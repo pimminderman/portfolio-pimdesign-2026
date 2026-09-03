@@ -308,15 +308,18 @@
     }
 
     .footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
       margin: 0 auto;
       padding: 18px 0 32px;
       border-top: 1px solid var(--line);
       color: var(--muted);
       font-size: 12px;
+    }
+
+    .footer-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
     }
 
     .footer-links {
@@ -330,6 +333,11 @@
       flex-wrap: wrap;
       align-items: center;
       gap: 0;
+    }
+
+    .footer-copyright {
+      display: block;
+      margin-top: 12px;
     }
 
     .footer-cta {
@@ -367,7 +375,7 @@
       .work,
       .footer { width: calc(100% - 32px); }
 
-      .footer { align-items: flex-start; }
+      .footer-top { align-items: flex-start; }
 
       .intro {
         width: calc(100% - 32px);
@@ -539,15 +547,17 @@
   </main>
 
   <footer class="footer">
-    <div class="footer-meta">
+    <div class="footer-top">
+      <div class="footer-meta">
       <span class="footer-cta">Want to see more about each product story? <a href="mailto:pim.minderman89@gmail.com">Contact me <span class="external-icon" aria-hidden="true">call_made</span></a></span>
-      <span>© 2026 Pim Minderman</span>
+      </div>
+      <div class="footer-links" aria-label="Personal channels">
+        <a href="https://uk.linkedin.com/in/pimminderman" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href="https://productbypim.substack.com" target="_blank" rel="noreferrer">Product by Pim</a>
+        <a href="https://github.com/pimminderman" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
     </div>
-    <div class="footer-links" aria-label="Personal channels">
-      <a href="https://uk.linkedin.com/in/pimminderman" target="_blank" rel="noreferrer">LinkedIn</a>
-      <a href="https://productbypim.substack.com" target="_blank" rel="noreferrer">Product by Pim</a>
-      <a href="https://github.com/pimminderman" target="_blank" rel="noreferrer">GitHub</a>
-    </div>
+    <span class="footer-copyright">© 2026 Pim Minderman</span>
   </footer>
 
   <script>
