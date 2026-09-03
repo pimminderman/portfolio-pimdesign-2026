@@ -154,7 +154,8 @@
     .main {
       display: grid;
       grid-template-columns: 170px 1fr;
-      gap: 50px;
+      column-gap: 50px;
+      row-gap: 0;
     }
 
     .company {
@@ -214,6 +215,8 @@
     .main > .trigger {
       grid-column: 2;
       align-self: flex-start;
+      justify-self: start;
+      width: fit-content;
       margin-top: 12px;
     }
 
