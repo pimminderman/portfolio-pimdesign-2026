@@ -370,7 +370,7 @@
       vertical-align: -2px;
     }
 
-    @media (max-width: 760px) {
+    @media (max-width: 600px) {
       .header,
       .work,
       .footer { width: calc(100% - 32px); }
@@ -568,7 +568,7 @@
       .forEach((row) => storyList.prepend(row));
 
     const rows = [...document.querySelectorAll('.row')];
-    const isDesktop = () => window.innerWidth > 760;
+    const isDesktop = () => window.innerWidth > 600;
 
     function arrangeStoryMeta() {
       rows.forEach((row) => {
