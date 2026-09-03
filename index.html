@@ -212,6 +212,7 @@
     }
 
     .main > .trigger {
+      grid-column: 2;
       align-self: flex-start;
       margin-top: 12px;
     }
@@ -397,7 +398,7 @@
 
       .copy { order: 1; }
       .company {
-        order: 2;
+        order: 3;
         margin-top: 14px;
         font-size: 14px;
       }
@@ -405,7 +406,7 @@
         width: 20px;
         height: 20px;
       }
-      .main > .trigger { order: 3; }
+      .main > .trigger { order: 2; }
       .copy h3 { font-size: 16px; }
 
       .popover {
@@ -572,14 +573,9 @@
 
     function arrangeStoryMeta() {
       rows.forEach((row) => {
-        const company = row.querySelector('.company');
         const trigger = row.querySelector('.trigger');
 
-        if (isDesktop()) {
-          row.querySelector('.title').append(trigger);
-        } else {
-          company.after(trigger);
-        }
+        row.querySelector('.copy').after(trigger);
       });
     }
 
