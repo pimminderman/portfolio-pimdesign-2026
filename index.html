@@ -495,6 +495,12 @@
   </footer>
 
   <script>
+    const storyList = document.querySelector('.list');
+    [...storyList.querySelectorAll('.row')]
+      .filter((row) => row.querySelector('.company').textContent.includes('Risk Ledger'))
+      .reverse()
+      .forEach((row) => storyList.prepend(row));
+
     const rows = [...document.querySelectorAll('.row')];
     const isDesktop = () => window.innerWidth > 760;
 
