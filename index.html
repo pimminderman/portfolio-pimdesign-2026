@@ -191,15 +191,13 @@
     }
 
     .title {
-      display: flex;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      gap: 9px;
+      display: block;
     }
 
     .trigger {
       flex: none;
-      margin-top: 1px;
+      display: inline-flex;
+      margin-top: 10px;
       padding: 5px 8px;
       border: 1px solid #cbd5e1;
       border-radius: 999px;
@@ -240,6 +238,12 @@
       visibility: visible;
       transform: none;
       pointer-events: auto;
+    }
+
+    .row:last-child .popover {
+      top: auto;
+      bottom: 0;
+      transform: translateY(8px) scale(0.98);
     }
 
     .media {
@@ -359,6 +363,7 @@
         position: relative;
         top: auto;
         right: auto;
+        bottom: auto;
         display: none;
         width: 100%;
         margin-top: 18px;
