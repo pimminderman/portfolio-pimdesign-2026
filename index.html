@@ -319,7 +319,17 @@
       gap: 14px;
     }
 
+    .footer-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+
     .footer-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
       color: #475569;
       font-size: 14px;
     }
@@ -509,9 +519,11 @@
   </main>
 
   <footer class="footer">
-    <span>© 2026 Pim Minderman</span>
+    <div class="footer-meta">
+      <span class="footer-cta">Want to see more about each product story? Contact me <span class="external-icon" aria-hidden="true">north_east</span></span>
+      <span>© 2026 Pim Minderman</span>
+    </div>
     <div class="footer-links" aria-label="Personal channels">
-      <span class="footer-cta">Want to see more about each product story? Contact me.</span>
       <a href="https://uk.linkedin.com/in/pimminderman" target="_blank" rel="noreferrer">LinkedIn <span class="external-icon" aria-hidden="true">open_in_new</span></a>
       <a href="https://productbypim.substack.com" target="_blank" rel="noreferrer">Product by Pim <span class="external-icon" aria-hidden="true">open_in_new</span></a>
       <a href="https://github.com/pimminderman" target="_blank" rel="noreferrer">GitHub <span class="external-icon" aria-hidden="true">open_in_new</span></a>
