@@ -152,23 +152,24 @@
     .row:first-child { border-top: 1px solid var(--line); }
 
     .main {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 50px;
     }
 
     .company {
-      align-self: flex-start;
+      align-self: start;
       display: flex;
       align-items: center;
       gap: 9px;
-      margin-top: 14px;
+      margin-top: 0;
       color: #475569;
-      font-size: 14px;
+      font-size: 16px;
     }
 
     .logo {
-      width: 20px;
-      height: 20px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       background: #fff;
       object-fit: cover;
@@ -383,8 +384,20 @@
 
       .main {
         display: flex;
+        flex-direction: column;
       }
 
+      .copy { order: 1; }
+      .company {
+        order: 2;
+        margin-top: 14px;
+        font-size: 14px;
+      }
+      .logo {
+        width: 20px;
+        height: 20px;
+      }
+      .main > .trigger { order: 3; }
       .copy h3 { font-size: 16px; }
 
       .popover {
@@ -544,12 +557,24 @@
       .reverse()
       .forEach((row) => storyList.prepend(row));
 
-    [...storyList.querySelectorAll('.row')].forEach((row) => {
-      row.querySelector('.company').after(row.querySelector('.trigger'));
-    });
-
     const rows = [...document.querySelectorAll('.row')];
     const isDesktop = () => window.innerWidth > 760;
+
+    function arrangeStoryMeta() {
+      rows.forEach((row) => {
+        const company = row.querySelector('.company');
+        const trigger = row.querySelector('.trigger');
+
+        if (isDesktop()) {
+          row.querySelector('.title').append(trigger);
+        } else {
+          company.after(trigger);
+        }
+      });
+    }
+
+    arrangeStoryMeta();
+    window.addEventListener('resize', arrangeStoryMeta);
 
     function closeAll(except = null) {
       rows.forEach((row) => {
