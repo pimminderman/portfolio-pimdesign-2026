@@ -152,23 +152,23 @@
     .row:first-child { border-top: 1px solid var(--line); }
 
     .main {
-      display: grid;
-      grid-template-columns: 170px 1fr;
-      gap: 50px;
+      display: flex;
+      flex-direction: column;
     }
 
     .company {
-      align-self: start;
+      align-self: flex-start;
       display: flex;
       align-items: center;
       gap: 9px;
+      margin-top: 14px;
       color: #475569;
-      font-size: 16px;
+      font-size: 14px;
     }
 
     .logo {
-      width: 28px;
-      height: 28px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       background: #fff;
       object-fit: cover;
@@ -208,6 +208,11 @@
       font: 500 12px/1 Inter, system-ui, sans-serif;
       white-space: nowrap;
       transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .main > .trigger {
+      align-self: flex-start;
+      margin-top: 12px;
     }
 
     .trigger:hover {
@@ -376,9 +381,10 @@
       .row { padding: 28px 0; }
 
       .main {
-        grid-template-columns: 1fr;
-        gap: 18px;
+        display: flex;
       }
+
+      .copy h3 { font-size: 16px; }
 
       .popover {
         position: relative;
@@ -520,13 +526,13 @@
 
   <footer class="footer">
     <div class="footer-meta">
-      <span class="footer-cta">Want to see more about each product story? Contact me <span class="external-icon" aria-hidden="true">north_east</span></span>
+      <span class="footer-cta">Want to see more about each product story? Contact me <span class="external-icon" aria-hidden="true">call_made</span></span>
       <span>© 2026 Pim Minderman</span>
     </div>
     <div class="footer-links" aria-label="Personal channels">
-      <a href="https://uk.linkedin.com/in/pimminderman" target="_blank" rel="noreferrer">LinkedIn <span class="external-icon" aria-hidden="true">open_in_new</span></a>
-      <a href="https://productbypim.substack.com" target="_blank" rel="noreferrer">Product by Pim <span class="external-icon" aria-hidden="true">open_in_new</span></a>
-      <a href="https://github.com/pimminderman" target="_blank" rel="noreferrer">GitHub <span class="external-icon" aria-hidden="true">open_in_new</span></a>
+      <a href="https://uk.linkedin.com/in/pimminderman" target="_blank" rel="noreferrer">LinkedIn</a>
+      <a href="https://productbypim.substack.com" target="_blank" rel="noreferrer">Product by Pim</a>
+      <a href="https://github.com/pimminderman" target="_blank" rel="noreferrer">GitHub</a>
     </div>
   </footer>
 
@@ -536,6 +542,10 @@
       .filter((row) => row.querySelector('.company').textContent.includes('Risk Ledger'))
       .reverse()
       .forEach((row) => storyList.prepend(row));
+
+    [...storyList.querySelectorAll('.row')].forEach((row) => {
+      row.querySelector('.company').after(row.querySelector('.trigger'));
+    });
 
     const rows = [...document.querySelectorAll('.row')];
     const isDesktop = () => window.innerWidth > 760;
