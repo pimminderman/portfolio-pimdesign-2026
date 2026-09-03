@@ -310,7 +310,13 @@
 
     .footer-links {
       display: flex;
+      flex-wrap: wrap;
       gap: 14px;
+    }
+
+    .footer-cta {
+      color: #475569;
+      font-size: 14px;
     }
 
     .footer a {
@@ -487,10 +493,14 @@
   </main>
 
   <footer class="footer">
-    <span>© 2026 Pim Minderman</span>
+    <div>
+      <div class="footer-cta">Want to see more about each product story? Contact me.</div>
+      <span>© 2026 Pim Minderman</span>
+    </div>
     <div class="footer-links" aria-label="Personal channels">
       <a href="https://uk.linkedin.com/in/pimminderman" target="_blank" rel="noreferrer">LinkedIn</a>
       <a href="https://productbypim.substack.com" target="_blank" rel="noreferrer">Product by Pim</a>
+      <a href="https://github.com/pimminderman" target="_blank" rel="noreferrer">GitHub</a>
     </div>
   </footer>
 
