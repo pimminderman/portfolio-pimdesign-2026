@@ -256,11 +256,15 @@
     }
 
     .popover {
-      position: absolute;
-      z-index: 3;
-      top: 0;
-      right: 0;
-      width: 440px;
+      position: fixed;
+      z-index: 20;
+      top: 16px;
+      right: auto;
+      bottom: auto;
+      left: 16px;
+      width: min(720px, calc(100vw - 32px));
+      max-height: calc(100dvh - 32px);
+      overflow: auto;
       padding: 8px;
       border: 1px solid #d8e0e8;
       border-radius: 12px;
@@ -278,12 +282,6 @@
       visibility: visible;
       transform: none;
       pointer-events: auto;
-    }
-
-    .row:last-child .popover {
-      top: auto;
-      bottom: 0;
-      transform: translateY(8px) scale(0.98);
     }
 
     .media {
@@ -324,7 +322,7 @@
     }
 
     .close {
-      display: none;
+      display: flex;
       position: absolute;
       top: 12px;
       right: 12px;
@@ -531,12 +529,12 @@
           <div class="copy">
             <div class="title">
               <h3>Designing transparency for financial sustainability data</h3>
-              <button class="trigger" type="button" aria-expanded="false">View snapshot</button>
+              <button class="trigger" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="snapshot-transparency">View snapshot</button>
             </div>
             <p>Built a reusable transparency panel that breaks down any ESG score into clear drivers, methodologies and underlying data.</p>
           </div>
         </div>
-        <aside class="popover" aria-label="Project snapshot">
+        <aside id="snapshot-transparency" class="popover" role="dialog" aria-label="Project snapshot">
           <button class="close" type="button" aria-label="Close snapshot">×</button>
           <div class="media"><video controls muted playsinline src="assets/Eu%20Tax%20-%20TP.mp4"></video></div>
           <div class="details">
@@ -556,12 +554,12 @@
           <div class="copy">
             <div class="title">
               <h3>Sustainability insights beyond the platform</h3>
-              <button class="trigger" type="button" aria-expanded="false">View snapshot</button>
+              <button class="trigger" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="snapshot-ai-insights">View snapshot</button>
             </div>
             <p>Created an AI-powered experience that helps users explore complex sustainability data and uncover what matters—faster.</p>
           </div>
         </div>
-        <aside class="popover" aria-label="Project snapshot">
+        <aside id="snapshot-ai-insights" class="popover" role="dialog" aria-label="Project snapshot">
           <button class="close" type="button" aria-label="Close snapshot">×</button>
           <div class="media"><video controls muted playsinline src="assets/AI%20Insight%20-%20Product%20Video.%20July%202024-%20v7.mp4"></video></div>
           <div class="details">
@@ -581,12 +579,12 @@
           <div class="copy">
             <div class="title">
               <h3>Auto discover assets for clients, for their suppliers.</h3>
-              <button class="trigger" type="button" aria-expanded="false">View snapshot</button>
+              <button class="trigger" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="snapshot-domain-assets">View snapshot</button>
             </div>
             <p>Designed a continuous asset discovery product that gives security teams visibility of their external attack surface and uncovers unknown risks.</p>
           </div>
         </div>
-        <aside class="popover" aria-label="Project snapshot">
+        <aside id="snapshot-domain-assets" class="popover" role="dialog" aria-label="Project snapshot">
           <button class="close" type="button" aria-label="Close snapshot">×</button>
           <div class="media"><img src="assets/Portfolio%20Assets%20Disco.jpg" alt="Asset discovery product interface"></div>
           <div class="details">
@@ -606,12 +604,12 @@
           <div class="copy">
             <div class="title">
               <h3>Security Certifications</h3>
-              <button class="trigger" type="button" aria-expanded="false">View snapshot</button>
+              <button class="trigger" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="snapshot-certifications">View snapshot</button>
             </div>
             <p>Automatically populate the most crucial security data: security certifications.</p>
           </div>
         </div>
-        <aside class="popover" aria-label="Project snapshot">
+        <aside id="snapshot-certifications" class="popover" role="dialog" aria-label="Project snapshot">
           <button class="close" type="button" aria-label="Close snapshot">×</button>
           <div class="media"><video controls muted playsinline src="assets/Security%20Certs.mov"></video></div>
           <div class="details">
@@ -676,7 +674,33 @@
     }
 
     arrangeStoryMeta();
-    window.addEventListener('resize', arrangeStoryMeta);
+
+    function positionPopover(trigger, popover) {
+      const viewportPadding = 16;
+      const offset = 12;
+      const triggerRect = trigger.getBoundingClientRect();
+      const popoverRect = popover.getBoundingClientRect();
+      const availableBelow = window.innerHeight - triggerRect.bottom - viewportPadding;
+      const availableAbove = triggerRect.top - viewportPadding;
+      const opensBelow = availableBelow >= popoverRect.height + offset || availableBelow >= availableAbove;
+      const top = opensBelow
+        ? Math.min(triggerRect.bottom + offset, window.innerHeight - popoverRect.height - viewportPadding)
+        : Math.max(viewportPadding, triggerRect.top - popoverRect.height - offset);
+      const left = Math.min(
+        Math.max(viewportPadding, triggerRect.left),
+        window.innerWidth - popoverRect.width - viewportPadding
+      );
+
+      popover.style.left = `${left}px`;
+      popover.style.top = `${top}px`;
+    }
+
+    window.addEventListener('resize', () => {
+      arrangeStoryMeta();
+      rows.filter((row) => row.classList.contains('open')).forEach((row) => {
+        positionPopover(row.querySelector('.trigger'), row.querySelector('.popover'));
+      });
+    });
 
     function closeAll(except = null) {
       rows.forEach((row) => {
@@ -693,11 +717,15 @@
       const close = row.querySelector('.close');
       let closeTimer;
 
-      function open() {
+      function open({ focusClose = false } = {}) {
         clearTimeout(closeTimer);
         closeAll(row);
         row.classList.add('open');
         trigger.setAttribute('aria-expanded', 'true');
+        window.requestAnimationFrame(() => {
+          positionPopover(trigger, popover);
+          if (focusClose) close.focus();
+        });
       }
 
       function scheduleClose() {
@@ -719,14 +747,22 @@
           row.classList.remove('open');
           trigger.setAttribute('aria-expanded', 'false');
         } else {
-          open();
+          open({ focusClose: true });
         }
       });
 
       close.addEventListener('click', () => {
         row.classList.remove('open');
         trigger.setAttribute('aria-expanded', 'false');
+        trigger.focus();
       });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      const openRow = rows.find((row) => row.classList.contains('open'));
+      closeAll();
+      openRow?.querySelector('.trigger').focus();
     });
 
     document.addEventListener('click', (event) => {
