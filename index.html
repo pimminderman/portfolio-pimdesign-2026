@@ -33,6 +33,29 @@
       font-family: Inter, system-ui, sans-serif;
     }
 
+    .theme-toggle {
+      position: fixed;
+      z-index: 5;
+      top: 20px;
+      right: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--card);
+      color: var(--ink);
+      box-shadow: 0 6px 20px rgb(15 23 42 / 10%);
+      cursor: pointer;
+      font: 500 12px/1 Inter, system-ui, sans-serif;
+    }
+
+    .theme-toggle .material-symbols-outlined {
+      font-size: 16px;
+      line-height: 1;
+    }
+
     .header,
     .work,
     .footer {
@@ -380,41 +403,41 @@
       vertical-align: -2px;
     }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
+    body[data-theme="dark"] {
+      color-scheme: dark;
         --bg: #0f172a;
         --ink: #f8fafc;
         --muted: #cbd5e1;
         --line: #475569;
         --card: #111827;
-      }
-
-      :where(a, button):focus-visible { outline-color: #5eead4; }
-
-      .experience a,
-      .trigger {
-        border-color: #64748b;
-        background: rgb(15 23 42 / 72%);
-        color: #e2e8f0;
-      }
-
-      .experience a:hover,
-      .trigger:hover {
-        border-color: #94a3b8;
-        background: #1e293b;
-        color: #f8fafc;
-      }
-
-      .company,
-      .copy > p,
-      .section-heading p,
-      .footer-cta { color: #cbd5e1; }
-
-      .details p { color: #e2e8f0; }
-      .label { color: #cbd5e1; }
-      .media { background: #1e293b; color: #cbd5e1; }
-      .close { border-color: #64748b; }
     }
+
+    body[data-theme="light"] { color-scheme: light; }
+    body[data-theme="dark"] :where(a, button):focus-visible { outline-color: #5eead4; }
+
+    body[data-theme="dark"] .experience a,
+    body[data-theme="dark"] .trigger {
+      border-color: #64748b;
+      background: rgb(15 23 42 / 72%);
+      color: #e2e8f0;
+    }
+
+    body[data-theme="dark"] .experience a:hover,
+    body[data-theme="dark"] .trigger:hover {
+      border-color: #94a3b8;
+      background: #1e293b;
+      color: #f8fafc;
+    }
+
+    body[data-theme="dark"] .company,
+    body[data-theme="dark"] .copy > p,
+    body[data-theme="dark"] .section-heading p,
+    body[data-theme="dark"] .footer-cta { color: #cbd5e1; }
+
+    body[data-theme="dark"] .details p { color: #e2e8f0; }
+    body[data-theme="dark"] .label { color: #cbd5e1; }
+    body[data-theme="dark"] .media { background: #1e293b; color: #cbd5e1; }
+    body[data-theme="dark"] .close { border-color: #64748b; }
 
     @media (max-width: 600px) {
       .header,
@@ -422,6 +445,10 @@
       .footer { width: calc(100% - 32px); }
 
       .footer-top { align-items: flex-start; }
+      .theme-toggle {
+        top: 12px;
+        right: 12px;
+      }
 
       .intro {
         width: calc(100% - 32px);
@@ -471,6 +498,11 @@
   </style>
 </head>
 <body>
+  <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
+    <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+    <span class="theme-label">Dark mode</span>
+  </button>
+
   <section class="intro">
     <img class="portrait" src="assets/Pim_photo.jpg" alt="Portrait of Pim Minderman">
     <span class="eyebrow">Senior Product Designer</span>
@@ -607,6 +639,25 @@
   </footer>
 
   <script>
+    const themeToggle = document.querySelector('.theme-toggle');
+    const savedTheme = localStorage.getItem('portfolio-theme');
+
+    function setTheme(theme) {
+      document.body.dataset.theme = theme;
+      const isDark = theme === 'dark';
+      themeToggle.setAttribute('aria-pressed', String(isDark));
+      themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+      themeToggle.querySelector('.theme-label').textContent = isDark ? 'Light mode' : 'Dark mode';
+      themeToggle.querySelector('.material-symbols-outlined').textContent = isDark ? 'light_mode' : 'dark_mode';
+    }
+
+    setTheme(savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+    themeToggle.addEventListener('click', () => {
+      const nextTheme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('portfolio-theme', nextTheme);
+      setTheme(nextTheme);
+    });
+
     const storyList = document.querySelector('.list');
     [...storyList.querySelectorAll('.row')]
       .filter((row) => row.querySelector('.company').textContent.includes('Risk Ledger'))
