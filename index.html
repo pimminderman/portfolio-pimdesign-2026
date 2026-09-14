@@ -41,37 +41,16 @@
       width: 36px;
       height: 36px;
       padding: 0;
-      border: 1px solid #111827;
+      border: 0;
       border-radius: 50%;
-      background: linear-gradient(90deg, #111827 0 50%, #f8fafc 50% 100%);
-      box-shadow: 0 6px 20px rgb(15 23 42 / 10%);
+      background: linear-gradient(135deg, #111827 0 49%, #f8fafc 51% 100%);
+      box-shadow: 0 4px 14px rgb(15 23 42 / 8%);
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .theme-toggle::before,
-    .theme-toggle::after {
-      position: absolute;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      content: "";
-    }
-
-    .theme-toggle::before {
-      top: 8px;
-      left: 8px;
-      background: #f8fafc;
-    }
-
-    .theme-toggle::after {
-      right: 8px;
-      bottom: 8px;
-      background: #111827;
-    }
-
     .theme-toggle:hover {
-      box-shadow: 0 8px 24px rgb(15 23 42 / 20%);
+      box-shadow: 0 6px 18px rgb(15 23 42 / 14%);
       transform: scale(1.06);
     }
 
