@@ -11,6 +11,7 @@
   <title>Product by Pim</title>
   <style>
     :root {
+      color-scheme: light dark;
       --bg: #f8fafc;
       --ink: #171717;
       --muted: #64748b;
@@ -19,6 +20,11 @@
     }
 
     * { box-sizing: border-box; }
+
+    :where(a, button):focus-visible {
+      outline: 2px solid #0f766e;
+      outline-offset: 3px;
+    }
 
     body {
       margin: 0;
@@ -374,6 +380,42 @@
       vertical-align: -2px;
     }
 
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a;
+        --ink: #f8fafc;
+        --muted: #cbd5e1;
+        --line: #475569;
+        --card: #111827;
+      }
+
+      :where(a, button):focus-visible { outline-color: #5eead4; }
+
+      .experience a,
+      .trigger {
+        border-color: #64748b;
+        background: rgb(15 23 42 / 72%);
+        color: #e2e8f0;
+      }
+
+      .experience a:hover,
+      .trigger:hover {
+        border-color: #94a3b8;
+        background: #1e293b;
+        color: #f8fafc;
+      }
+
+      .company,
+      .copy > p,
+      .section-heading p,
+      .footer-cta { color: #cbd5e1; }
+
+      .details p { color: #e2e8f0; }
+      .label { color: #cbd5e1; }
+      .media { background: #1e293b; color: #cbd5e1; }
+      .close { border-color: #64748b; }
+    }
+
     @media (max-width: 600px) {
       .header,
       .work,
@@ -436,7 +478,7 @@
     <div class="experience" aria-label="Previous experience">
       <a href="https://riskledger.com" target="_blank" rel="noreferrer">Risk Ledger</a>
       <a href="https://clarity.ai" target="_blank" rel="noreferrer">Clarity AI</a>
-      <a href="https://brandtraction.com" target="_blank" rel="noreferrer">Proquo</a>
+      <a href="https://brandtraction.com" target="_blank" rel="noreferrer">Proquo AI</a>
       <a href="https://www.akqa.com" target="_blank" rel="noreferrer">AKQA</a>
     </div>
   </section>
@@ -467,7 +509,7 @@
           <div class="media"><video controls muted playsinline src="assets/Eu%20Tax%20-%20TP.mp4"></video></div>
           <div class="details">
             <div><span class="label">Tension</span><p>Investment teams could see an ESG score, but they could not easily see the underlying drivers and data that shaped it.</p></div>
-            <div><span class="label">What we solved</span><p>I designed a reusable panel that made ESG scores and underlying data easier for investment teams to understand and trust.</p></div>
+            <div><span class="label">Why we solved it</span><p>Transparency data was available, but 22% of clients still could not find or compare it. We made the data clearer, easier to compare and more accessible.</p></div>
             <div><span class="label">Outcome</span><p>The panel supported a broader transparency initiative that helped lift user satisfaction from 75% to 90%; it was subsequently adopted by 8 product teams.</p></div>
           </div>
         </aside>
@@ -492,7 +534,7 @@
           <div class="media"><video controls muted playsinline src="assets/AI%20Insight%20-%20Product%20Video.%20July%202024-%20v7.mp4"></video></div>
           <div class="details">
             <div><span class="label">Tension</span><p>Asset managers had sustainability data, but had to dig through tables, scores and company pages to use it. They needed fast answers they could verify.</p></div>
-            <div><span class="label">What we solved</span><p>AI Insights turned ESG data into decision-ready insights with visible sources, retrieval steps and familiar filters and tables.</p></div>
+            <div><span class="label">Why we solved it</span><p>Clarity AI had a wealth of data, but customers told us that understanding it still took most of their time. We used AI to aggregate the evidence into faster, decision-ready insights.</p></div>
             <div><span class="label">Outcome</span><p>Made complex sustainability information easier to explore while keeping the underlying evidence visible.</p></div>
           </div>
         </aside>
@@ -509,7 +551,7 @@
               <h3>Auto discover assets for clients, for their suppliers.</h3>
               <button class="trigger" type="button" aria-expanded="false">View snapshot</button>
             </div>
-            <p>Designed a continuous asset discovery product that gives security teams visibility of their external attack surface and uncovers unknown risks.</p>
+            <p>Domain assets</p>
           </div>
         </div>
         <aside class="popover" aria-label="Project snapshot">
@@ -517,7 +559,7 @@
           <div class="media"><img src="assets/Portfolio%20Assets%20Disco.jpg" alt="Asset discovery product interface"></div>
           <div class="details">
             <div><span class="label">Tension</span><p>Security teams lacked a continuously updated view of supplier-facing assets and the risks those assets introduced.</p></div>
-            <div><span class="label">What we solved</span><p>I designed a continuous asset-discovery experience that gave teams visibility of their external attack surface and surfaced unknown risks.</p></div>
+            <div><span class="label">Why we solved it</span><p>Seventy per cent of suppliers added no more than one asset, leaving teams with an incomplete view of their exposure. We automated asset discovery to build a more complete, continuously updated picture.</p></div>
             <div><span class="label">Outcome</span><p>Created a clearer way to monitor supplier-facing assets and surface security issues continuously.</p></div>
           </div>
         </aside>
@@ -534,7 +576,7 @@
               <h3>Security Certifications</h3>
               <button class="trigger" type="button" aria-expanded="false">View snapshot</button>
             </div>
-            <p>Making security certifications automatically discovered for all suppliers.</p>
+            <p>Automatically populate the most crucial security data: security certifications.</p>
           </div>
         </div>
         <aside class="popover" aria-label="Project snapshot">
@@ -542,7 +584,7 @@
           <div class="media"><video controls muted playsinline src="assets/Security%20Certs.mov"></video></div>
           <div class="details">
             <div><span class="label">Tension</span><p>Thirty percent of suppliers never respond to information requests—not because they refuse, but because client teams do not have the capacity to keep chasing them.</p></div>
-            <div><span class="label">What we solved</span><p>We brought supplier certification data directly into the product, closing a critical information gap: certifications were missing for 60% of suppliers.</p></div>
+            <div><span class="label">Why we solved it</span><p>Unresponsive suppliers create gaps in the supplier network and in the data available about them. We closed that gap by automatically sourcing certification data for suppliers.</p></div>
             <div><span class="label">Outcome</span><p>Achieved 70% accurate certification discovery, with 60% of the 120-client base using the capability to find certifications.</p></div>
           </div>
         </aside>
