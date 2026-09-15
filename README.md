@@ -6,6 +6,7 @@ A static portfolio site presenting selected product design work across sustainab
 
 - `index.html` — the portfolio website
 - `assets/` — project videos and the preview icon
+- `DESIGN_SYSTEM.md` — visual, interaction and accessibility rules for extending the site
 
 ## Preview locally
 
