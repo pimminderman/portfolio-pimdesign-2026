@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Painting, decorating and joinery work by Pim Minderman in London.">
+  <link rel="canonical" href="https://pimminderman.github.io/portfolio-pimdesign-2026/painter-carpentry.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Painter &amp; carpentry — Pim Minderman">
+  <meta property="og:description" content="A record of hands-on painting, decorating and joinery work across London.">
+  <meta property="og:image" content="https://pimminderman.github.io/portfolio-pimdesign-2026/assets/painter-carpentry-battersea.jpg">
+  <meta property="og:image:alt" content="Custom cabinet joinery in progress in Battersea, London">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>Painter &amp; carpentry — Pim Minderman</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f8fafc;
+      --ink: #171717;
+      --muted: #64748b;
+      --line: #dbe2ea;
+      --card: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    :where(a, button):focus-visible {
+      outline: 2px solid #0f766e;
+      outline-offset: 3px;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, system-ui, sans-serif;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      z-index: 2;
+      top: 20px;
+      right: 20px;
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #111827 0 49%, #f8fafc 51% 100%);
+      box-shadow: 0 4px 14px rgb(15 23 42 / 8%);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      box-shadow: 0 6px 18px rgb(15 23 42 / 14%);
+      transform: scale(1.06);
+    }
+
+    .theme-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    .page {
+      width: min(1060px, calc(100% - 64px));
+      margin: auto;
+      padding: 30px 0 80px;
+    }
+
+    .back {
+      color: var(--muted);
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .back:hover {
+      color: var(--ink);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .intro {
+      max-width: 720px;
+      margin: 88px auto 0;
+    }
+
+    .eyebrow,
+    .caption {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 12px 0 0;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.045em;
+    }
+
+    .intro p {
+      max-width: 590px;
+      margin: 20px 0 0;
+      color: #475569;
+      font-size: 20px;
+      line-height: 1.5;
+      letter-spacing: -0.025em;
+    }
+
+    figure { margin: 56px 0 0; }
+
+    .project-image {
+      display: block;
+      width: 100%;
+      max-height: min(78vh, 880px);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--card);
+      object-fit: contain;
+    }
+
+    figcaption { margin-top: 12px; }
+
+    .project-notes {
+      display: grid;
+      grid-template-columns: 170px minmax(0, 1fr);
+      gap: 50px;
+      max-width: 720px;
+      margin: 56px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+    }
+
+    .project-notes h2 {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .project-notes p {
+      margin: 0;
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    body[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #0f172a;
+      --ink: #f8fafc;
+      --muted: #cbd5e1;
+      --line: #475569;
+      --card: #111827;
+    }
+
+    body[data-theme="dark"] .theme-toggle { transform: rotate(180deg); }
+    body[data-theme="dark"] .theme-toggle:hover { transform: rotate(180deg) scale(1.06); }
+    body[data-theme="dark"] :where(a, button):focus-visible { outline-color: #5eead4; }
+    body[data-theme="dark"] .intro p,
+    body[data-theme="dark"] .project-notes p { color: #cbd5e1; }
+
+    @media (max-width: 600px) {
+      .page { width: calc(100% - 32px); padding: 24px 0 64px; }
+      .theme-toggle { top: 12px; right: 12px; width: 16px; height: 16px; }
+      .intro { margin-top: 68px; }
+      .intro p { font-size: 18px; }
+      figure { margin-top: 40px; }
+      .project-notes { display: block; margin-top: 40px; }
+      .project-notes p { margin-top: 12px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode"><span class="theme-label">Dark mode</span></button>
+
+  <main class="page">
+    <a class="back" href="index.html">← Back to portfolio</a>
+
+    <header class="intro">
+      <span class="eyebrow">Other project</span>
+      <h1>Painter &amp; carpentry</h1>
+      <p>Hands-on painting, decorating and joinery work across London.</p>
+    </header>
+
+    <figure>
+      <img class="project-image" src="assets/painter-carpentry-battersea.jpg" alt="Custom cabinet joinery in progress in Battersea, London">
+      <figcaption class="caption">Carpentry joinery — Battersea, London</figcaption>
+    </figure>
+
+    <section class="project-notes" aria-label="Project details">
+      <h2>In progress</h2>
+      <p>A custom built-in cabinet in progress, designed to make practical use of an awkward interior space.</p>
+    </section>
+  </main>
+
+  <script>
+    const themeToggle = document.querySelector('.theme-toggle');
+    const savedTheme = localStorage.getItem('portfolio-theme');
+
+    function setTheme(theme) {
+      document.body.dataset.theme = theme;
+      const isDark = theme === 'dark';
+      themeToggle.setAttribute('aria-pressed', String(isDark));
+      themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+      themeToggle.querySelector('.theme-label').textContent = isDark ? 'Light mode' : 'Dark mode';
+    }
+
+    setTheme(savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+    themeToggle.addEventListener('click', () => {
+      const nextTheme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('portfolio-theme', nextTheme);
+      setTheme(nextTheme);
+    });
+  </script>
+</body>
+</html>
