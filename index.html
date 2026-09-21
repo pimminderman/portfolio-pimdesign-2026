@@ -206,47 +206,43 @@
       margin: 96px auto 0;
     }
 
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
+    .project-list {
       margin-top: 28px;
+      border-top: 1px solid var(--line);
     }
 
-    .project-card {
-      min-height: 168px;
-      padding: 24px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: var(--card);
+    .project-item {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
     }
 
-    .project-card h3 {
+    .project-item h3 {
       margin: 0;
       font-size: 16px;
       font-weight: 500;
       letter-spacing: -0.02em;
     }
 
-    .project-card h3 a {
+    .project-item h3 a {
       color: var(--ink);
       text-decoration: none;
     }
 
-    .project-card h3 a:hover,
-    .project-card p a:hover {
+    .project-item h3 a:hover,
+    .project-item p a:hover {
       text-decoration: underline;
       text-underline-offset: 3px;
     }
 
-    .project-card p {
-      margin: 12px 0 0;
+    .project-item p {
+      max-width: 620px;
+      margin: 8px 0 0;
       color: #475569;
       font-size: 14px;
       line-height: 1.6;
     }
 
-    .project-card p a { color: inherit; }
+    .project-item p a { color: inherit; }
 
     .row {
       position: relative;
@@ -526,7 +522,7 @@
     body[data-theme="dark"] .company,
     body[data-theme="dark"] .copy > p,
     body[data-theme="dark"] .section-heading p,
-    body[data-theme="dark"] .project-card p,
+    body[data-theme="dark"] .project-item p,
     body[data-theme="dark"] .footer-cta { color: #cbd5e1; }
 
     body[data-theme="dark"] .details p { color: #e2e8f0; }
@@ -562,8 +558,6 @@
       .row { padding: 28px 0; }
 
       .other-projects { margin-top: 72px; }
-      .project-grid { grid-template-columns: 1fr; }
-      .project-card { min-height: 0; padding: 20px; }
 
       .main {
         display: flex;
@@ -741,12 +735,12 @@
     <div class="section-heading">
       <span id="other-projects-heading" class="heading">Other projects</span>
     </div>
-    <div class="project-grid">
-      <article class="project-card">
+    <div class="project-list">
+      <article class="project-item">
         <h3><a href="https://github.com/pimminderman/portfolio-pimdesign-2026/blob/main/DESIGN_SYSTEM.md" target="_blank" rel="noreferrer">Portfolio — design system</a></h3>
         <p>I created a first design system for this portfolio so it can grow through reusable patterns and clear rules, rather than one-off design decisions.</p>
       </article>
-      <article class="project-card">
+      <article class="project-item">
         <h3>Sharped</h3>
         <p>Sharp-edged gradients and repeatable image patterns for the content and webpages of <a href="https://productbypim.substack.com" target="_blank" rel="noreferrer">Product by Pim</a>.</p>
       </article>
