@@ -157,6 +157,63 @@
       line-height: 1.6;
     }
 
+    .painting-project {
+      margin: 88px 0 0;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+    }
+
+    .painting-intro {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .painting-intro h2 {
+      margin: 12px 0 0;
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.035em;
+    }
+
+    .painting-intro p {
+      max-width: 590px;
+      margin: 12px 0 0;
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .gallery-phase { margin-top: 48px; }
+
+    .gallery-phase h3 {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .gallery-grid.single { grid-template-columns: 1fr; }
+
+    .gallery-grid figure { margin: 0; }
+
+    .gallery-image {
+      display: block;
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--card);
+    }
+
+    .gallery-grid figcaption { margin-top: 10px; }
+
     body[data-theme="dark"] {
       color-scheme: dark;
       --bg: #0f172a;
@@ -170,7 +227,8 @@
     body[data-theme="dark"] .theme-toggle:hover { transform: rotate(180deg) scale(1.06); }
     body[data-theme="dark"] :where(a, button):focus-visible { outline-color: #5eead4; }
     body[data-theme="dark"] .intro p,
-    body[data-theme="dark"] .project-notes p { color: #cbd5e1; }
+    body[data-theme="dark"] .project-notes p,
+    body[data-theme="dark"] .painting-intro p { color: #cbd5e1; }
 
     @media (max-width: 600px) {
       .page { width: calc(100% - 32px); padding: 24px 0 64px; }
@@ -180,6 +238,10 @@
       figure { margin-top: 40px; }
       .project-notes { display: block; margin-top: 40px; }
       .project-notes p { margin-top: 12px; }
+      .painting-project { margin-top: 64px; }
+      .painting-intro h2 { font-size: 24px; }
+      .gallery-phase { margin-top: 36px; }
+      .gallery-grid { grid-template-columns: 1fr; gap: 24px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -207,6 +269,52 @@
     <section class="project-notes" aria-label="Project details">
       <h2>In progress</h2>
       <p>A custom built-in cabinet in progress, designed to make practical use of an awkward interior space.</p>
+    </section>
+
+    <section class="painting-project" aria-labelledby="painting-heading">
+      <div class="painting-intro">
+        <span class="eyebrow">Painting &amp; decorating</span>
+        <h2 id="painting-heading">A room, repainted</h2>
+        <p>A before, during and after record of repainting the room around the original fireplace and built-in shelving.</p>
+      </div>
+
+      <div class="gallery-phase">
+        <h3>Before</h3>
+        <div class="gallery-grid">
+          <figure>
+            <img class="gallery-image" src="assets/painting-before-fireplace.jpg" alt="Original fireplace and built-in shelves before repainting">
+            <figcaption class="caption">Original fireplace and shelving</figcaption>
+          </figure>
+          <figure>
+            <img class="gallery-image" src="assets/painting-before-room.jpg" alt="Room before repainting, with bare walls and original shelving">
+            <figcaption class="caption">The room before painting</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="gallery-phase">
+        <h3>During</h3>
+        <div class="gallery-grid single">
+          <figure>
+            <img class="gallery-image" src="assets/painting-during-room.jpg" alt="Room during painting, with deep blue paint, taped edges and a ladder">
+            <figcaption class="caption">First coat and masking in progress</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="gallery-phase">
+        <h3>After</h3>
+        <div class="gallery-grid">
+          <figure>
+            <img class="gallery-image" src="assets/painting-after-fireplace.jpg" alt="Original fireplace and white shelving set against newly painted deep blue walls">
+            <figcaption class="caption">Deep blue walls, with the fireplace and shelving retained</figcaption>
+          </figure>
+          <figure>
+            <img class="gallery-image" src="assets/painting-after-detail.jpg" alt="Detail of the newly painted deep blue wall and white built-in shelves">
+            <figcaption class="caption">Fresh paint across the built-in shelving</figcaption>
+          </figure>
+        </div>
+      </div>
     </section>
   </main>
 
