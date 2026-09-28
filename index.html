@@ -422,18 +422,20 @@
     }
 
     .details { padding: 22px 0 2px; }
-    .details > div { margin-bottom: 12px; }
-
-    .design-decisions {
+    .details > div {
       display: grid;
       grid-template-columns: 110px minmax(0, 1fr);
       gap: 16px;
-      margin-top: 22px;
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
+      margin-bottom: 22px;
     }
 
-    .design-decisions .label { margin: 2px 0 0; }
+    .details > div .label { margin: 2px 0 0; }
+
+    .design-decisions {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: 0;
+    }
 
     .decision-list {
       display: grid;
@@ -649,7 +651,7 @@
       .copy h3 { font-size: 16px; }
 
       .close { top: 16px; right: 16px; width: 28px; height: 28px; }
-      .design-decisions { grid-template-columns: 96px minmax(0, 1fr); gap: 12px; }
+      .details > div { grid-template-columns: 96px minmax(0, 1fr); gap: 12px; }
     }
 
     /* Tailwind-aligned drawer touchpoints: md 768px, lg 1024px, xl 1280px, 2xl 1536px. */
