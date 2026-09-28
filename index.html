@@ -478,6 +478,55 @@
       content: "";
     }
 
+    .related {
+      margin-bottom: 22px;
+    }
+
+    .related:empty {
+      display: none;
+    }
+
+    .related-card {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      min-height: 64px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      background: rgb(255 255 255 / 60%);
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.35;
+      text-decoration: none;
+      transition: border-color 150ms ease, background 150ms ease, transform 150ms ease;
+    }
+
+    .related-card:hover {
+      border-color: #94a3b8;
+      background: var(--card);
+      transform: translateY(-1px);
+    }
+
+    .related-card:focus-visible {
+      outline: 3px solid #0f172a;
+      outline-offset: 3px;
+    }
+
+    .related-card img {
+      width: 72px;
+      height: 64px;
+      object-fit: cover;
+    }
+
+    .related-card .external-arrow {
+      padding-right: 14px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
     .label {
       display: block;
       margin-bottom: 6px;
@@ -618,6 +667,9 @@
     body[data-theme="dark"] .decision-list li { color: #e2e8f0; }
     body[data-theme="dark"] .label { color: #cbd5e1; }
     body[data-theme="dark"] .media { background: #1e293b; color: #cbd5e1; }
+    body[data-theme="dark"] .related-card { border-color: #475569; background: #1e293b; color: #f8fafc; }
+    body[data-theme="dark"] .related-card:hover { border-color: #94a3b8; background: #273549; }
+    body[data-theme="dark"] .related-card:focus-visible { outline-color: #f8fafc; }
     body[data-theme="dark"] .close { border-color: #64748b; }
 
     @media (max-width: 600px) {
@@ -674,6 +726,8 @@
 
       .close { top: 16px; right: 16px; width: 28px; height: 28px; }
       .details > div { grid-template-columns: 96px minmax(0, 1fr); gap: 12px; }
+      .related-card { grid-template-columns: 64px minmax(0, 1fr) auto; }
+      .related-card img { width: 64px; }
     }
 
     /* Tailwind-aligned drawer touchpoints: md 768px, lg 1024px, xl 1280px, 2xl 1536px. */
@@ -756,6 +810,14 @@
                 <li>Use comparison-ready patterns so teams can assess companies faster.</li>
               </ul>
             </div>
+            <div class="related">
+              <span class="label">Related</span>
+              <a class="related-card" href="https://www.riskledger.com/changelog#january-2026-deeper-security-insights-without-extra-work" target="_blank" rel="noreferrer">
+                <img src="assets/Portfolio%20Assets%20Disco.jpg" alt="Automatic supplier asset discovery interface">
+                <span>Automatic supplier asset discovery</span>
+                <span class="external-arrow" aria-hidden="true">↗</span>
+              </a>
+            </div>
           </div>
         </aside>
       </article>
@@ -789,6 +851,7 @@
                 <li>Frame AI as guided exploration, not an opaque recommendation engine.</li>
               </ul>
             </div>
+            <div class="related" data-related-slot="ai-insights"></div>
           </div>
         </aside>
       </article>
@@ -822,6 +885,7 @@
                 <li>Use a scan-friendly table so security teams can act on findings quickly.</li>
               </ul>
             </div>
+            <div class="related" data-related-slot="domain-assets"></div>
           </div>
         </aside>
       </article>
@@ -855,6 +919,7 @@
                 <li>Surface coverage gaps clearly so users know where information is incomplete.</li>
               </ul>
             </div>
+            <div class="related" data-related-slot="certifications"></div>
           </div>
         </aside>
       </article>
