@@ -70,8 +70,10 @@
     }
 
     .site-content {
+      width: 100%;
       min-width: 0;
-      transition: margin-right 240ms ease;
+      margin-right: 0;
+      transition: width 240ms ease, margin-right 240ms ease;
     }
 
     body.snapshot-open .site-content { margin-right: 0; }
@@ -735,7 +737,10 @@
     }
 
     @media (min-width: 1024px) {
-      body.snapshot-open .site-content { margin-right: var(--side-panel-width); }
+      body.snapshot-open .site-content {
+        width: calc(100% - var(--side-panel-width));
+        margin-right: var(--side-panel-width);
+      }
       body.snapshot-open .theme-toggle { right: calc(var(--side-panel-width) + 20px); }
     }
 
@@ -1020,32 +1025,35 @@
     arrangeStoryMeta();
     window.addEventListener('resize', arrangeStoryMeta);
 
-    function closeAll(except = null) {
+    let activeRow = null;
+
+    function closeAll() {
       rows.forEach((row) => {
-        if (row !== except) {
-          row.classList.remove('open');
-          row.querySelector('.trigger').setAttribute('aria-expanded', 'false');
-        }
+        row.classList.remove('open');
+        row.querySelector('.trigger').setAttribute('aria-expanded', 'false');
       });
-      document.body.classList.toggle('snapshot-open', Boolean(except));
+      activeRow = null;
+      document.body.classList.remove('snapshot-open');
+    }
+
+    function openSnapshot(row) {
+      closeAll();
+      row.classList.add('open');
+      row.querySelector('.trigger').setAttribute('aria-expanded', 'true');
+      activeRow = row;
+      document.body.classList.add('snapshot-open');
+      window.requestAnimationFrame(() => row.querySelector('.close').focus());
     }
 
     rows.forEach((row) => {
       const trigger = row.querySelector('.trigger');
       const close = row.querySelector('.close');
 
-      function open() {
-        closeAll(row);
-        row.classList.add('open');
-        trigger.setAttribute('aria-expanded', 'true');
-        window.requestAnimationFrame(() => close.focus());
-      }
-
       trigger.addEventListener('click', () => {
-        if (row.classList.contains('open')) {
+        if (activeRow === row) {
           closeAll();
         } else {
-          open();
+          openSnapshot(row);
         }
       });
 
@@ -1057,7 +1065,7 @@
 
     document.addEventListener('keydown', (event) => {
       if (event.key !== 'Escape') return;
-      const openRow = rows.find((row) => row.classList.contains('open'));
+      const openRow = activeRow;
       closeAll();
       openRow?.querySelector('.trigger').focus();
     });
