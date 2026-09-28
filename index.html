@@ -424,6 +424,44 @@
     .details { padding: 22px 0 2px; }
     .details > div { margin-bottom: 12px; }
 
+    .design-decisions {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1fr);
+      gap: 16px;
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .design-decisions .label { margin: 2px 0 0; }
+
+    .decision-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .decision-list li {
+      position: relative;
+      padding-left: 13px;
+      color: #334155;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .decision-list li::before {
+      position: absolute;
+      top: 0.55em;
+      left: 0;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: currentColor;
+      content: "";
+    }
+
     .label {
       display: block;
       margin-bottom: 6px;
@@ -558,6 +596,7 @@
     body[data-theme="dark"] .footer-cta { color: #cbd5e1; }
 
     body[data-theme="dark"] .details p { color: #e2e8f0; }
+    body[data-theme="dark"] .decision-list li { color: #e2e8f0; }
     body[data-theme="dark"] .label { color: #cbd5e1; }
     body[data-theme="dark"] .media { background: #1e293b; color: #cbd5e1; }
     body[data-theme="dark"] .close { border-color: #64748b; }
@@ -610,6 +649,7 @@
       .copy h3 { font-size: 16px; }
 
       .close { top: 16px; right: 16px; width: 28px; height: 28px; }
+      .design-decisions { grid-template-columns: 96px minmax(0, 1fr); gap: 12px; }
     }
 
     /* Tailwind-aligned drawer touchpoints: md 768px, lg 1024px, xl 1280px, 2xl 1536px. */
@@ -690,6 +730,14 @@
             <div><span class="label">Tension</span><p>Investment teams could see an ESG score, but they could not easily see the underlying drivers and data that shaped it.</p></div>
             <div><span class="label">Why we solved it</span><p>Transparency data was available, but 22% of clients still could not find or compare it. We made the data clearer, easier to compare and more accessible.</p></div>
             <div><span class="label">Outcome</span><p>The panel supported a broader transparency initiative that helped lift user satisfaction from 75% to 90%; it was subsequently adopted by 8 product teams.</p></div>
+            <div class="design-decisions">
+              <span class="label">Design decisions</span>
+              <ul class="decision-list">
+                <li>Break each ESG score into clear drivers and underlying data.</li>
+                <li>Keep definitions and methodology in context, rather than hidden in help content.</li>
+                <li>Use comparison-ready patterns so teams can assess companies faster.</li>
+              </ul>
+            </div>
           </div>
         </aside>
       </article>
@@ -715,6 +763,14 @@
             <div><span class="label">Tension</span><p>Asset managers had sustainability data, but had to dig through tables, scores and company pages to use it. They needed fast answers they could verify.</p></div>
             <div><span class="label">Why we solved it</span><p>Clarity AI had a wealth of data, but customers told us that understanding it still took most of their time. We used AI to aggregate the evidence into faster, decision-ready insights.</p></div>
             <div><span class="label">Outcome</span><p>Made complex sustainability information easier to explore while keeping the underlying evidence visible.</p></div>
+            <div class="design-decisions">
+              <span class="label">Design decisions</span>
+              <ul class="decision-list">
+                <li>Show source evidence and retrieval steps alongside AI-generated answers.</li>
+                <li>Use familiar filters, tables and raw data patterns to build trust.</li>
+                <li>Frame AI as guided exploration, not an opaque recommendation engine.</li>
+              </ul>
+            </div>
           </div>
         </aside>
       </article>
@@ -740,6 +796,14 @@
             <div><span class="label">Tension</span><p>Security teams lacked a continuously updated view of supplier-facing assets and the risks those assets introduced.</p></div>
             <div><span class="label">Why we solved it</span><p>Seventy per cent of suppliers added no more than one asset, leaving teams with an incomplete view of their exposure. We automated asset discovery to build a more complete, continuously updated picture.</p></div>
             <div><span class="label">Outcome</span><p>Created a clearer way to monitor supplier-facing assets and surface security issues continuously.</p></div>
+            <div class="design-decisions">
+              <span class="label">Design decisions</span>
+              <ul class="decision-list">
+                <li>Make asset discovery continuous rather than dependent on supplier input.</li>
+                <li>Prioritise previously unknown external assets and the risks they introduce.</li>
+                <li>Use a scan-friendly table so security teams can act on findings quickly.</li>
+              </ul>
+            </div>
           </div>
         </aside>
       </article>
@@ -765,6 +829,14 @@
             <div><span class="label">Tension</span><p>Thirty percent of suppliers never respond to information requests—not because they refuse, but because client teams do not have the capacity to keep chasing them.</p></div>
             <div><span class="label">Why we solved it</span><p>Unresponsive suppliers create gaps in the supplier network and in the data available about them. We closed that gap by automatically sourcing certification data for suppliers.</p></div>
             <div><span class="label">Outcome</span><p>Achieved 70% accurate certification discovery, with 60% of the 120-client base using the capability to find certifications.</p></div>
+            <div class="design-decisions">
+              <span class="label">Design decisions</span>
+              <ul class="decision-list">
+                <li>Source certification signals automatically when supplier responses are missing.</li>
+                <li>Make discovered data easy to review before teams rely on it.</li>
+                <li>Surface coverage gaps clearly so users know where information is incomplete.</li>
+              </ul>
+            </div>
           </div>
         </aside>
       </article>
