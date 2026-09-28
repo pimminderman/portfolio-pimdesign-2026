@@ -733,10 +733,10 @@
 
     /* Tailwind-aligned drawer touchpoints: md 768px, lg 1024px, xl 1280px, 2xl 1536px. */
     @media (min-width: 768px) {
-      :root { --side-panel-width: 28rem; }
+      :root { --side-panel-width: min(28rem, 48vw); }
     }
 
-    @media (min-width: 1024px) {
+    @media (min-width: 768px) {
       body.snapshot-open .site-content {
         width: calc(100% - var(--side-panel-width));
         margin-right: var(--side-panel-width);
