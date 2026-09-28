@@ -167,31 +167,6 @@
       letter-spacing: -0.025em;
     }
 
-    .experience {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 24px;
-    }
-
-    .experience a {
-      padding: 7px 10px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgb(255 255 255 / 60%);
-      color: #475569;
-      font-size: 14px;
-      text-decoration: none;
-      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-    }
-
-    .experience a:hover {
-      border-color: #94a3b8;
-      background: var(--card);
-      color: var(--ink);
-    }
-
     .channels {
       display: flex;
       flex-wrap: wrap;
@@ -234,6 +209,45 @@
     .other-projects {
       width: min(1060px, calc(100% - 64px));
       margin: 96px auto 0;
+    }
+
+    .experience-section {
+      width: min(1060px, calc(100% - 64px));
+      margin: 72px auto 0;
+    }
+
+    .experience-list {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+    }
+
+    .experience-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      color: #475569;
+      font-size: 16px;
+      text-decoration: none;
+    }
+
+    .experience-link:hover {
+      color: var(--ink);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .experience-logo {
+      width: 28px;
+      height: 28px;
+      flex: none;
+      border-radius: 50%;
+      background: #fff;
+      object-fit: cover;
     }
 
     .project-list {
@@ -597,6 +611,9 @@
     body[data-theme="dark"] .project-item p,
     body[data-theme="dark"] .footer-cta { color: #cbd5e1; }
 
+    body[data-theme="dark"] .experience-link { color: #cbd5e1; }
+    body[data-theme="dark"] .experience-link:hover { color: #f8fafc; }
+
     body[data-theme="dark"] .details p { color: #e2e8f0; }
     body[data-theme="dark"] .decision-list li { color: #e2e8f0; }
     body[data-theme="dark"] .label { color: #cbd5e1; }
@@ -607,6 +624,7 @@
       .header,
       .work,
       .other-projects,
+      .experience-section,
       .footer { width: calc(100% - 32px); }
 
       .footer-top { align-items: flex-start; }
@@ -631,6 +649,10 @@
       .row { padding: 28px 0; }
 
       .other-projects { margin-top: 72px; }
+      .experience-section { margin-top: 56px; }
+      .experience-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 12px; }
+      .experience-link { font-size: 14px; }
+      .experience-logo { width: 24px; height: 24px; }
 
       .main {
         display: flex;
@@ -696,12 +718,6 @@
     <img class="portrait" src="assets/Pim_photo.jpg" alt="Portrait of Pim Minderman">
     <span class="eyebrow">Senior Product Designer</span>
     <p>Hi 👋, my name is Pim Minderman.<br>I’m a product designer who turns customer problems inside out to build systematic design solutions—reusable patterns, not one-offs.</p>
-    <div class="experience" aria-label="Previous experience">
-      <a href="https://riskledger.com" target="_blank" rel="noreferrer">Risk Ledger</a>
-      <a href="https://clarity.ai" target="_blank" rel="noreferrer">Clarity AI</a>
-      <a href="https://brandtraction.com" target="_blank" rel="noreferrer">Proquo AI</a>
-      <a href="https://www.akqa.com" target="_blank" rel="noreferrer">AKQA</a>
-    </div>
   </section>
 
   <main class="work">
@@ -862,6 +878,18 @@
         <h3><a href="painter-carpentry.html">Painter &amp; carpentry</a></h3>
         <p>A record of hands-on painting, decorating and joinery work across London.</p>
       </article>
+    </div>
+  </section>
+
+  <section class="experience-section" aria-labelledby="experience-heading">
+    <div class="section-heading">
+      <span id="experience-heading" class="heading">Where I’ve worked</span>
+    </div>
+    <div class="experience-list">
+      <a class="experience-link" href="https://riskledger.com" target="_blank" rel="noreferrer"><img class="experience-logo" src="https://cdn.prod.website-files.com/69120d5d7c98c5df2a3b1391/69eb3bd5bed5b6599f440737_RL-256.png" alt="">Risk Ledger</a>
+      <a class="experience-link" href="https://clarity.ai" target="_blank" rel="noreferrer"><img class="experience-logo clarity" src="https://clarity.ai/wp-content/uploads/2024/07/Horizontal-RGB-1.svg" alt="">Clarity AI</a>
+      <a class="experience-link" href="https://brandtraction.com" target="_blank" rel="noreferrer"><img class="experience-logo" src="https://static.otta.com/uploads/images/company-favicons/mElyViIkmIHXMs6rPrexISn3FetJM4UP7xaHLy5-DvU.png" alt="">Proquo AI</a>
+      <a class="experience-link" href="https://www.akqa.com" target="_blank" rel="noreferrer"><img class="experience-logo" src="https://www.akqa.com/favicon.ico" alt="">AKQA</a>
     </div>
   </section>
 
