@@ -52,7 +52,7 @@
       --muted: #64748b;
       --line: #dbe2ea;
       --card: #ffffff;
-      --side-panel-width: min(560px, 44vw);
+      --side-panel-width: 100vw;
     }
 
     * { box-sizing: border-box; }
@@ -74,8 +74,7 @@
       transition: margin-right 240ms ease;
     }
 
-    body.snapshot-open .site-content { margin-right: var(--side-panel-width); }
-    body.snapshot-open .theme-toggle { right: calc(var(--side-panel-width) + 20px); }
+    body.snapshot-open .site-content { margin-right: 0; }
 
     .theme-toggle {
       position: fixed;
@@ -577,9 +576,6 @@
         height: 16px;
       }
 
-      body.snapshot-open .site-content { margin-right: 0; }
-      body.snapshot-open .theme-toggle { right: 12px; }
-
       .intro {
         width: calc(100% - 32px);
         padding: 58px 0 96px;
@@ -613,29 +609,25 @@
       .main > .trigger { order: 2; }
       .copy h3 { font-size: 16px; }
 
-      .popover {
-        position: relative;
-        top: auto;
-        right: auto;
-        bottom: auto;
-        left: auto;
-        display: none;
-        width: 100%;
-        max-height: none;
-        margin-top: 18px;
-        padding: 8px;
-        border: 1px solid #d8e0e8;
-        border-radius: 12px;
-        box-shadow: 0 24px 70px rgb(15 23 42 / 16%);
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-        transform: none;
-        transition: none;
-      }
+      .close { top: 16px; right: 16px; width: 28px; height: 28px; }
+    }
 
-      .row.open .popover { display: block; }
-      .close { top: 12px; right: 12px; display: flex; width: 28px; height: 28px; }
+    /* Tailwind-aligned drawer touchpoints: md 768px, lg 1024px, xl 1280px, 2xl 1536px. */
+    @media (min-width: 768px) {
+      :root { --side-panel-width: 28rem; }
+    }
+
+    @media (min-width: 1024px) {
+      body.snapshot-open .site-content { margin-right: var(--side-panel-width); }
+      body.snapshot-open .theme-toggle { right: calc(var(--side-panel-width) + 20px); }
+    }
+
+    @media (min-width: 1280px) {
+      :root { --side-panel-width: 32rem; }
+    }
+
+    @media (min-width: 1536px) {
+      :root { --side-panel-width: 35rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
