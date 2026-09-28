@@ -396,11 +396,26 @@
       transition: transform 240ms ease, visibility 240ms ease;
     }
 
-    .row.open .popover {
+    .snapshot-template {
+      display: none;
+    }
+
+    body.snapshot-open .shared-drawer {
       opacity: 1;
       visibility: visible;
       transform: translateX(0);
       pointer-events: auto;
+    }
+
+    .drawer-content {
+      opacity: 1;
+      transform: translateX(0);
+      transition: opacity 140ms ease, transform 140ms ease;
+    }
+
+    .drawer-content.is-changing {
+      opacity: 0;
+      transform: translateX(12px);
     }
 
     .media {
@@ -794,12 +809,12 @@
           <div class="copy">
             <div class="title">
               <h3>Designing transparency for financial sustainability data</h3>
-              <button class="trigger" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="snapshot-transparency">View snapshot</button>
+              <button class="trigger" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="snapshot-drawer">View snapshot</button>
             </div>
             <p>Built a reusable transparency panel that breaks down any ESG score into clear drivers, methodologies and underlying data.</p>
           </div>
         </div>
-        <aside id="snapshot-transparency" class="popover" role="dialog" aria-label="Project snapshot">
+        <aside id="snapshot-transparency" class="popover snapshot-template" role="dialog" aria-label="Project snapshot">
           <button class="close" type="button" aria-label="Close snapshot">×</button>
           <div class="media"><video controls muted playsinline src="assets/Eu%20Tax%20-%20TP.mp4"></video></div>
           <div class="details">
@@ -836,12 +851,12 @@
           <div class="copy">
             <div class="title">
               <h3>Sustainability insights beyond the platform</h3>
-              <button class="trigger" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="snapshot-ai-insights">View snapshot</button>
+              <button class="trigger" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="snapshot-drawer">View snapshot</button>
             </div>
             <p>Created an AI-powered experience that helps users explore complex sustainability data and uncover what matters—faster.</p>
           </div>
         </div>
-        <aside id="snapshot-ai-insights" class="popover" role="dialog" aria-label="Project snapshot">
+        <aside id="snapshot-ai-insights" class="popover snapshot-template" role="dialog" aria-label="Project snapshot">
           <button class="close" type="button" aria-label="Close snapshot">×</button>
           <div class="media"><video controls muted playsinline src="assets/AI%20Insight%20-%20Product%20Video.%20July%202024-%20v7.mp4"></video></div>
           <div class="details">
@@ -871,12 +886,12 @@
           <div class="copy">
             <div class="title">
               <h3>Auto discover assets for clients, for their suppliers.</h3>
-              <button class="trigger" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="snapshot-domain-assets">View snapshot</button>
+              <button class="trigger" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="snapshot-drawer">View snapshot</button>
             </div>
             <p>Designed a continuous asset discovery product that gives security teams visibility of their external attack surface and uncovers unknown risks.</p>
           </div>
         </div>
-        <aside id="snapshot-domain-assets" class="popover" role="dialog" aria-label="Project snapshot">
+        <aside id="snapshot-domain-assets" class="popover snapshot-template" role="dialog" aria-label="Project snapshot">
           <button class="close" type="button" aria-label="Close snapshot">×</button>
           <div class="media"><img src="assets/Portfolio%20Assets%20Disco.jpg" alt="Asset discovery product interface"></div>
           <div class="details">
@@ -913,12 +928,12 @@
           <div class="copy">
             <div class="title">
               <h3>Security Certifications</h3>
-              <button class="trigger" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="snapshot-certifications">View snapshot</button>
+              <button class="trigger" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="snapshot-drawer">View snapshot</button>
             </div>
             <p>Automatically populate the most crucial security data: security certifications.</p>
           </div>
         </div>
-        <aside id="snapshot-certifications" class="popover" role="dialog" aria-label="Project snapshot">
+        <aside id="snapshot-certifications" class="popover snapshot-template" role="dialog" aria-label="Project snapshot">
           <button class="close" type="button" aria-label="Close snapshot">×</button>
           <div class="media"><video controls muted playsinline src="assets/Security%20Certs.mov"></video></div>
           <div class="details">
@@ -988,6 +1003,10 @@
   </footer>
   </div>
 
+  <aside id="snapshot-drawer" class="popover shared-drawer" role="dialog" aria-modal="true" aria-label="Project snapshot">
+    <div class="drawer-content"></div>
+  </aside>
+
   <script>
     const themeToggle = document.querySelector('.theme-toggle');
     const savedTheme = localStorage.getItem('portfolio-theme');
@@ -1025,29 +1044,49 @@
     arrangeStoryMeta();
     window.addEventListener('resize', arrangeStoryMeta);
 
+    const drawer = document.querySelector('.shared-drawer');
+    const drawerContent = drawer.querySelector('.drawer-content');
     let activeRow = null;
+    let contentTimer = null;
 
     function closeAll() {
+      window.clearTimeout(contentTimer);
       rows.forEach((row) => {
-        row.classList.remove('open');
         row.querySelector('.trigger').setAttribute('aria-expanded', 'false');
       });
       activeRow = null;
       document.body.classList.remove('snapshot-open');
     }
 
+    function replaceDrawerContent(row, animate) {
+      const source = row.querySelector('.snapshot-template');
+      const render = () => {
+        drawerContent.innerHTML = source.innerHTML;
+        drawer.setAttribute('aria-label', source.getAttribute('aria-label'));
+        window.requestAnimationFrame(() => drawerContent.classList.remove('is-changing'));
+      };
+
+      if (!animate) {
+        render();
+        return;
+      }
+
+      drawerContent.classList.add('is-changing');
+      contentTimer = window.setTimeout(render, 140);
+    }
+
     function openSnapshot(row) {
+      const isSwitching = Boolean(activeRow);
       closeAll();
-      row.classList.add('open');
+      replaceDrawerContent(row, isSwitching);
       row.querySelector('.trigger').setAttribute('aria-expanded', 'true');
       activeRow = row;
       document.body.classList.add('snapshot-open');
-      window.requestAnimationFrame(() => row.querySelector('.close').focus());
+      window.setTimeout(() => drawer.querySelector('.close')?.focus(), isSwitching ? 150 : 0);
     }
 
     rows.forEach((row) => {
       const trigger = row.querySelector('.trigger');
-      const close = row.querySelector('.close');
 
       trigger.addEventListener('click', () => {
         if (activeRow === row) {
@@ -1056,11 +1095,13 @@
           openSnapshot(row);
         }
       });
+    });
 
-      close.addEventListener('click', () => {
-        closeAll();
-        trigger.focus();
-      });
+    drawer.addEventListener('click', (event) => {
+      if (!event.target.closest('.close')) return;
+      const openRow = activeRow;
+      closeAll();
+      openRow?.querySelector('.trigger').focus();
     });
 
     document.addEventListener('keydown', (event) => {
