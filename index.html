@@ -52,6 +52,7 @@
       --muted: #64748b;
       --line: #dbe2ea;
       --card: #ffffff;
+      --side-panel-width: min(560px, 44vw);
     }
 
     * { box-sizing: border-box; }
@@ -67,6 +68,14 @@
       color: var(--ink);
       font-family: Inter, system-ui, sans-serif;
     }
+
+    .site-content {
+      min-width: 0;
+      transition: margin-right 240ms ease;
+    }
+
+    body.snapshot-open .site-content { margin-right: var(--side-panel-width); }
+    body.snapshot-open .theme-toggle { right: calc(var(--side-panel-width) + 20px); }
 
     .theme-toggle {
       position: fixed;
@@ -352,29 +361,30 @@
     .popover {
       position: fixed;
       z-index: 20;
-      top: 16px;
-      right: auto;
-      bottom: auto;
-      left: 16px;
-      width: min(720px, calc(100vw - 32px));
-      max-height: calc(100dvh - 32px);
-      overflow: auto;
-      padding: 8px;
-      border: 1px solid #d8e0e8;
-      border-radius: 12px;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: auto;
+      width: var(--side-panel-width);
+      max-height: none;
+      overflow-y: auto;
+      padding: 24px;
+      border: 0;
+      border-left: 1px solid #d8e0e8;
+      border-radius: 0;
       background: var(--card);
-      box-shadow: 0 24px 70px rgb(15 23 42 / 16%);
-      opacity: 0;
+      box-shadow: -24px 0 70px rgb(15 23 42 / 14%);
+      opacity: 1;
       visibility: hidden;
-      transform: translateY(-8px) scale(0.98);
+      transform: translateX(100%);
       pointer-events: none;
-      transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+      transition: transform 240ms ease, visibility 240ms ease;
     }
 
     .row.open .popover {
       opacity: 1;
       visibility: visible;
-      transform: none;
+      transform: translateX(0);
       pointer-events: auto;
     }
 
@@ -412,7 +422,7 @@
       object-fit: cover;
     }
 
-    .details { padding: 14px 0 2px; }
+    .details { padding: 22px 0 2px; }
     .details > div { margin-bottom: 12px; }
 
     .label {
@@ -435,10 +445,11 @@
     .close {
       display: flex;
       position: absolute;
-      top: 12px;
-      right: 12px;
-      width: 28px;
-      height: 28px;
+      z-index: 2;
+      top: 20px;
+      right: 24px;
+      width: 32px;
+      height: 32px;
       align-items: center;
       justify-content: center;
       border: 1px solid #d8e0e8;
@@ -566,6 +577,9 @@
         height: 16px;
       }
 
+      body.snapshot-open .site-content { margin-right: 0; }
+      body.snapshot-open .theme-toggle { right: 12px; }
+
       .intro {
         width: calc(100% - 32px);
         padding: 58px 0 96px;
@@ -604,14 +618,24 @@
         top: auto;
         right: auto;
         bottom: auto;
+        left: auto;
         display: none;
         width: 100%;
+        max-height: none;
         margin-top: 18px;
+        padding: 8px;
+        border: 1px solid #d8e0e8;
+        border-radius: 12px;
+        box-shadow: 0 24px 70px rgb(15 23 42 / 16%);
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
         transform: none;
+        transition: none;
       }
 
       .row.open .popover { display: block; }
-      .close { display: flex; }
+      .close { top: 12px; right: 12px; display: flex; width: 28px; height: 28px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -633,6 +657,7 @@
     <span class="theme-label">Dark mode</span>
   </button>
 
+  <div class="site-content">
   <section class="intro">
     <img class="portrait" src="assets/Pim_photo.jpg" alt="Portrait of Pim Minderman">
     <span class="eyebrow">Senior Product Designer</span>
@@ -787,6 +812,7 @@
     </div>
     <span class="footer-copyright">© 2026 Pim Minderman</span>
   </footer>
+  </div>
 
   <script>
     const themeToggle = document.querySelector('.theme-toggle');
@@ -815,44 +841,15 @@
       .forEach((row) => storyList.prepend(row));
 
     const rows = [...document.querySelectorAll('.row')];
-    const isDesktop = () => window.innerWidth > 600;
 
     function arrangeStoryMeta() {
       rows.forEach((row) => {
-        const trigger = row.querySelector('.trigger');
-
-        row.querySelector('.copy').after(trigger);
+        row.querySelector('.copy').after(row.querySelector('.trigger'));
       });
     }
 
     arrangeStoryMeta();
-
-    function positionPopover(trigger, popover) {
-      const viewportPadding = 16;
-      const offset = 12;
-      const triggerRect = trigger.getBoundingClientRect();
-      const popoverRect = popover.getBoundingClientRect();
-      const availableBelow = window.innerHeight - triggerRect.bottom - viewportPadding;
-      const availableAbove = triggerRect.top - viewportPadding;
-      const opensBelow = availableBelow >= popoverRect.height + offset || availableBelow >= availableAbove;
-      const top = opensBelow
-        ? Math.min(triggerRect.bottom + offset, window.innerHeight - popoverRect.height - viewportPadding)
-        : Math.max(viewportPadding, triggerRect.top - popoverRect.height - offset);
-      const left = Math.min(
-        Math.max(viewportPadding, triggerRect.left),
-        window.innerWidth - popoverRect.width - viewportPadding
-      );
-
-      popover.style.left = `${left}px`;
-      popover.style.top = `${top}px`;
-    }
-
-    window.addEventListener('resize', () => {
-      arrangeStoryMeta();
-      rows.filter((row) => row.classList.contains('open')).forEach((row) => {
-        positionPopover(row.querySelector('.trigger'), row.querySelector('.popover'));
-      });
-    });
+    window.addEventListener('resize', arrangeStoryMeta);
 
     function closeAll(except = null) {
       rows.forEach((row) => {
@@ -861,51 +858,30 @@
           row.querySelector('.trigger').setAttribute('aria-expanded', 'false');
         }
       });
+      document.body.classList.toggle('snapshot-open', Boolean(except));
     }
 
     rows.forEach((row) => {
       const trigger = row.querySelector('.trigger');
-      const popover = row.querySelector('.popover');
       const close = row.querySelector('.close');
-      let closeTimer;
 
-      function open({ focusClose = false } = {}) {
-        clearTimeout(closeTimer);
+      function open() {
         closeAll(row);
         row.classList.add('open');
         trigger.setAttribute('aria-expanded', 'true');
-        window.requestAnimationFrame(() => {
-          positionPopover(trigger, popover);
-          if (focusClose) close.focus();
-        });
+        window.requestAnimationFrame(() => close.focus());
       }
 
-      function scheduleClose() {
-        if (!isDesktop()) return;
-        closeTimer = window.setTimeout(() => {
-          row.classList.remove('open');
-          trigger.setAttribute('aria-expanded', 'false');
-        }, 220);
-      }
-
-      trigger.addEventListener('mouseenter', () => isDesktop() && open());
-      trigger.addEventListener('mouseleave', scheduleClose);
-      popover.addEventListener('mouseenter', () => clearTimeout(closeTimer));
-      popover.addEventListener('mouseleave', scheduleClose);
-
-      trigger.addEventListener('click', (event) => {
-        event.stopPropagation();
+      trigger.addEventListener('click', () => {
         if (row.classList.contains('open')) {
-          row.classList.remove('open');
-          trigger.setAttribute('aria-expanded', 'false');
+          closeAll();
         } else {
-          open({ focusClose: true });
+          open();
         }
       });
 
       close.addEventListener('click', () => {
-        row.classList.remove('open');
-        trigger.setAttribute('aria-expanded', 'false');
+        closeAll();
         trigger.focus();
       });
     });
@@ -915,10 +891,6 @@
       const openRow = rows.find((row) => row.classList.contains('open'));
       closeAll();
       openRow?.querySelector('.trigger').focus();
-    });
-
-    document.addEventListener('click', (event) => {
-      if (!event.target.closest('.popover') && !event.target.closest('.trigger')) closeAll();
     });
   </script>
 </body>
