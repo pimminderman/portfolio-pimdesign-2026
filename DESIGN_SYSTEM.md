@@ -23,8 +23,6 @@ Font family: **Inter** with system sans-serif fallbacks. Use weights 400, 500 an
 | Style | Size / line-height | Weight | Use |
 | --- | --- | --- | --- |
 | Intro | 20px / 1.5 | 400 | Personal introduction |
-| Hero greeting | 14px | 500 | Welcome line above the introduction |
-| Hero divider | 20px / 1 | 400 | Decorative `⸺` divider |
 | Story title | 20px / 1.25 | 500 | Desktop case-study title |
 | Story title, mobile | 16px / 1.25 | 500 | Mobile case-study title |
 | Body | 14px / 1.6 | 400 | Story summaries and supporting copy |
