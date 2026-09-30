@@ -505,7 +505,7 @@
 
     .related-card {
       display: grid;
-      grid-template-columns: 72px minmax(0, 1fr) auto;
+      grid-template-columns: 72px minmax(0, 1fr);
       align-items: start;
       gap: 12px;
       min-height: 80px;
@@ -563,19 +563,12 @@
     }
 
     .release-description {
-      display: -webkit-box;
+      display: block;
       overflow: hidden;
       color: var(--muted);
       font: 400 10px/1.35 Inter, system-ui, sans-serif;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 1;
-    }
-
-    .related-card .external-arrow {
-      padding-right: 14px;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .label {
@@ -778,7 +771,7 @@
 
       .close { top: 16px; right: 16px; width: 28px; height: 28px; }
       .details > div { grid-template-columns: 96px minmax(0, 1fr); gap: 12px; }
-      .related-card { grid-template-columns: 64px minmax(0, 1fr) auto; }
+      .related-card { grid-template-columns: 64px minmax(0, 1fr); }
       .related-card > img { width: 64px; }
     }
 
@@ -874,7 +867,6 @@
                   <span class="release-title">ESG Product Round-up: 2023 Highlights to Advance Sustainable Finance</span>
                   <span class="release-description">A round-up of 2023 product updates helping investors advance sustainable finance.</span>
                 </span>
-                <span class="external-arrow" aria-hidden="true">↗</span>
               </a>
             </div>
             <div class="project-year"><span class="label">Year</span><p>2023</p></div>
@@ -955,7 +947,6 @@
                   <span class="release-title">January 2026: Deeper security insights without extra work</span>
                   <span class="release-description">Automated asset discovery brings supplier-facing security insights into view.</span>
                 </span>
-                <span class="external-arrow" aria-hidden="true">↗</span>
               </a>
             </div>
             <div class="project-year"><span class="label">Year</span><p>2026</p></div>

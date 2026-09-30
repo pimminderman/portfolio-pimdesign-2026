@@ -100,8 +100,8 @@ Used at the bottom of a snapshot to link to relevant public releases or product 
 - Section label: **Releases**.
 - 2px-corner card with a 1px `--line` border, 8px internal padding and an inset 72px × 64px thumbnail (64px wide on mobile).
 - Source line uses 10px regular Inter; it contains the company name and release type, without a logo.
-- Title uses 12px regular Inter; supporting copy uses 10px regular Inter and truncates after one line.
-- Use the release’s original image and full public title when available. Links open in a new tab and show a diagonal arrow.
+- Title uses 12px regular Inter; supporting copy uses the full text column at 10px regular Inter and truncates with an ellipsis after one line.
+- Use the release’s original image and full public title when available. Links open in a new tab without an additional arrow icon.
 
 ### Theme control
 
