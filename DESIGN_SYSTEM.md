@@ -59,11 +59,12 @@ The drawer changes the usable page width from the `md` breakpoint (768px) upward
 
 ### Where I’ve worked
 
-Previous-company links sit below Other projects as a four-column logo list.
+Previous-company links sit below Other projects as a four-column, logo-only list.
 
-- 28px circular logo and 16px company name on desktop.
-- Two columns, 24px logos and 14px company names on mobile.
-- Use a simple text underline on hover; keep the logo decorative when the adjacent company name is visible.
+- Each transparent rectangular link has a 1px `--line` border, 2px corners and a 72px minimum height.
+- Logos are 32px high on desktop and 24px on mobile; preserve their aspect ratio and do not add text labels.
+- Default state: greyscale with 45% opacity. Hover and focus: full opacity in the strong foreground colour.
+- Provide the company name through an accessible `aria-label`; logo images remain decorative.
 
 ### Story row
 

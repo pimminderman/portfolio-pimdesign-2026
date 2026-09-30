@@ -221,36 +221,41 @@
     .experience-list {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 20px;
+      gap: 12px;
       margin-top: 28px;
       padding-top: 20px;
       border-top: 1px solid var(--line);
     }
 
     .experience-link {
-      display: inline-flex;
+      display: flex;
+      min-height: 72px;
       align-items: center;
-      gap: 10px;
+      justify-content: center;
       min-width: 0;
-      color: #475569;
-      font-size: 16px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 2px;
       text-decoration: none;
+      transition: border-color 150ms ease;
     }
 
-    .experience-link:hover {
-      color: var(--ink);
-      text-decoration: underline;
-      text-underline-offset: 3px;
+    .experience-link:hover,
+    .experience-link:focus-visible {
+      border-color: #94a3b8;
     }
 
     .experience-logo {
-      width: 28px;
-      height: 28px;
-      flex: none;
-      border-radius: 50%;
-      background: #fff;
-      object-fit: cover;
+      width: min(100%, 140px);
+      height: 32px;
+      filter: grayscale(1);
+      object-fit: contain;
+      opacity: 0.45;
+      transition: filter 150ms ease, opacity 150ms ease;
     }
+
+    .experience-link:hover .experience-logo,
+    .experience-link:focus-visible .experience-logo { filter: grayscale(1) brightness(0.15); opacity: 1; }
 
     .project-list {
       margin-top: 28px;
@@ -704,8 +709,12 @@
     body[data-theme="dark"] .project-item p,
     body[data-theme="dark"] .footer-cta { color: #cbd5e1; }
 
-    body[data-theme="dark"] .experience-link { color: #cbd5e1; }
-    body[data-theme="dark"] .experience-link:hover { color: #f8fafc; }
+    body[data-theme="dark"] .experience-link { border-color: #475569; }
+    body[data-theme="dark"] .experience-link:hover,
+    body[data-theme="dark"] .experience-link:focus-visible { border-color: #94a3b8; }
+    body[data-theme="dark"] .experience-logo { filter: grayscale(1) invert(1); opacity: 0.45; }
+    body[data-theme="dark"] .experience-link:hover .experience-logo,
+    body[data-theme="dark"] .experience-link:focus-visible .experience-logo { filter: grayscale(1) invert(1); opacity: 1; }
 
     body[data-theme="dark"] .details p { color: #e2e8f0; }
     body[data-theme="dark"] .decision-list li { color: #e2e8f0; }
@@ -748,9 +757,9 @@
 
       .other-projects { margin-top: 72px; }
       .experience-section { margin-top: 56px; }
-      .experience-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 12px; }
-      .experience-link { font-size: 14px; }
-      .experience-logo { width: 24px; height: 24px; }
+      .experience-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+      .experience-link { min-height: 64px; padding: 14px; }
+      .experience-logo { height: 24px; }
 
       .main {
         display: flex;
@@ -1017,10 +1026,10 @@
       <span id="experience-heading" class="heading">Where I’ve worked</span>
     </div>
     <div class="experience-list">
-      <a class="experience-link" href="https://riskledger.com" target="_blank" rel="noreferrer"><img class="experience-logo" src="https://cdn.prod.website-files.com/69120d5d7c98c5df2a3b1391/69eb3bd5bed5b6599f440737_RL-256.png" alt="">Risk Ledger</a>
-      <a class="experience-link" href="https://clarity.ai" target="_blank" rel="noreferrer"><img class="experience-logo clarity" src="https://clarity.ai/wp-content/uploads/2024/07/Horizontal-RGB-1.svg" alt="">Clarity AI</a>
-      <a class="experience-link" href="https://brandtraction.com" target="_blank" rel="noreferrer"><img class="experience-logo" src="https://static.otta.com/uploads/images/company-favicons/mElyViIkmIHXMs6rPrexISn3FetJM4UP7xaHLy5-DvU.png" alt="">Proquo AI</a>
-      <a class="experience-link" href="https://www.akqa.com" target="_blank" rel="noreferrer"><img class="experience-logo" src="https://www.akqa.com/favicon.ico" alt="">AKQA</a>
+      <a class="experience-link" href="https://riskledger.com" target="_blank" rel="noreferrer" aria-label="Risk Ledger"><img class="experience-logo" src="https://cdn.prod.website-files.com/69120d5d7c98c5df2a3b1391/69eb3bd5bed5b6599f440737_RL-256.png" alt=""></a>
+      <a class="experience-link" href="https://clarity.ai" target="_blank" rel="noreferrer" aria-label="Clarity AI"><img class="experience-logo" src="https://clarity.ai/wp-content/uploads/2024/07/Horizontal-RGB-1.svg" alt=""></a>
+      <a class="experience-link" href="https://brandtraction.co.uk" target="_blank" rel="noreferrer" aria-label="Traction"><img class="experience-logo" src="https://brandtraction.co.uk/wp-content/uploads/2025/08/Traction-logo.svg" alt=""></a>
+      <a class="experience-link" href="https://www.akqa.com" target="_blank" rel="noreferrer" aria-label="AKQA"><img class="experience-logo" src="https://www.akqa.com/icons/apple-touch-icon.png" alt=""></a>
     </div>
   </section>
 
