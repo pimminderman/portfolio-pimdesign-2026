@@ -40,9 +40,11 @@ Use a 4px-based rhythm where possible: `4, 8, 12, 16, 24, 32, 48, 64`.
 
 - Content rail: `min(1060px, 100% - 64px)` on desktop; 32px total side gutter on mobile.
 - Intro rail: maximum 720px, centred.
-- Desktop story grid: 170px company column, 50px gap, flexible story column.
+- Desktop story grid: 128px company column, 24px gap, flexible story column.
 - Breakpoint: 600px. Stories become a vertical flow: title and copy, snapshot button, then company.
 - Story rows: 34px vertical / 30px horizontal padding on desktop; 28px vertical / no added horizontal padding on mobile.
+
+The drawer changes the usable page width from the `md` breakpoint (768px) upwards. Any future compact-layout rules should respond to the page container width—not only viewport width—so titles do not become narrow when the drawer is open.
 
 ## Components
 
@@ -52,14 +54,13 @@ Use a 4px-based rhythm where possible: `4, 8, 12, 16, 24, 32, 48, 64`.
 - One 1px border plus an outer 1px outline with a 5px gap.
 - Gentle vertical float: 4 seconds, ease-in-out, 5px maximum travel.
 
-### Experience pill
+### Where I’ve worked
 
-Used for previous-company links.
+Previous-company links sit below Other projects as a four-column logo list.
 
-- 14px text; 7px × 10px padding.
-- Full pill radius (`999px`).
-- 1px `--line` border and a low-contrast white surface.
-- Hover increases border and text contrast; do not use heavy fills or shadows.
+- 28px circular logo and 16px company name on desktop.
+- Two columns, 24px logos and 14px company names on mobile.
+- Use a simple text underline on hover; keep the logo decorative when the adjacent company name is visible.
 
 ### Story row
 
@@ -76,16 +77,27 @@ Each case study contains a company label, title, short summary and **View snapsh
 - Sits 12px below the story copy.
 - The trigger must work with mouse, keyboard and touch. Do not make hover the only way to open a snapshot.
 
-### Snapshot panel
+### Snapshot drawer
 
-- Maximum width: 720px, with a 16px viewport gutter.
-- Maximum height: viewport height minus 32px; panel scrolls internally when needed.
-- 8px outer padding, 12px rounded corners and a restrained raised shadow.
-- Media: 16:9, 7px radius.
-- Content labels: 12px uppercase, followed by 14px body copy with 6px separation.
-- Close control: circular 28px button at the top-right.
+One persistent drawer displays the selected story; switching stories changes its content rather than opening another drawer.
 
-On larger screens the snapshot opens on hover and stays open while moving between the trigger and panel; it also opens on click. On smaller screens it opens in the story flow. The viewport-positioning logic chooses the available space above or below the trigger.
+- Mobile (below 768px): full-width overlay.
+- From 768px: right-hand drawer reserves page space and shifts the page left.
+- Width: `min(28rem, 48vw)` at 768px; 32rem at 1280px; 35rem at 1536px.
+- Full viewport height, 24px inner padding, internal vertical scrolling and a left divider/shadow.
+- Media: 16:9 with 7px corners.
+- Detail rows: 12px uppercase label alongside 14px body copy.
+- Close control: circular button at the top-right; Escape closes the drawer.
+- Selecting another **View snapshot** keeps the drawer open and fades the content out/in over 140ms.
+
+### Release card
+
+Used at the bottom of a snapshot to link to relevant public releases or product updates.
+
+- Section label: **Releases**.
+- 2px-corner card with a 1px `--line` border, 8px internal padding and an inset 72px × 64px thumbnail (64px wide on mobile).
+- Title uses the same 12px, medium Inter styling as the snapshot trigger.
+- Use the release’s original image and full public title when available. Links open in a new tab and show a diagonal arrow.
 
 ### Theme control
 
@@ -105,15 +117,16 @@ Motion is quiet and decorative, not required to understand or use the portfolio.
 
 - Portrait float: 4 seconds, infinite.
 - Snapshot-media shine: 5.5 seconds, infinite.
-- Hover and panel transitions: 150–200ms.
+- Release-card hover: 150ms.
+- Drawer entry/exit: 240ms; content switching: 140ms.
 - Honour `prefers-reduced-motion: reduce` by effectively disabling animation and transition timing.
 
 ## Accessibility rules
 
 - Keep visible keyboard focus for all links and buttons.
 - Use descriptive alternative text for meaningful images; company logos are decorative when their name is already adjacent.
-- Mark snapshots as dialogs and connect each trigger with `aria-controls` and `aria-expanded`.
-- Support Escape to close an open snapshot and clicking or tapping outside it to dismiss it.
+- Mark the persistent snapshot as a dialog and connect every trigger with `aria-controls="snapshot-drawer"` and `aria-expanded`.
+- Support Escape and the visible close button. Do not claim outside-click dismissal unless it is implemented.
 - Preserve strong light and dark colour contrast when adding colours or surfaces. Test any new foreground/background pairing before publishing.
 
 ## Social share card
@@ -132,4 +145,4 @@ When adding a story or component:
 1. Reuse the typography, colour and spacing rules above.
 2. Check desktop, mobile and dark mode.
 3. Verify keyboard focus, click/tap use and reduced-motion behaviour.
-4. Keep the page lightweight: use local media assets and avoid adding frameworks for a single component.
+4. Keep the page lightweight: prefer local portfolio media; use the original public thumbnail only when linking to an external release.
