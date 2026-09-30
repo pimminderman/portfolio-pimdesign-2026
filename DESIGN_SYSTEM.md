@@ -29,9 +29,9 @@ Font family: **Inter** with system sans-serif fallbacks. Use weights 400, 500 an
 | Company | 16px | 400 | Desktop company name |
 | Company, mobile | 14px | 400 | Mobile company name |
 | Labels | 12px | 600 | Snapshot labels and buttons |
-| Release source | 11px / 1.2 | 400 | Company and release type |
+| Release source | 10px / 1.2 | 400 | Company and release type |
 | Release title | 12px / 1.3 | 400 | Linked release title |
-| Release description | 11px / 1.35 | 400 | One-line supporting summary |
+| Release description | 10px / 1.35 | 400 | One-line supporting summary |
 | Eyebrows | 14px | 600 | Uppercase section labels |
 | Footer copyright | 12px | 400 | Secondary footer text |
 
@@ -99,8 +99,8 @@ Used at the bottom of a snapshot to link to relevant public releases or product 
 
 - Section label: **Releases**.
 - 2px-corner card with a 1px `--line` border, 8px internal padding and an inset 72px × 64px thumbnail (64px wide on mobile).
-- Source line uses 11px regular Inter; it contains the company name and release type, without a logo.
-- Title uses 12px regular Inter; supporting copy uses 11px regular Inter and truncates after one line.
+- Source line uses 10px regular Inter; it contains the company name and release type, without a logo.
+- Title uses 12px regular Inter; supporting copy uses 10px regular Inter and truncates after one line.
 - Use the release’s original image and full public title when available. Links open in a new tab and show a diagonal arrow.
 
 ### Theme control
