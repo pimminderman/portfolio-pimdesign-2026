@@ -531,11 +531,54 @@
       outline-offset: 3px;
     }
 
-    .related-card img {
+    .related-card > img {
       width: 72px;
       height: 64px;
       border-radius: 2px;
       object-fit: cover;
+    }
+
+    .release-copy {
+      display: grid;
+      min-width: 0;
+      gap: 4px;
+      padding-top: 1px;
+    }
+
+    .release-source {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      min-width: 0;
+      color: var(--muted);
+      font: 400 11px/1.2 Inter, system-ui, sans-serif;
+    }
+
+    .release-source img {
+      width: 16px;
+      height: 16px;
+      flex: none;
+      border-radius: 50%;
+      background: #fff;
+      object-fit: cover;
+    }
+
+    .release-title {
+      display: -webkit-box;
+      overflow: hidden;
+      color: var(--ink);
+      font: 400 12px/1.3 Inter, system-ui, sans-serif;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    .release-description {
+      display: -webkit-box;
+      overflow: hidden;
+      color: var(--muted);
+      font: 400 11px/1.35 Inter, system-ui, sans-serif;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
     }
 
     .related-card .external-arrow {
@@ -688,6 +731,7 @@
     body[data-theme="dark"] .related-card { border-color: #475569; background: #1e293b; color: #f8fafc; }
     body[data-theme="dark"] .related-card:hover { border-color: #94a3b8; background: #273549; }
     body[data-theme="dark"] .related-card:focus-visible { outline-color: #f8fafc; }
+    body[data-theme="dark"] .release-title { color: #f8fafc; }
     body[data-theme="dark"] .close { border-color: #64748b; }
 
     @media (max-width: 600px) {
@@ -745,7 +789,7 @@
       .close { top: 16px; right: 16px; width: 28px; height: 28px; }
       .details > div { grid-template-columns: 96px minmax(0, 1fr); gap: 12px; }
       .related-card { grid-template-columns: 64px minmax(0, 1fr) auto; }
-      .related-card img { width: 64px; }
+      .related-card > img { width: 64px; }
     }
 
     /* Tailwind-aligned drawer touchpoints: md 768px, lg 1024px, xl 1280px, 2xl 1536px. */
@@ -835,7 +879,11 @@
               <span class="label">Releases</span>
               <a class="related-card" href="https://clarity.ai/research-and-insights/product-updates/esg-product-round-up-2023-highlights-to-advance-sustainable-finance/" target="_blank" rel="noreferrer" title="ESG Product Round-up: 2023 Highlights to Advance Sustainable Finance">
                 <img src="https://clarity.ai/wp-content/uploads/2023/12/PRODUCT-1.jpg" alt="">
-                <span>ESG Product Round-up: 2023 Highlights to Advance Sustainable Finance</span>
+                <span class="release-copy">
+                  <span class="release-source"><img class="clarity" src="https://clarity.ai/wp-content/uploads/2024/07/Horizontal-RGB-1.svg" alt="">Clarity AI · Product update</span>
+                  <span class="release-title">ESG Product Round-up: 2023 Highlights to Advance Sustainable Finance</span>
+                  <span class="release-description">A round-up of 2023 product updates helping investors advance sustainable finance.</span>
+                </span>
                 <span class="external-arrow" aria-hidden="true">↗</span>
               </a>
             </div>
@@ -912,7 +960,11 @@
               <span class="label">Releases</span>
               <a class="related-card" href="https://www.riskledger.com/changelog#january-2026-deeper-security-insights-without-extra-work" target="_blank" rel="noreferrer" title="January 2026: Deeper security insights without extra work">
                 <img src="https://cdn.prod.website-files.com/69120d5d7c98c5df2a3b13a5/69ef584239ea98e99e66ef5f_698339043818152c35be1a59_Asset%2520Discovery%2520(1).jpeg" alt="">
-                <span>January 2026: Deeper security insights without extra work</span>
+                <span class="release-copy">
+                  <span class="release-source"><img src="https://cdn.prod.website-files.com/69120d5d7c98c5df2a3b1391/69eb3bc53c06d8bd5f2cff18_RL-32.png" alt="">Risk Ledger · Changelog</span>
+                  <span class="release-title">January 2026: Deeper security insights without extra work</span>
+                  <span class="release-description">Automated asset discovery brings supplier-facing security insights into view.</span>
+                </span>
                 <span class="external-arrow" aria-hidden="true">↗</span>
               </a>
             </div>
