@@ -314,21 +314,27 @@
       align-self: start;
       display: flex;
       align-items: center;
-      gap: 9px;
       margin-top: 0;
-      color: #475569;
-      font-size: 16px;
     }
 
-    .logo {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: #fff;
-      object-fit: cover;
+    .company-logo {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 104px;
+      height: 32px;
     }
 
-    .clarity { object-position: left; }
+    .company-logo img {
+      display: block;
+      max-width: 100%;
+      max-height: 24px;
+      object-fit: contain;
+      object-position: left center;
+    }
+
+    .company-logo--risk-ledger img { width: 24px; height: 24px; }
+    .company-logo--clarity img { width: 96px; height: 24px; }
 
     .copy h3 {
       margin: 0;
@@ -770,12 +776,11 @@
       .company {
         order: 3;
         margin-top: 14px;
-        font-size: 14px;
       }
-      .logo {
-        width: 20px;
-        height: 20px;
-      }
+      .company-logo { width: 96px; height: 24px; }
+      .company-logo img { max-height: 20px; }
+      .company-logo--risk-ledger img { width: 20px; height: 20px; }
+      .company-logo--clarity img { width: 88px; height: 20px; }
       .main > .trigger { order: 2; }
       .copy h3 { font-size: 16px; }
 
@@ -841,9 +846,8 @@
     <div class="list">
       <article class="row">
         <div class="main">
-          <div class="company">
-            <img class="logo clarity" src="https://clarity.ai/wp-content/uploads/2024/07/Horizontal-RGB-1.svg" alt="">
-            Clarity AI
+          <div class="company" data-company="Clarity AI">
+            <div class="company-logo company-logo--clarity"><img src="https://clarity.ai/wp-content/uploads/2024/07/Horizontal-RGB-1.svg" alt="Clarity AI"></div>
           </div>
           <div class="copy">
             <div class="title">
@@ -886,9 +890,8 @@
 
       <article class="row">
         <div class="main">
-          <div class="company">
-            <img class="logo clarity" src="https://clarity.ai/wp-content/uploads/2024/07/Horizontal-RGB-1.svg" alt="">
-            Clarity AI
+          <div class="company" data-company="Clarity AI">
+            <div class="company-logo company-logo--clarity"><img src="https://clarity.ai/wp-content/uploads/2024/07/Horizontal-RGB-1.svg" alt="Clarity AI"></div>
           </div>
           <div class="copy">
             <div class="title">
@@ -921,9 +924,8 @@
 
       <article class="row">
         <div class="main">
-          <div class="company">
-            <img class="logo" src="https://cdn.prod.website-files.com/69120d5d7c98c5df2a3b1391/69eb3bd5bed5b6599f440737_RL-256.png" alt="">
-            Risk Ledger
+          <div class="company" data-company="Risk Ledger">
+            <div class="company-logo company-logo--risk-ledger"><img src="https://cdn.prod.website-files.com/69120d5d7c98c5df2a3b1391/69eb3bd5bed5b6599f440737_RL-256.png" alt="Risk Ledger"></div>
           </div>
           <div class="copy">
             <div class="title">
@@ -966,9 +968,8 @@
 
       <article class="row">
         <div class="main">
-          <div class="company">
-            <img class="logo" src="https://cdn.prod.website-files.com/69120d5d7c98c5df2a3b1391/69eb3bd5bed5b6599f440737_RL-256.png" alt="">
-            Risk Ledger
+          <div class="company" data-company="Risk Ledger">
+            <div class="company-logo company-logo--risk-ledger"><img src="https://cdn.prod.website-files.com/69120d5d7c98c5df2a3b1391/69eb3bd5bed5b6599f440737_RL-256.png" alt="Risk Ledger"></div>
           </div>
           <div class="copy">
             <div class="title">
@@ -1074,7 +1075,7 @@
 
     const storyList = document.querySelector('.list');
     [...storyList.querySelectorAll('.row')]
-      .filter((row) => row.querySelector('.company').textContent.includes('Risk Ledger'))
+      .filter((row) => row.querySelector('.company').dataset.company === 'Risk Ledger')
       .reverse()
       .forEach((row) => storyList.prepend(row));
 
