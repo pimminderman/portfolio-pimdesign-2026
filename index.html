@@ -45,6 +45,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" rel="stylesheet">
   <title>Pim Minderman — Product Designer</title>
   <style>
+    @font-face {
+      font-family: 'Risk Ledger Duplet';
+      src: url('https://cdn.prod.website-files.com/69120d5d7c98c5df2a3b1391/69a569c2381ae50d19f4bbb1_Duplet-Semibold-BF642a34066f658.otf') format('opentype');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+
     :root {
       color-scheme: light dark;
       --bg: #f8fafc;
@@ -330,8 +338,33 @@
       object-position: left center;
     }
 
-    .company-logo--risk-ledger img { width: 24px; height: 24px; }
+    .company-logo--risk-ledger { width: 128px; }
     .company-logo--clarity img { width: 96px; height: 24px; }
+
+    .risk-ledger-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #0f172a;
+      font-family: 'Risk Ledger Duplet', Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .risk-ledger-mark {
+      width: 24px;
+      height: 22px;
+      flex: 0 0 auto;
+    }
+
+    .risk-ledger-mark--gradient { display: none; }
+
+    body[data-theme="dark"] .risk-ledger-lockup { color: #f8fafc; }
+    body[data-theme="dark"] .risk-ledger-mark--light { display: none; }
+    body[data-theme="dark"] .risk-ledger-mark--gradient { display: block; }
 
     .copy h3 {
       margin: 0;
@@ -773,8 +806,10 @@
       }
       .company-logo { width: 96px; height: 24px; }
       .company-logo img { max-height: 20px; }
-      .company-logo--risk-ledger img { width: 20px; height: 20px; }
+      .company-logo--risk-ledger { width: 120px; }
       .company-logo--clarity img { width: 88px; height: 20px; }
+      .risk-ledger-lockup { font-size: 14px; }
+      .risk-ledger-mark { width: 20px; height: 18px; }
       .main > .trigger { order: 2; }
       .copy h3 { font-size: 16px; }
 
@@ -919,7 +954,7 @@
       <article class="row">
         <div class="main">
           <div class="company" data-company="Risk Ledger">
-            <div class="company-logo company-logo--risk-ledger"><img src="https://cdn.prod.website-files.com/69120d5d7c98c5df2a3b1391/69eb3bd5bed5b6599f440737_RL-256.png" alt="Risk Ledger"></div>
+            <div class="company-logo company-logo--risk-ledger"><span class="risk-ledger-lockup" role="img" aria-label="Risk Ledger"><svg class="risk-ledger-mark risk-ledger-mark--light" viewBox="0 0 39 34" fill="none" aria-hidden="true"><path d="M1.15625 1.15486V32.5507L19.1639 24.5836L37.177 32.4312V1.15486L19.1639 8.99704L1.15625 1.15486Z" stroke="currentColor" stroke-width="2.30972" stroke-linejoin="round"/></svg><svg class="risk-ledger-mark risk-ledger-mark--gradient" viewBox="0 0 39 34" fill="none" aria-hidden="true"><defs><linearGradient id="risk-gradient-domain" x1="0.966169" y1="1.15486" x2="24.6808" y2="42.5422" gradientUnits="userSpaceOnUse"><stop stop-color="#46FFC9"/><stop offset="0.682692" stop-color="#3BAEEC"/><stop offset="1" stop-color="#6133F7"/></linearGradient></defs><path d="M1.15625 1.15486V32.5507L19.1639 24.5836L37.177 32.4312V1.15486L19.1639 8.99704L1.15625 1.15486Z" stroke="url(#risk-gradient-domain)" stroke-width="2.30972" stroke-linejoin="round"/></svg><span>Risk Ledger</span></span></div>
           </div>
           <div class="copy">
             <div class="title">
@@ -963,7 +998,7 @@
       <article class="row">
         <div class="main">
           <div class="company" data-company="Risk Ledger">
-            <div class="company-logo company-logo--risk-ledger"><img src="https://cdn.prod.website-files.com/69120d5d7c98c5df2a3b1391/69eb3bd5bed5b6599f440737_RL-256.png" alt="Risk Ledger"></div>
+            <div class="company-logo company-logo--risk-ledger"><span class="risk-ledger-lockup" role="img" aria-label="Risk Ledger"><svg class="risk-ledger-mark risk-ledger-mark--light" viewBox="0 0 39 34" fill="none" aria-hidden="true"><path d="M1.15625 1.15486V32.5507L19.1639 24.5836L37.177 32.4312V1.15486L19.1639 8.99704L1.15625 1.15486Z" stroke="currentColor" stroke-width="2.30972" stroke-linejoin="round"/></svg><svg class="risk-ledger-mark risk-ledger-mark--gradient" viewBox="0 0 39 34" fill="none" aria-hidden="true"><defs><linearGradient id="risk-gradient-certifications" x1="0.966169" y1="1.15486" x2="24.6808" y2="42.5422" gradientUnits="userSpaceOnUse"><stop stop-color="#46FFC9"/><stop offset="0.682692" stop-color="#3BAEEC"/><stop offset="1" stop-color="#6133F7"/></linearGradient></defs><path d="M1.15625 1.15486V32.5507L19.1639 24.5836L37.177 32.4312V1.15486L19.1639 8.99704L1.15625 1.15486Z" stroke="url(#risk-gradient-certifications)" stroke-width="2.30972" stroke-linejoin="round"/></svg><span>Risk Ledger</span></span></div>
           </div>
           <div class="copy">
             <div class="title">
@@ -1021,7 +1056,7 @@
       <span id="experience-heading" class="heading">Clients</span>
     </div>
     <div class="experience-list">
-      <a class="experience-link" href="https://riskledger.com" target="_blank" rel="noreferrer" aria-label="Risk Ledger"><img class="experience-logo" src="https://cdn.prod.website-files.com/69120d5d7c98c5df2a3b1391/69eb3bd5bed5b6599f440737_RL-256.png" alt=""></a>
+      <a class="experience-link" href="https://riskledger.com" target="_blank" rel="noreferrer" aria-label="Risk Ledger"><span class="risk-ledger-lockup" aria-hidden="true"><svg class="risk-ledger-mark risk-ledger-mark--light" viewBox="0 0 39 34" fill="none"><path d="M1.15625 1.15486V32.5507L19.1639 24.5836L37.177 32.4312V1.15486L19.1639 8.99704L1.15625 1.15486Z" stroke="currentColor" stroke-width="2.30972" stroke-linejoin="round"/></svg><svg class="risk-ledger-mark risk-ledger-mark--gradient" viewBox="0 0 39 34" fill="none"><defs><linearGradient id="risk-gradient-client" x1="0.966169" y1="1.15486" x2="24.6808" y2="42.5422" gradientUnits="userSpaceOnUse"><stop stop-color="#46FFC9"/><stop offset="0.682692" stop-color="#3BAEEC"/><stop offset="1" stop-color="#6133F7"/></linearGradient></defs><path d="M1.15625 1.15486V32.5507L19.1639 24.5836L37.177 32.4312V1.15486L19.1639 8.99704L1.15625 1.15486Z" stroke="url(#risk-gradient-client)" stroke-width="2.30972" stroke-linejoin="round"/></svg><span>Risk Ledger</span></span></a>
       <a class="experience-link" href="https://clarity.ai" target="_blank" rel="noreferrer" aria-label="Clarity AI"><img class="experience-logo" src="https://clarity.ai/wp-content/uploads/2024/07/Horizontal-RGB-1.svg" alt=""></a>
       <a class="experience-link" href="https://brandtraction.co.uk" target="_blank" rel="noreferrer" aria-label="Traction"><img class="experience-logo" src="https://brandtraction.co.uk/wp-content/uploads/2025/08/Traction-logo.svg" alt=""></a>
       <a class="experience-link" href="https://www.akqa.com" target="_blank" rel="noreferrer" aria-label="AKQA"><img class="experience-logo" src="https://www.akqa.com/icons/apple-touch-icon.png" alt=""></a>

@@ -70,7 +70,7 @@ Client links sit below Other projects as a four-column, logo-only list.
 
 Each case study contains a company mark, title, short summary and **View snapshot** trigger.
 
-- Company marks sit in transparent, outline-free containers. Risk Ledger uses a 24px desktop / 20px mobile mark; the Clarity AI wordmark sits in the same 32px / 24px-high container.
+- Company marks sit in transparent, outline-free containers. Risk Ledger uses its Duplet lock-up: a dark transparent mark in light mode and its gradient mark in dark mode, at 24px desktop / 20px mobile. The Clarity AI wordmark sits in the same 32px / 24px-high container.
 - Divider: 1px `--line` above the first row and below every row.
 - Keep one primary story idea in the title and a short, outcome-focused summary below it.
 
