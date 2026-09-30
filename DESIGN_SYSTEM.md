@@ -57,20 +57,20 @@ The drawer changes the usable page width from the `md` breakpoint (768px) upward
 - One 1px border plus an outer 1px outline with a 5px gap.
 - Gentle vertical float: 4 seconds, ease-in-out, 5px maximum travel.
 
-### Where I’ve worked
+### Clients
 
-Previous-company links sit below Other projects as a four-column, logo-only list.
+Client links sit below Other projects as a four-column, logo-only list.
 
-- Each transparent rectangular link has a 1px `--line` border, 2px corners and a 72px minimum height.
-- Logos are 32px high on desktop and 24px on mobile; preserve their aspect ratio and do not add text labels.
+- Each transparent link has no static outline or background, a 48px minimum height, and 32px vertical padding around the complete logo group.
+- Logos use a consistent 112px × 32px desktop frame and 96px × 28px mobile frame; preserve their aspect ratio and do not add text labels.
 - Default state: greyscale with 45% opacity. Hover and focus: full opacity in the strong foreground colour.
 - Provide the company name through an accessible `aria-label`; logo images remain decorative.
 
 ### Story row
 
-Each case study contains a company label, title, short summary and **View snapshot** trigger.
+Each case study contains a company mark, title, short summary and **View snapshot** trigger.
 
-- Company logo: circular, 24px desktop / 20px mobile.
+- Company marks sit in transparent, outline-free containers. Risk Ledger uses a 24px desktop / 20px mobile mark; the Clarity AI wordmark sits in the same 32px / 24px-high container.
 - Divider: 1px `--line` above the first row and below every row.
 - Keep one primary story idea in the title and a short, outcome-focused summary below it.
 
@@ -129,7 +129,7 @@ Motion is quiet and decorative, not required to understand or use the portfolio.
 ## Accessibility rules
 
 - Keep visible keyboard focus for all links and buttons.
-- Use descriptive alternative text for meaningful images; company logos are decorative when their name is already adjacent.
+- Use descriptive alternative text for meaningful images; logo-only company marks must retain their company-name alternative text or an accessible link label.
 - Mark the persistent snapshot as a dialog and connect every trigger with `aria-controls="snapshot-drawer"` and `aria-expanded`.
 - Support Escape and the visible close button. Do not claim outside-click dismissal unless it is implemented.
 - Preserve strong light and dark colour contrast when adding colours or surfaces. Test any new foreground/background pairing before publishing.
