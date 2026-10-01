@@ -89,7 +89,7 @@ One persistent drawer displays the selected story; switching stories changes its
 - From 768px: right-hand drawer reserves page space and shifts the page left.
 - Width: `min(28rem, 48vw)` at 768px; 32rem at 1280px; 35rem at 1536px.
 - Full viewport height, 24px inner padding, internal vertical scrolling and a left divider/shadow.
-- Media: 16:9 with 7px corners.
+- Media: 16:9 with 7px corners, a 1px `--line` border and a matching 1px outline offset by 4px—the same framed treatment as the portrait. Release thumbnails retain a single 1px border.
 - Detail rows: 12px uppercase label alongside 14px body copy.
 - Close control: circular button at the top-right; Escape closes the drawer.
 - Selecting another **View snapshot** keeps the drawer open and fades the content out/in over 140ms.
