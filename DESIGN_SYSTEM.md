@@ -22,7 +22,7 @@ Font family: **Inter** with system sans-serif fallbacks. Use weights 400, 500 an
 
 | Style | Size / line-height | Weight | Use |
 | --- | --- | --- | --- |
-| Intro | 20px / 1.5 | 400 | Personal introduction |
+| Intro | 16px / 1.5 | 400 | Personal introduction |
 | Story title | 20px / 1.25 | 500 | Desktop case-study title |
 | Story title, mobile | 16px / 1.25 | 500 | Mobile case-study title |
 | Body | 14px / 1.6 | 400 | Story summaries and supporting copy |
@@ -42,7 +42,7 @@ Headings use `letter-spacing: -0.025em`; uppercase labels use `0.06–0.08em` le
 Use a 4px-based rhythm where possible: `4, 8, 12, 16, 24, 32, 48, 64`.
 
 - Content rail: `min(1060px, 100% - 64px)` on desktop; 32px total side gutter on mobile.
-- Intro rail: maximum 720px, centred.
+- Intro rail: maximum 400px, centred as a reading column; portrait, eyebrow and copy are left-aligned within it.
 - Desktop story grid: 128px company column, 24px gap, flexible story column.
 - Breakpoint: 600px. Stories become a vertical flow: title and copy, snapshot button, then company.
 - Story rows: 34px vertical / 30px horizontal padding on desktop; 28px vertical / no added horizontal padding on mobile.
