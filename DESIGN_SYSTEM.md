@@ -49,7 +49,7 @@ Use a 4px-based rhythm where possible: `4, 8, 12, 16, 24, 32, 48, 64`.
 - Story list: 40px circular company mark, 24px gap and a flexible text column at every breakpoint.
 - Story rows: 16px vertical padding, a 10px gap between rows and a 1px divider below each row.
 - The whole row opens its snapshot; keyboard focus retains a visible 2px outline.
-- Story and Other-project content have a permanent 8px left inset while their dividers remain full width. Use coral `#FDA89A` in light mode and `#1F2937` (Tailwind gray-800) in dark mode. On the coral surface, use `#171717` for titles and `#334155` for supporting text.
+- Story and Other-project content have a permanent 8px left inset while their dividers remain full width. Use coral `#FFF1EE` in light mode and `#1F2937` (Tailwind gray-800) in dark mode. On the coral surface, use `#171717` for titles and `#334155` for supporting text.
 - On hover, remove the row divider and apply an 8px corner radius to the interactive surface. Keyboard focus uses the same rounded bounding box; pointer activation does not leave a persistent outline.
 - In dark mode, the story and Other-project hover surface is Tailwind gray-800 (`#1F2937`); titles use the light foreground and supporting metadata uses `#CBD5E1`.
 
