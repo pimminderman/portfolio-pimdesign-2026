@@ -41,7 +41,7 @@
   <script data-collect-dnt="true" async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" rel="stylesheet">
   <title>Pim Minderman — Product Designer</title>
   <style>
@@ -74,7 +74,7 @@
       margin: 0;
       background: var(--bg);
       color: var(--ink);
-      font-family: Inter, system-ui, sans-serif;
+      font-family: Geist, system-ui, sans-serif;
     }
 
     .site-content {
@@ -139,7 +139,7 @@
     }
 
     .intro {
-      padding: 80px 0 96px;
+      padding: 80px 8px 96px;
       text-align: left;
     }
 
@@ -162,11 +162,13 @@
       50% { transform: translateY(-5px); }
     }
 
-    .eyebrow {
+    .eyebrow,
+    .section-heading .heading {
       color: var(--muted);
       font-size: 14px;
       font-weight: 600;
       letter-spacing: 0.08em;
+      line-height: 1.2;
       text-transform: uppercase;
     }
 
@@ -201,16 +203,13 @@
 
     .channels a:hover { color: var(--ink); }
 
-    .section-heading { text-align: left; }
+    .section-heading {
+      padding: 0 8px;
+      text-align: left;
+    }
 
     .section-heading .heading {
       display: block;
-      color: #1d293d;
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: -0.025em;
-      line-height: 1.2;
-      text-transform: none;
     }
 
     .section-heading p {
@@ -220,6 +219,10 @@
       font-size: 14px;
       line-height: 1.3;
       white-space: nowrap;
+    }
+
+    .work .story-company-name {
+      font-family: 'Geist Mono', ui-monospace, monospace;
     }
 
     .list {
@@ -242,7 +245,7 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
       margin-top: 28px;
-      padding: 32px 0;
+      padding: 32px 8px;
     }
 
     .experience-link {
@@ -285,8 +288,11 @@
       grid-template-columns: 40px minmax(0, 1fr);
       gap: 24px;
       align-items: center;
-      padding: 16px 0;
+      padding: 16px 8px;
       border-bottom: 1px solid var(--line);
+      color: var(--ink);
+      text-decoration: none;
+      transition: background 150ms ease;
     }
 
     .project-mark {
@@ -312,17 +318,6 @@
       letter-spacing: -0.01em;
     }
 
-    .project-item h3 a {
-      color: var(--ink);
-      text-decoration: none;
-    }
-
-    .project-item h3 a:hover,
-    .project-item p a:hover {
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
     .project-item p {
       max-width: 620px;
       margin: 4px 0 0;
@@ -331,12 +326,13 @@
       line-height: 1.3;
     }
 
-    .project-item p a { color: inherit; }
-
     .row {
       position: relative;
-      padding: 16px 0;
+      width: 100%;
+      margin-left: 0;
+      padding: 16px 8px;
       border-bottom: 1px solid var(--line);
+      transition: background 150ms ease;
     }
 
     .row:first-child { border-top: 0; }
@@ -383,11 +379,13 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: #05070d;
-      filter: grayscale(1) brightness(0) invert(1);
+      max-width: 40px;
+      max-height: none;
       object-fit: contain;
-      padding: 8px 3px;
+      padding: 0;
     }
+
+    .company-logo--clarity { overflow: visible; }
 
     .risk-ledger-lockup {
       display: inline-flex;
@@ -450,16 +448,35 @@
       margin: 0;
       padding: 0;
       border: 0;
-      border-radius: 0;
+      border-radius: 8px;
       background: transparent;
       color: transparent;
       cursor: pointer;
       font-size: 0;
     }
 
-    .row:hover { background: rgb(255 255 255 / 40%); }
-    .row:focus-within { outline: 2px solid var(--ink); outline-offset: 2px; }
-    body[data-theme="dark"] .row:hover { background: rgb(255 255 255 / 6%); }
+    .row:hover {
+      border-color: transparent;
+      border-radius: 8px;
+      background: #fef2f2;
+    }
+    .row:has(.trigger:focus-visible) {
+      border-color: transparent;
+      border-radius: 8px;
+    }
+    .project-item:hover {
+      border-color: transparent;
+      border-radius: 8px;
+      background: #fef2f2;
+    }
+    .project-item:focus-visible {
+      border-color: transparent;
+      border-radius: 8px;
+      outline: 2px solid var(--ink);
+      outline-offset: 2px;
+    }
+    body[data-theme="dark"] .row:hover,
+    body[data-theme="dark"] .project-item:hover { background: #1f2937; }
 
     .popover {
       position: fixed;
@@ -606,7 +623,7 @@
       border-radius: 2px;
       background: rgb(255 255 255 / 60%);
       color: var(--ink);
-      font: 500 12px/1 Inter, system-ui, sans-serif;
+      font: 500 12px/1 Geist, system-ui, sans-serif;
       text-decoration: none;
       transition: border-color 150ms ease, background 150ms ease, transform 150ms ease;
     }
@@ -642,14 +659,14 @@
       align-items: center;
       min-width: 0;
       color: var(--muted);
-      font: 400 10px/1.2 Inter, system-ui, sans-serif;
+      font: 400 10px/1.2 Geist, system-ui, sans-serif;
     }
 
     .release-title {
       display: -webkit-box;
       overflow: hidden;
       color: var(--ink);
-      font: 400 12px/1.3 Inter, system-ui, sans-serif;
+      font: 400 12px/1.3 Geist, system-ui, sans-serif;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
     }
@@ -658,7 +675,7 @@
       display: block;
       overflow: hidden;
       color: var(--muted);
-      font: 400 10px/1.35 Inter, system-ui, sans-serif;
+      font: 400 10px/1.35 Geist, system-ui, sans-serif;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
@@ -706,25 +723,18 @@
       font-size: 12px;
     }
 
-    .footer-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
+    .footer-top,
+    .footer-copyright { margin-left: 8px; margin-right: 8px; }
+
+    .footer-top { display: block; }
 
     .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
     }
 
-    .footer-meta {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0;
-    }
+    .footer-meta { display: none; }
 
     .footer-copyright {
       display: block;
@@ -743,8 +753,15 @@
     .footer a {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 2px;
+      min-height: 36px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 2px;
       color: var(--muted);
+      font-size: 12px;
+      line-height: 1.2;
       text-decoration: none;
     }
 
@@ -818,6 +835,8 @@
       .footer { width: calc(100% - 32px); }
 
       .footer-top { align-items: flex-start; }
+      .footer-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .footer-links a:last-child { grid-column: 1 / -1; }
       .theme-toggle {
         top: 12px;
         right: 12px;
@@ -827,7 +846,7 @@
 
       .intro {
         width: calc(100% - 32px);
-        padding: 58px 0 96px;
+        padding: 58px 8px 96px;
       }
 
       .portrait {
@@ -856,7 +875,7 @@
       .company-logo { width: 40px; height: 40px; }
       .company-logo img { max-height: 20px; }
       .company-logo--risk-ledger { width: 40px; }
-      .company-logo--clarity img { width: 40px; height: 40px; max-height: 40px; }
+      .company-logo--clarity img { width: 40px; height: 40px; max-height: none; }
       .risk-ledger-lockup { font-size: 14px; }
       .risk-ledger-mark { width: 20px; height: 18px; }
       .copy h3 { font-size: 14px; }
@@ -917,14 +936,14 @@
   <main class="work">
     <div class="section-heading">
       <span class="heading">Stories</span>
-      <p>Curated stories on tensions, decisions and outcomes</p>
+      <p>Curated design stories led by tensions, problems, decisions, outcomes and interface.</p>
     </div>
 
     <div class="list">
-      <article class="row">
+      <article class="row" data-year="2023">
         <div class="main">
           <div class="company" data-company="Clarity AI">
-            <div class="company-logo company-logo--clarity"><img src="https://clarity.ai/wp-content/uploads/2024/07/Horizontal-RGB-1.svg" alt="Clarity AI"></div>
+            <div class="company-logo company-logo--clarity"><img src="assets/clarity-ai-mark.svg" alt="Clarity AI"></div>
           </div>
           <div class="copy">
             <div class="title">
@@ -966,10 +985,10 @@
         </aside>
       </article>
 
-      <article class="row">
+      <article class="row" data-year="2024">
         <div class="main">
           <div class="company" data-company="Clarity AI">
-            <div class="company-logo company-logo--clarity"><img src="https://clarity.ai/wp-content/uploads/2024/07/Horizontal-RGB-1.svg" alt="Clarity AI"></div>
+            <div class="company-logo company-logo--clarity"><img src="assets/clarity-ai-mark.svg" alt="Clarity AI"></div>
           </div>
           <div class="copy">
             <div class="title">
@@ -1001,7 +1020,7 @@
         </aside>
       </article>
 
-      <article class="row">
+      <article class="row" data-year="2026">
         <div class="main">
           <div class="company" data-company="Risk Ledger">
             <div class="company-logo company-logo--risk-ledger"><span class="risk-ledger-lockup" role="img" aria-label="Risk Ledger"><svg class="risk-ledger-mark risk-ledger-mark--light" viewBox="0 0 39 34" fill="none" aria-hidden="true"><path d="M1.15625 1.15486V32.5507L19.1639 24.5836L37.177 32.4312V1.15486L19.1639 8.99704L1.15625 1.15486Z" stroke="currentColor" stroke-width="2.30972" stroke-linejoin="round"/></svg><svg class="risk-ledger-mark risk-ledger-mark--gradient" viewBox="0 0 39 34" fill="none" aria-hidden="true"><defs><linearGradient id="risk-gradient-domain" x1="0.966169" y1="1.15486" x2="24.6808" y2="42.5422" gradientUnits="userSpaceOnUse"><stop stop-color="#46FFC9"/><stop offset="0.682692" stop-color="#3BAEEC"/><stop offset="1" stop-color="#6133F7"/></linearGradient></defs><path d="M1.15625 1.15486V32.5507L19.1639 24.5836L37.177 32.4312V1.15486L19.1639 8.99704L1.15625 1.15486Z" stroke="url(#risk-gradient-domain)" stroke-width="2.30972" stroke-linejoin="round"/></svg><span>Risk Ledger</span></span></div>
@@ -1046,7 +1065,7 @@
         </aside>
       </article>
 
-      <article class="row">
+      <article class="row" data-year="2026">
         <div class="main">
           <div class="company" data-company="Risk Ledger">
             <div class="company-logo company-logo--risk-ledger"><span class="risk-ledger-lockup" role="img" aria-label="Risk Ledger"><svg class="risk-ledger-mark risk-ledger-mark--light" viewBox="0 0 39 34" fill="none" aria-hidden="true"><path d="M1.15625 1.15486V32.5507L19.1639 24.5836L37.177 32.4312V1.15486L19.1639 8.99704L1.15625 1.15486Z" stroke="currentColor" stroke-width="2.30972" stroke-linejoin="round"/></svg><svg class="risk-ledger-mark risk-ledger-mark--gradient" viewBox="0 0 39 34" fill="none" aria-hidden="true"><defs><linearGradient id="risk-gradient-certifications" x1="0.966169" y1="1.15486" x2="24.6808" y2="42.5422" gradientUnits="userSpaceOnUse"><stop stop-color="#46FFC9"/><stop offset="0.682692" stop-color="#3BAEEC"/><stop offset="1" stop-color="#6133F7"/></linearGradient></defs><path d="M1.15625 1.15486V32.5507L19.1639 24.5836L37.177 32.4312V1.15486L19.1639 8.99704L1.15625 1.15486Z" stroke="url(#risk-gradient-certifications)" stroke-width="2.30972" stroke-linejoin="round"/></svg><span>Risk Ledger</span></span></div>
@@ -1088,27 +1107,27 @@
       <span id="other-projects-heading" class="heading">Other projects</span>
     </div>
     <div class="project-list">
-      <article class="project-item">
+      <a class="project-item" href="https://github.com/pimminderman/portfolio-pimdesign-2026/blob/main/DESIGN_SYSTEM.md" target="_blank" rel="noreferrer">
         <span class="project-mark" aria-hidden="true">dashboard_customize</span>
         <div class="project-copy">
-          <h3><a href="https://github.com/pimminderman/portfolio-pimdesign-2026/blob/main/DESIGN_SYSTEM.md" target="_blank" rel="noreferrer">Portfolio — design system</a></h3>
+          <h3>Portfolio — design system</h3>
           <p>Reusable patterns and clear rules for evolving this portfolio.</p>
         </div>
-      </article>
-      <article class="project-item">
+      </a>
+      <a class="project-item" href="https://pimminderman.github.io/sharped/" target="_blank" rel="noreferrer">
         <span class="project-mark" aria-hidden="true">gradient</span>
         <div class="project-copy">
-          <h3><a href="https://pimminderman.github.io/sharped/" target="_blank" rel="noreferrer">Sharped</a></h3>
-          <p>Sharp-edged gradients and image patterns for <a href="https://productbypim.substack.com" target="_blank" rel="noreferrer">Product by Pim</a>.</p>
+          <h3>Sharped</h3>
+          <p>Sharp-edged gradients and image patterns for Product by Pim.</p>
         </div>
-      </article>
-      <article class="project-item">
+      </a>
+      <a class="project-item" href="painter-carpentry.html">
         <span class="project-mark" aria-hidden="true">carpenter</span>
         <div class="project-copy">
-          <h3><a href="painter-carpentry.html">Painter &amp; carpentry</a></h3>
+          <h3>Painter &amp; carpentry</h3>
           <p>Hands-on painting, decorating and joinery work across London.</p>
         </div>
-      </article>
+      </a>
     </div>
   </section>
 
@@ -1118,7 +1137,7 @@
     </div>
     <div class="experience-list">
       <a class="experience-link" href="https://riskledger.com" target="_blank" rel="noreferrer" aria-label="Risk Ledger"><span class="risk-ledger-lockup" aria-hidden="true"><svg class="risk-ledger-mark risk-ledger-mark--light" viewBox="0 0 39 34" fill="none"><path d="M1.15625 1.15486V32.5507L19.1639 24.5836L37.177 32.4312V1.15486L19.1639 8.99704L1.15625 1.15486Z" stroke="currentColor" stroke-width="2.30972" stroke-linejoin="round"/></svg><svg class="risk-ledger-mark risk-ledger-mark--gradient" viewBox="0 0 39 34" fill="none"><defs><linearGradient id="risk-gradient-client" x1="0.966169" y1="1.15486" x2="24.6808" y2="42.5422" gradientUnits="userSpaceOnUse"><stop stop-color="#46FFC9"/><stop offset="0.682692" stop-color="#3BAEEC"/><stop offset="1" stop-color="#6133F7"/></linearGradient></defs><path d="M1.15625 1.15486V32.5507L19.1639 24.5836L37.177 32.4312V1.15486L19.1639 8.99704L1.15625 1.15486Z" stroke="url(#risk-gradient-client)" stroke-width="2.30972" stroke-linejoin="round"/></svg><span>Risk Ledger</span></span></a>
-      <a class="experience-link" href="https://clarity.ai" target="_blank" rel="noreferrer" aria-label="Clarity AI"><img class="experience-logo" src="https://clarity.ai/wp-content/uploads/2024/07/Horizontal-RGB-1.svg" alt=""></a>
+      <a class="experience-link" href="https://clarity.ai" target="_blank" rel="noreferrer" aria-label="Clarity AI"><img class="experience-logo" src="assets/clarity-ai-mark.svg" alt=""></a>
       <a class="experience-link" href="https://brandtraction.co.uk" target="_blank" rel="noreferrer" aria-label="Traction"><img class="experience-logo" src="https://brandtraction.co.uk/wp-content/uploads/2025/08/Traction-logo.svg" alt=""></a>
       <a class="experience-link" href="https://www.akqa.com" target="_blank" rel="noreferrer" aria-label="AKQA"><img class="experience-logo" src="https://www.akqa.com/icons/apple-touch-icon.png" alt=""></a>
       <a class="experience-link" href="https://www.toyota.co.uk" target="_blank" rel="noreferrer" aria-label="Toyota"><img class="experience-logo" src="https://www.toyota.co.uk/etc.clientlibs/dxp-frontend-core/clientlibs/clientlib-toyota/resources/images/favicons/apple-touch-icon.png" alt=""></a>
@@ -1129,13 +1148,12 @@
 
   <footer class="footer">
     <div class="footer-top">
-      <div class="footer-meta">
-      <span class="footer-cta">Want to see more about each product story? <a href="mailto:pim.minderman89@gmail.com">Contact me <span class="external-icon" aria-hidden="true">call_made</span></a></span>
-      </div>
       <div class="footer-links" aria-label="Personal channels">
         <a href="https://uk.linkedin.com/in/pimminderman" target="_blank" rel="noreferrer">LinkedIn</a>
         <a href="https://productbypim.substack.com" target="_blank" rel="noreferrer">Product by Pim</a>
+        <a href="https://www.instagram.com/pimminderman/" target="_blank" rel="noreferrer">Instagram</a>
         <a href="https://github.com/pimminderman" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="mailto:pim.minderman89@gmail.com">Contact me <span class="external-icon" aria-hidden="true">call_made</span></a>
       </div>
     </div>
     <span class="footer-copyright">© 2026 Pim Minderman</span>
@@ -1167,12 +1185,10 @@
     });
 
     const storyList = document.querySelector('.list');
-    [...storyList.querySelectorAll('.row')]
-      .filter((row) => row.querySelector('.company').dataset.company === 'Risk Ledger')
-      .reverse()
-      .forEach((row) => storyList.prepend(row));
+    const rows = [...document.querySelectorAll('.row')]
+      .sort((first, second) => Number(second.dataset.year) - Number(first.dataset.year));
 
-    const rows = [...document.querySelectorAll('.row')];
+    rows.forEach((row) => storyList.append(row));
 
     function arrangeStoryMeta() {
       rows.forEach((row) => {

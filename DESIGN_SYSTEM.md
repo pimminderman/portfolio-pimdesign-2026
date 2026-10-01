@@ -18,12 +18,14 @@ Interactive focus uses a 2px teal outline (`#0F766E` in light mode and `#5EEAD4`
 
 ### Typography
 
-Font family: **Inter** with system sans-serif fallbacks. Use weights 400, 500 and 600 only.
+Font family: **Geist** with system sans-serif fallbacks. Use weights 400, 500 and 600 only.
+
+Use **Geist Mono** only for Stories company-year metadata; all body copy remains Geist.
 
 | Style | Size / line-height | Weight | Use |
 | --- | --- | --- | --- |
 | Intro | 16px / 1.5 | 400 | Personal introduction |
-| Section title | 20px / 1.2 | 600 | Stories, Other projects and Clients |
+| Section label | 14px / 1.2 | 600 | Uppercase Stories, Other projects and Clients |
 | Story title | 14px / 1.3 | 600 | Compact case-study list title |
 | Story metadata | 14px / 1.3 | 400 | Company and year |
 | Body | 14px / 1.6 | 400 | Story summaries and supporting copy |
@@ -42,10 +44,12 @@ Headings use `letter-spacing: -0.025em`; uppercase labels use `0.06–0.08em` le
 
 Use a 4px-based rhythm where possible: `4, 8, 12, 16, 24, 32, 48, 64`.
 
-- One reading rail: the intro, Stories, Other projects, Clients and footer share a centred 440px maximum width; 32px total side gutter on mobile.
+- One reading rail: the intro, Stories, Other projects, Clients and footer share a centred 440px maximum width; their visible content uses an additional shared 8px internal inset. Mobile keeps a 32px total side gutter.
 - Story list: 40px circular company mark, 24px gap and a flexible text column at every breakpoint.
 - Story rows: 16px vertical padding, a 10px gap between rows and a 1px divider below each row.
 - The whole row opens its snapshot; keyboard focus retains a visible 2px outline.
+- Story and Other-project content have a permanent 8px left inset while their dividers remain full width. Use `#FEF2F2` (Tailwind red-50) in light mode and `#1F2937` (Tailwind gray-800) in dark mode.
+- On hover, remove the row divider and apply an 8px corner radius to the interactive surface. Keyboard focus uses the same rounded bounding box; pointer activation does not leave a persistent outline.
 
 The drawer changes the usable page width from the `md` breakpoint (768px) upwards. Any future compact-layout rules should respond to the page container width—not only viewport width—so titles do not become narrow when the drawer is open.
 
@@ -70,9 +74,13 @@ Client links sit below Other projects as a three-column, logo-only list (two col
 
 Each case study is a compact, full-row snapshot trigger containing a company mark, title and company-year metadata.
 
-- Company marks are 40px circular brand treatments. Risk Ledger uses the approved gradient mark from the story component; Clarity AI uses a high-contrast monochrome treatment. Company and year appear as one muted secondary line below the title.
+- Company marks are 40px circular brand treatments. Risk Ledger uses the approved gradient mark from the story component; Clarity AI uses its standalone C mark without the wordmark. Company and year appear as one muted secondary line below the title.
 - Divider: 1px `--line` below each row.
 - Keep one primary story idea in the title; detail and outcome copy belong in the snapshot drawer.
+
+### Other-project row
+
+Other projects use the same 40px-mark, title-and-supporting-line row structure as Stories, but the whole row is its project link rather than a snapshot trigger.
 
 ### Snapshot trigger
 
@@ -98,8 +106,8 @@ Used at the bottom of a snapshot to link to relevant public releases or product 
 
 - Section label: **Releases**.
 - 2px-corner card with a 1px `--line` border, 8px internal padding and an inset 72px × 64px thumbnail (64px wide on mobile).
-- Source line uses 10px regular Inter; it contains the company name and release type, without a logo.
-- Title uses 12px regular Inter; supporting copy uses the full text column at 10px regular Inter and truncates with an ellipsis after one line.
+- Source line uses 10px regular Geist; it contains the company name and release type, without a logo.
+- Title uses 12px regular Geist; supporting copy uses the full text column at 10px regular Geist and truncates with an ellipsis after one line.
 - Use the release’s original image and full public title when available. Links open in a new tab without an additional arrow icon.
 
 ### Theme control
