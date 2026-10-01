@@ -8,9 +8,10 @@ This is the lightweight visual and interaction system used by the portfolio. The
 
 | Token | Light | Dark | Use |
 | --- | --- | --- | --- |
-| `--bg` | `#F8FAFC` | `#0F172A` | Page background |
+| `--bg` | `#F0F9FF` | `#0F172A` | Page background |
 | `--ink` | `#171717` | `#F8FAFC` | Primary text |
 | `--muted` | `#64748B` | `#CBD5E1` | Supporting text |
+| Secondary body | `#475569` | `#CBD5E1` | Introductory and project description copy |
 | `--line` | `#DBE2EA` | `#475569` | Dividers and outlines |
 | `--card` | `#FFFFFF` | `#111827` | Snapshots and raised surfaces |
 
@@ -24,7 +25,7 @@ Use **Geist Mono** only for Stories company-year metadata; all body copy remains
 
 | Style | Size / line-height | Weight | Use |
 | --- | --- | --- | --- |
-| Intro | 16px / 1.5 | 400 | Personal introduction |
+| Intro | 16px / 1.5 | 400 | Personal introduction; use secondary-body colour |
 | Section label | 14px / 1.2 | 600 | Uppercase Stories, Other projects and Clients |
 | Story title | 14px / 1.3 | 600 | Compact case-study list title |
 | Story metadata | 14px / 1.3 | 400 | Company and year |
@@ -50,6 +51,7 @@ Use a 4px-based rhythm where possible: `4, 8, 12, 16, 24, 32, 48, 64`.
 - The whole row opens its snapshot; keyboard focus retains a visible 2px outline.
 - Story and Other-project content have a permanent 8px left inset while their dividers remain full width. Use `#FEF2F2` (Tailwind red-50) in light mode and `#1F2937` (Tailwind gray-800) in dark mode.
 - On hover, remove the row divider and apply an 8px corner radius to the interactive surface. Keyboard focus uses the same rounded bounding box; pointer activation does not leave a persistent outline.
+- In dark mode, the story and Other-project hover surface is Tailwind gray-800 (`#1F2937`); titles use the light foreground and supporting metadata uses `#CBD5E1`.
 
 The drawer changes the usable page width from the `md` breakpoint (768px) upwards. Any future compact-layout rules should respond to the page container width—not only viewport width—so titles do not become narrow when the drawer is open.
 
@@ -120,7 +122,7 @@ Used at the bottom of a snapshot to link to relevant public releases or product 
 ### Footer
 
 - Top divider and compact 12px copyright line.
-- Contact uses the only external-arrow treatment; other external links remain text-only.
+- Social and contact links are plain 12px text links with 14px icons: LinkedIn, Substack for Product by Pim, Instagram, GitHub and mail for Contact me. Do not place them in boxes or add external-arrow treatments.
 
 ## Motion
 
