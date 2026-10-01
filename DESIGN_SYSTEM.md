@@ -23,8 +23,8 @@ Font family: **Inter** with system sans-serif fallbacks. Use weights 400, 500 an
 | Style | Size / line-height | Weight | Use |
 | --- | --- | --- | --- |
 | Intro | 16px / 1.5 | 400 | Personal introduction |
-| Story title | 20px / 1.25 | 500 | Desktop case-study title |
-| Story title, mobile | 16px / 1.25 | 500 | Mobile case-study title |
+| Story title | 14px / 1.3 | 500 | Compact case-study list title |
+| Story company | 14px / 1.3 | 400 | Secondary case-study label |
 | Body | 14px / 1.6 | 400 | Story summaries and supporting copy |
 | Company | 16px | 400 | Desktop company name |
 | Company, mobile | 14px | 400 | Mobile company name |
@@ -41,11 +41,11 @@ Headings use `letter-spacing: -0.025em`; uppercase labels use `0.06–0.08em` le
 
 Use a 4px-based rhythm where possible: `4, 8, 12, 16, 24, 32, 48, 64`.
 
-- Content rail: `min(1060px, 100% - 64px)` on desktop; 32px total side gutter on mobile.
+- Section rails: Selected stories, Other projects and Clients use a centred 440px maximum rail; 32px total side gutter on mobile.
 - Intro rail: maximum 400px, centred as a reading column; portrait, eyebrow and copy are left-aligned within it.
-- Desktop story grid: 128px company column, 24px gap, flexible story column.
-- Breakpoint: 600px. Stories become a vertical flow: title and copy, snapshot button, then company.
-- Story rows: 34px vertical / 30px horizontal padding on desktop; 28px vertical / no added horizontal padding on mobile.
+- Story list: 48px company tile, 24px gap and a flexible text column at every breakpoint.
+- Story rows: 16px padding and a 1px divider below each row.
+- The whole row opens its snapshot; keyboard focus retains a visible 2px outline.
 
 The drawer changes the usable page width from the `md` breakpoint (768px) upwards. Any future compact-layout rules should respond to the page container width—not only viewport width—so titles do not become narrow when the drawer is open.
 
@@ -59,7 +59,7 @@ The drawer changes the usable page width from the `md` breakpoint (768px) upward
 
 ### Clients
 
-Client links sit below Other projects as a four-column, logo-only list.
+Client links sit below Other projects as a three-column, logo-only list (two columns on mobile).
 
 - Each transparent link has no static outline or background, a 48px minimum height, and 32px vertical padding around the complete logo group.
 - Logos use a consistent 112px × 32px desktop frame and 96px × 28px mobile frame; preserve their aspect ratio and do not add text labels.
@@ -68,18 +68,16 @@ Client links sit below Other projects as a four-column, logo-only list.
 
 ### Story row
 
-Each case study contains a company mark, title, short summary and **View snapshot** trigger.
+Each case study is a compact, full-row snapshot trigger containing a company mark, title and company name.
 
-- Company marks sit in transparent, outline-free containers. Risk Ledger uses its Duplet lock-up: a dark transparent mark in light mode and its gradient mark in dark mode, at 24px desktop / 20px mobile. The Clarity AI vector wordmark uses a dark monochrome treatment in light mode and a high-contrast light treatment in dark mode, within the same 32px / 24px-high container.
-- Divider: 1px `--line` above the first row and below every row.
-- Keep one primary story idea in the title and a short, outcome-focused summary below it.
+- Company marks sit in a 48px × 53px `--card` tile without an outline. Risk Ledger uses the Duplet mark; Clarity AI uses a monochrome treatment. The company name appears as the muted secondary label below the title.
+- Divider: 1px `--line` below each row.
+- Keep one primary story idea in the title; detail and outcome copy belong in the snapshot drawer.
 
 ### Snapshot trigger
 
-- Label: 12px, weight 500.
-- Padding: 5px × 8px; full pill radius.
-- Sits 12px below the story copy.
-- The trigger must work with mouse, keyboard and touch. Do not make hover the only way to open a snapshot.
+- The visible story row is the trigger; it must work with mouse, keyboard and touch.
+- Keep the accessible name **View snapshot**, even when the compact visual treatment does not show a separate button label.
 
 ### Snapshot drawer
 
