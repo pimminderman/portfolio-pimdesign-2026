@@ -49,7 +49,7 @@ Use a 4px-based rhythm where possible: `4, 8, 12, 16, 24, 32, 48, 64`.
 - Story list: 40px circular company mark, 24px gap and a flexible text column at every breakpoint.
 - Story rows: 16px vertical padding, a 10px gap between rows and a 1px divider below each row.
 - The whole row opens its snapshot; keyboard focus retains a visible 2px outline.
-- Story and Other-project content have a permanent 8px left inset while their dividers remain full width. Use `#FEF2F2` (Tailwind red-50) in light mode and `#1F2937` (Tailwind gray-800) in dark mode.
+- Story and Other-project content have a permanent 8px left inset while their dividers remain full width. Use coral `#FDA89A` in light mode and `#1F2937` (Tailwind gray-800) in dark mode. On the coral surface, use `#171717` for titles and `#334155` for supporting text.
 - On hover, remove the row divider and apply an 8px corner radius to the interactive surface. Keyboard focus uses the same rounded bounding box; pointer activation does not leave a persistent outline.
 - In dark mode, the story and Other-project hover surface is Tailwind gray-800 (`#1F2937`); titles use the light foreground and supporting metadata uses `#CBD5E1`.
 
@@ -63,14 +63,13 @@ The drawer changes the usable page width from the `md` breakpoint (768px) upward
 - One 1px border plus an outer 1px outline with a 5px gap.
 - Gentle vertical float: 4 seconds, ease-in-out, 5px maximum travel.
 
-### Clients
+### Companies
 
-Client links sit below Other projects as a three-column, logo-only list (two columns on mobile).
+Companies sits below Other projects as a simple, editable two-column list: company name on the left and year or date range on the right.
 
-- Each transparent link has no static outline or background, a 48px minimum height, and 32px vertical padding around the complete logo group.
-- Logos use a consistent 112px × 32px desktop frame and 96px × 28px mobile frame; preserve their aspect ratio and do not add text labels.
-- Default state: greyscale with 45% opacity. Hover and focus: full opacity in the strong foreground colour. In dark mode, monochrome marks invert to a high-contrast light treatment; the Risk Ledger mark uses its brand gradient.
-- Provide the company name through an accessible `aria-label`; logo images remain decorative.
+- List items use 14px text, 12px vertical padding and 1px dividers; the first item also has a top divider.
+- The company name uses the primary foreground colour. The year is supporting text and stays right-aligned without wrapping.
+- Keep it text-only rather than using company logos or external links, so the list can be quickly maintained as experience changes.
 
 ### Story row
 
