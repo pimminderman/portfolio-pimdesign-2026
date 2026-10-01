@@ -63,14 +63,14 @@ Client links sit below Other projects as a four-column, logo-only list.
 
 - Each transparent link has no static outline or background, a 48px minimum height, and 32px vertical padding around the complete logo group.
 - Logos use a consistent 112px × 32px desktop frame and 96px × 28px mobile frame; preserve their aspect ratio and do not add text labels.
-- Default state: greyscale with 45% opacity. Hover and focus: full opacity in the strong foreground colour.
+- Default state: greyscale with 45% opacity. Hover and focus: full opacity in the strong foreground colour. In dark mode, monochrome marks invert to a high-contrast light treatment; the Risk Ledger mark uses its brand gradient.
 - Provide the company name through an accessible `aria-label`; logo images remain decorative.
 
 ### Story row
 
 Each case study contains a company mark, title, short summary and **View snapshot** trigger.
 
-- Company marks sit in transparent, outline-free containers. Risk Ledger uses its Duplet lock-up: a dark transparent mark in light mode and its gradient mark in dark mode, at 24px desktop / 20px mobile. The Clarity AI wordmark sits in the same 32px / 24px-high container.
+- Company marks sit in transparent, outline-free containers. Risk Ledger uses its Duplet lock-up: a dark transparent mark in light mode and its gradient mark in dark mode, at 24px desktop / 20px mobile. The Clarity AI vector wordmark uses a dark monochrome treatment in light mode and a high-contrast light treatment in dark mode, within the same 32px / 24px-high container.
 - Divider: 1px `--line` above the first row and below every row.
 - Keep one primary story idea in the title and a short, outcome-focused summary below it.
 

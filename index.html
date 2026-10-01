@@ -339,7 +339,11 @@
     }
 
     .company-logo--risk-ledger { width: 128px; }
-    .company-logo--clarity img { width: 96px; height: 24px; }
+    .company-logo--clarity img {
+      width: 96px;
+      height: 24px;
+      filter: grayscale(1) contrast(1.25) brightness(0.35);
+    }
 
     .risk-ledger-lockup {
       display: inline-flex;
@@ -365,6 +369,11 @@
     body[data-theme="dark"] .risk-ledger-lockup { color: #f8fafc; }
     body[data-theme="dark"] .risk-ledger-mark--light { display: none; }
     body[data-theme="dark"] .risk-ledger-mark--gradient { display: block; }
+    body[data-theme="dark"] .company-logo--clarity img { filter: grayscale(1) brightness(0) invert(1); }
+
+    .experience-link .risk-ledger-lockup { opacity: 0.45; transition: opacity 150ms ease; }
+    .experience-link:hover .risk-ledger-lockup,
+    .experience-link:focus-visible .risk-ledger-lockup { opacity: 1; }
 
     .copy h3 {
       margin: 0;
