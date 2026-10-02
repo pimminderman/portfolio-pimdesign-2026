@@ -250,19 +250,35 @@
     }
 
     .company-list li {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .company-list li:first-child { border-top: 1px solid var(--line); }
+
+    .company-list a {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
       gap: 24px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--line);
+      padding: 12px 8px;
+      border-radius: 8px;
       color: var(--ink);
       font-size: 14px;
       line-height: 1.3;
+      text-decoration: none;
+      transition: background 150ms ease;
     }
 
-    .company-list li:first-child { border-top: 1px solid var(--line); }
-    .company-list .company-year { color: #475569; white-space: nowrap; }
+    .company-list a:hover { background: #fff1ee; }
+    .company-list a:focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: 2px;
+    }
+    .company-list .company-year {
+      color: #475569;
+      font-family: 'Geist Mono', ui-monospace, monospace;
+      white-space: nowrap;
+    }
 
     .project-list {
       display: flex;
@@ -807,6 +823,7 @@
     body[data-theme="dark"] .story-company-name { color: #cbd5e1; }
     body[data-theme="dark"] .row:hover .story-company-name { color: #cbd5e1; }
     body[data-theme="dark"] .company-list .company-year { color: #cbd5e1; }
+    body[data-theme="dark"] .company-list a:hover { background: #1f2937; }
 
     body[data-theme="dark"] .details p { color: #e2e8f0; }
     body[data-theme="dark"] .decision-list li { color: #e2e8f0; }
@@ -1124,13 +1141,10 @@
       <span id="experience-heading" class="heading">Companies</span>
     </div>
     <ul class="company-list" aria-label="Companies worked for or with">
-      <li><span>Risk Ledger</span><span class="company-year">Add year</span></li>
-      <li><span>Clarity AI</span><span class="company-year">Add year</span></li>
-      <li><span>Proquo AI</span><span class="company-year">Add year</span></li>
-      <li><span>AKQA</span><span class="company-year">Add year</span></li>
-      <li><span>Toyota</span><span class="company-year">Add year</span></li>
-      <li><span>Swarovski</span><span class="company-year">Add year</span></li>
-      <li><span>Van Lanschot Kempen</span><span class="company-year">Add year</span></li>
+      <li><a href="https://www.riskledger.com/" target="_blank" rel="noreferrer"><span>Risk Ledger</span><span class="company-year">2025–2026</span></a></li>
+      <li><a href="https://clarity.ai/" target="_blank" rel="noreferrer"><span>Clarity AI</span><span class="company-year">2022–2025</span></a></li>
+      <li><a href="https://brandtraction.co.uk/" target="_blank" rel="noreferrer"><span>Traction (former ProQuo AI)</span><span class="company-year">2020–2022</span></a></li>
+      <li><a href="https://www.akqa.com/" target="_blank" rel="noreferrer"><span>AKQA</span><span class="company-year">2016–2020</span></a></li>
     </ul>
   </section>
 

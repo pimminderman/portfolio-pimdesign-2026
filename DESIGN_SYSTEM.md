@@ -68,8 +68,8 @@ The drawer changes the usable page width from the `md` breakpoint (768px) upward
 Companies sits below Other projects as a simple, editable two-column list: company name on the left and year or date range on the right.
 
 - List items use 14px text, 12px vertical padding and 1px dividers; the first item also has a top divider.
-- The company name uses the primary foreground colour. The year is supporting text and stays right-aligned without wrapping.
-- Keep it text-only rather than using company logos or external links, so the list can be quickly maintained as experience changes.
+- The company name uses the primary foreground colour. The year uses Geist Mono as supporting text and stays right-aligned without wrapping.
+- Keep the list text-first rather than using logos. Each row links to the company page, uses the shared coral hover surface in light mode and Tailwind gray-800 in dark mode, and retains a visible keyboard focus outline.
 
 ### Story row
 
