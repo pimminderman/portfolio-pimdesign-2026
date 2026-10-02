@@ -258,6 +258,15 @@
 
     .company-list li:first-child { border-top: 1px solid var(--line); }
 
+    .company-list li.is-company-active {
+      position: relative;
+      z-index: 5;
+      border-bottom-color: transparent;
+    }
+
+    .company-list li:first-child.is-company-active { border-top-color: transparent; }
+    .company-list li.is-company-preceding { border-bottom-color: transparent; }
+
     .company-list a {
       display: flex;
       align-items: baseline;
@@ -272,7 +281,7 @@
       transition: background 150ms ease;
     }
 
-    .company-list a:hover { background: #fff1ee; }
+    .company-list li.is-company-active a { background: #fff1ee; }
     .company-list a:focus-visible {
       outline: 2px solid var(--ink);
       outline-offset: 2px;
@@ -463,6 +472,9 @@
       border-radius: 8px;
       background: #fff1ee;
     }
+    .row:hover,
+    .row:focus-within,
+    .row.is-active { z-index: 5; }
     .row:has(.trigger:focus-visible) {
       border-color: transparent;
       border-radius: 8px;
@@ -906,7 +918,7 @@
     body[data-theme="dark"] .story-company-name { color: #cbd5e1; }
     body[data-theme="dark"] .row:hover .story-company-name { color: #cbd5e1; }
     body[data-theme="dark"] .company-list .company-year { color: #cbd5e1; }
-    body[data-theme="dark"] .company-list a:hover { background: #1f2937; }
+    body[data-theme="dark"] .company-list li.is-company-active a { background: #1f2937; }
 
     body[data-theme="dark"] .details p { color: #e2e8f0; }
     body[data-theme="dark"] .decision-list li { color: #e2e8f0; }
@@ -1319,6 +1331,24 @@
 
     rows.forEach((row) => storyList.append(row));
 
+    const companyItems = [...document.querySelectorAll('.company-list li')];
+
+    function setCompanyHover(item, isActive) {
+      item.classList.toggle('is-company-active', isActive);
+      item.previousElementSibling?.classList.toggle('is-company-preceding', isActive);
+    }
+
+    companyItems.forEach((item) => {
+      item.addEventListener('pointerenter', () => setCompanyHover(item, true));
+      item.addEventListener('pointerleave', () => setCompanyHover(item, false));
+      item.addEventListener('focusin', () => setCompanyHover(item, true));
+      item.addEventListener('focusout', () => {
+        window.requestAnimationFrame(() => {
+          if (!item.contains(document.activeElement)) setCompanyHover(item, false);
+        });
+      });
+    });
+
     function arrangeStoryMeta() {
       rows.forEach((row) => {
         row.querySelector('.copy').after(row.querySelector('.trigger'));
@@ -1416,6 +1446,7 @@
       window.clearTimeout(contentTimer);
       rows.forEach((row) => {
         row.querySelector('.trigger').setAttribute('aria-expanded', 'false');
+        row.classList.remove('is-active');
       });
       activeRow = null;
       document.body.classList.remove('snapshot-open');
@@ -1443,6 +1474,7 @@
       closeAll();
       replaceDrawerContent(row, isSwitching);
       row.querySelector('.trigger').setAttribute('aria-expanded', 'true');
+      row.classList.add('is-active');
       activeRow = row;
       document.body.classList.add('snapshot-open');
       window.setTimeout(() => drawer.querySelector('.close')?.focus(), isSwitching ? 150 : 0);

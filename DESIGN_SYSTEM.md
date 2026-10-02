@@ -70,6 +70,7 @@ Companies sits below Other projects as a simple, editable two-column list: compa
 - List items use 14px text, 12px vertical padding and 1px dividers; the first item also has a top divider.
 - The company name uses the primary foreground colour. The year uses Geist Mono as supporting text and stays right-aligned without wrapping.
 - Keep the list text-first rather than using logos. Each row links to the company page, uses the shared coral hover surface in light mode and Tailwind gray-800 in dark mode, and retains a visible keyboard focus outline.
+- While a company row is hovered or focused, remove its adjacent dividers while keeping the rest of the page unchanged.
 
 ### Story row
 
