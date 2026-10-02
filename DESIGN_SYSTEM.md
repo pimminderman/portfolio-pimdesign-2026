@@ -92,11 +92,12 @@ Other projects use the same 40px-mark, title-and-supporting-line row structure a
 
 One persistent drawer displays the selected story; switching stories changes its content rather than opening another drawer.
 
-- Mobile (below 768px): full-width overlay.
+- Mobile (below 768px): full-width drawer that slides in from the right and pushes the page fully left, so the snapshot takes over the screen without layering page content beneath it.
 - From 768px: right-hand drawer reserves page space and shifts the page left.
 - Width: `min(28rem, 48vw)` at 768px; 32rem at 1280px; 35rem at 1536px.
 - Full viewport height, 24px inner padding, internal vertical scrolling and a left divider/shadow.
-- Media: 16:9 with 7px corners, a 1px `--line` border and a matching 1px outline offset by 4px—the same framed treatment as the portrait. Release thumbnails retain a single 1px border.
+- From 768px, a subtle 2px handle appears on the drawer’s left edge on hover or keyboard focus. Drag it to resize between 320px and the available page width; Left/Right arrows resize in 24px steps when the handle is focused. Resizing is session-only and returns to the responsive default after reload.
+- Media: 16:9 with 7px corners, a 1px `--line` border and a matching 1px outline offset by 4px—the same framed treatment as the portrait. Keep media static, without a reflective loading animation. Release thumbnails retain a single 1px border.
 - Detail rows: 12px uppercase label alongside 14px body copy.
 - Close control: circular button at the top-right; Escape closes the drawer.
 - Selecting another **View snapshot** keeps the drawer open and fades the content out/in over 140ms.

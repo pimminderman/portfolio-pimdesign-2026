@@ -81,10 +81,13 @@
       width: 100%;
       min-width: 0;
       margin-right: 0;
-      transition: width 240ms ease, margin-right 240ms ease;
+      transition: width 240ms ease, margin-right 240ms ease, transform 240ms ease;
     }
 
-    body.snapshot-open .site-content { margin-right: 0; }
+    body.snapshot-open .site-content {
+      margin-right: 0;
+      transform: translateX(-100vw);
+    }
 
     .theme-toggle {
       position: fixed;
@@ -506,6 +509,43 @@
       transition: transform 240ms ease, visibility 240ms ease;
     }
 
+    .drawer-resize-handle {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -9px;
+      display: grid;
+      width: 18px;
+      place-items: center;
+      cursor: col-resize;
+      touch-action: none;
+    }
+
+    .drawer-resize-handle::before {
+      width: 2px;
+      height: 56px;
+      border-radius: 999px;
+      background: var(--line);
+      content: "";
+      opacity: 0;
+      transition: background 150ms ease, opacity 150ms ease;
+    }
+
+    .shared-drawer:hover .drawer-resize-handle::before,
+    .drawer-resize-handle:focus-visible::before,
+    body.drawer-resizing .drawer-resize-handle::before {
+      background: var(--ink);
+      opacity: 1;
+    }
+
+    .drawer-resize-handle:focus-visible { outline: none; }
+
+    body.drawer-resizing,
+    body.drawer-resizing * { cursor: col-resize !important; user-select: none; }
+
+    body.drawer-resizing .site-content,
+    body.drawer-resizing .shared-drawer { transition: none; }
+
     .snapshot-template {
       display: none;
     }
@@ -542,28 +582,71 @@
       color: #64748b;
     }
 
-    .media::after {
-      position: absolute;
-      z-index: 1;
-      inset: 0;
-      background: linear-gradient(110deg, transparent 38%, rgb(255 255 255 / 0.3) 48%, transparent 58%);
-      content: "";
-      pointer-events: none;
-      transform: translateX(-125%);
-      animation: media-shine 5.5s ease-in-out infinite;
-    }
-
-    @keyframes media-shine {
-      0% { transform: translateX(-125%); }
-      28%, 100% { transform: translateX(125%); }
-    }
-
     .media video,
     .media img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+
+    .media--screen {
+      aspect-ratio: auto;
+      margin-top: 24px;
+    }
+
+    .media--screen img {
+      display: block;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .media-carousel { margin: 0; }
+
+    .carousel-previews {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+      overflow-x: auto;
+      padding: 4px;
+      scrollbar-width: thin;
+    }
+
+    .carousel-preview {
+      display: grid;
+      flex: 1 1 0;
+      min-width: 0;
+      overflow: hidden;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      font: 500 10px/1.2 Geist, system-ui, sans-serif;
+      text-align: left;
+    }
+
+    .carousel-preview:hover,
+    .carousel-preview[aria-pressed="true"] { background: #fff1ee; }
+
+    .carousel-preview:focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: 2px;
+    }
+
+    .carousel-preview img,
+    .carousel-video-preview {
+      display: grid;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      place-items: center;
+      border-radius: 2px;
+      background: #fbe5e0;
+      color: #334155;
+      object-fit: cover;
+    }
+
+    .carousel-video-preview .material-symbols-outlined { font-size: 18px; }
 
     .details { padding: 22px 0 2px; }
     .details > div {
@@ -829,6 +912,9 @@
     body[data-theme="dark"] .decision-list li { color: #e2e8f0; }
     body[data-theme="dark"] .label { color: #cbd5e1; }
     body[data-theme="dark"] .media { background: #1e293b; color: #cbd5e1; }
+    body[data-theme="dark"] .carousel-preview:hover,
+    body[data-theme="dark"] .carousel-preview[aria-pressed="true"] { background: #1f2937; }
+    body[data-theme="dark"] .carousel-video-preview { background: #334155; color: #f8fafc; }
     body[data-theme="dark"] .related-card { border-color: #475569; background: #1e293b; color: #f8fafc; }
     body[data-theme="dark"] .related-card:hover { border-color: #94a3b8; background: #273549; }
     body[data-theme="dark"] .related-card:focus-visible { outline-color: #f8fafc; }
@@ -900,8 +986,13 @@
       body.snapshot-open .site-content {
         width: calc(100% - var(--side-panel-width));
         margin-right: var(--side-panel-width);
+        transform: translateX(0);
       }
       body.snapshot-open .theme-toggle { right: calc(var(--side-panel-width) + 20px); }
+    }
+
+    @media (max-width: 767px) {
+      .drawer-resize-handle { display: none; }
     }
 
     @media (min-width: 1280px) {
@@ -961,17 +1052,25 @@
         </div>
         <aside id="snapshot-transparency" class="popover snapshot-template" role="dialog" aria-label="Project snapshot">
           <button class="close" type="button" aria-label="Close snapshot">×</button>
-          <div class="media"><video controls muted playsinline src="assets/Eu%20Tax%20-%20TP.mp4"></video></div>
+          <div class="media-carousel">
+            <div class="media"><video controls muted playsinline src="assets/Eu%20Tax%20-%20TP.mp4"></video></div>
+            <div class="carousel-previews" role="group" aria-label="Transparency panel screens">
+              <button class="carousel-preview" type="button" aria-label="Transparency panel walkthrough" aria-pressed="true" data-media-type="video" data-media-src="assets/Eu%20Tax%20-%20TP.mp4"><span class="carousel-video-preview" aria-hidden="true"><span class="material-symbols-outlined">play_arrow</span></span></button>
+              <button class="carousel-preview" type="button" aria-label="Transparency panel anatomy" aria-pressed="false" data-media-type="image" data-media-src="assets/clarity-panel-anatomy.jpg" data-media-alt="Anatomy of the Clarity AI transparency panel"><img src="assets/clarity-panel-anatomy.jpg" alt=""></button>
+              <button class="carousel-preview" type="button" aria-label="EU Taxonomy transparency panel" aria-pressed="false" data-media-type="image" data-media-src="assets/eu-taxonomy-panel.jpg" data-media-alt="Clarity AI EU Taxonomy table with transparency side panels"><img src="assets/eu-taxonomy-panel.jpg" alt=""></button>
+            </div>
+          </div>
           <div class="details">
-            <div><span class="label">Tension</span><p>Investment teams could see an ESG score, but they could not easily see the underlying drivers and data that shaped it.</p></div>
-            <div><span class="label">Why we solved it</span><p>Transparency data was available, but 22% of clients still could not find or compare it. We made the data clearer, easier to compare and more accessible.</p></div>
-            <div><span class="label">Outcome</span><p>The panel supported a broader transparency initiative that helped lift user satisfaction from 75% to 90%; it was subsequently adopted by 8 product teams.</p></div>
+            <div><span class="label">Tension</span><p>Users needed to understand the evidence behind ESG scores, but tooltips made it difficult to explore historical data, score logs and supporting information while reviewing companies.</p></div>
+            <div><span class="label">Why we solved it</span><p>The supporting data was available, but its presentation could not accommodate its depth and complexity. Users needed a way to investigate scores and data points without losing their place in the table.</p></div>
+            <div><span class="label">Outcome</span><p>The panel supported a broader transparency initiative that helped increase user satisfaction from 75% to 90%. The interaction pattern was subsequently adopted by five product teams.</p></div>
             <div class="design-decisions">
               <span class="label">Design decisions</span>
               <ul class="decision-list">
-                <li>Break each ESG score into clear drivers and underlying data.</li>
-                <li>Keep definitions and methodology in context, rather than hidden in help content.</li>
-                <li>Use comparison-ready patterns so teams can assess companies faster.</li>
+                <li>Replace tooltips with side panels to accommodate richer evidence and historical data.</li>
+                <li>Keep the table visible so users retain context while investigating a score.</li>
+                <li>Allow users to move between table cells and update the panel’s content.</li>
+                <li>Establish a consistent interaction pattern across scores and data points.</li>
               </ul>
             </div>
             <div class="related">
@@ -1006,17 +1105,26 @@
         </div>
         <aside id="snapshot-ai-insights" class="popover snapshot-template" role="dialog" aria-label="Project snapshot">
           <button class="close" type="button" aria-label="Close snapshot">×</button>
-          <div class="media"><video controls muted playsinline src="assets/AI%20Insight%20-%20Product%20Video.%20July%202024-%20v7.mp4"></video></div>
+          <div class="media-carousel">
+            <div class="media"><video controls muted playsinline src="assets/AI%20Insight%20-%20Product%20Video.%20July%202024-%20v7.mp4"></video></div>
+            <div class="carousel-previews" role="group" aria-label="AI Insights screens">
+              <button class="carousel-preview" type="button" aria-label="AI Insights walkthrough" aria-pressed="true" data-media-type="video" data-media-src="assets/AI%20Insight%20-%20Product%20Video.%20July%202024-%20v7.mp4"><span class="carousel-video-preview" aria-hidden="true"><span class="material-symbols-outlined">play_arrow</span></span></button>
+              <button class="carousel-preview" type="button" aria-label="AI Insights platform design" aria-pressed="false" data-media-type="image" data-media-src="assets/clarity-insights-platform.png" data-media-alt="Clarity AI Insights platform design showing transparent AI responses"><img src="assets/clarity-insights-platform.png" alt=""></button>
+              <button class="carousel-preview" type="button" aria-label="AI Insights full view" aria-pressed="false" data-media-type="image" data-media-src="assets/ai-insights-full-view.png" data-media-alt="Clarity AI Insights full view across portfolio and company reporting"><img src="assets/ai-insights-full-view.png" alt=""></button>
+              <button class="carousel-preview" type="button" aria-label="Controversies heatmap" aria-pressed="false" data-media-type="image" data-media-src="assets/controversies-heatmap-oecd.jpg" data-media-alt="Clarity AI controversies heatmap with OECD guideline detail panel"><img src="assets/controversies-heatmap-oecd.jpg" alt=""></button>
+            </div>
+          </div>
           <div class="details">
-            <div><span class="label">Tension</span><p>Asset managers had sustainability data, but had to dig through tables, scores and company pages to use it. They needed fast answers they could verify.</p></div>
-            <div><span class="label">Why we solved it</span><p>Clarity AI had a wealth of data, but customers told us that understanding it still took most of their time. We used AI to aggregate the evidence into faster, decision-ready insights.</p></div>
-            <div><span class="label">Outcome</span><p>Made complex sustainability information easier to explore while keeping the underlying evidence visible.</p></div>
+            <div><span class="label">Tension</span><p>Portfolio and asset managers needed to identify what mattered within large volumes of data, without losing access to the detail behind an insight.</p></div>
+            <div><span class="label">Why we solved it</span><p>Similar needs appeared across company, portfolio and fund views. We needed an approach that addressed specific ESG questions while also supporting other domains, including climate and regulatory analysis.</p></div>
+            <div><span class="label">Outcome</span><p>Adoption of portfolio-level ESG risk analysis rose from 10% to 12% following the rollout of AI Insights—a 2 percentage-point increase.</p></div>
             <div class="design-decisions">
               <span class="label">Design decisions</span>
               <ul class="decision-list">
-                <li>Show source evidence and retrieval steps alongside AI-generated answers.</li>
-                <li>Use familiar filters, tables and raw data patterns to build trust.</li>
-                <li>Frame AI as guided exploration, not an opaque recommendation engine.</li>
+                <li>Surface useful insights while preserving access to supporting detail.</li>
+                <li>Adapt the experience to company, portfolio and fund contexts.</li>
+                <li>Define shared patterns while allowing for domain-specific requirements.</li>
+                <li>Align product teams, domain specialists and engineering around a consistent approach across in-app experiences and reporting.</li>
               </ul>
             </div>
             <div class="related" data-related-slot="ai-insights"></div>
@@ -1025,7 +1133,7 @@
         </aside>
       </article>
 
-      <article class="row" data-year="2026">
+      <article class="row" data-year="2025">
         <div class="main">
           <div class="company" data-company="Risk Ledger">
             <div class="company-logo company-logo--risk-ledger"><span class="risk-ledger-lockup" role="img" aria-label="Risk Ledger"><svg class="risk-ledger-mark risk-ledger-mark--light" viewBox="0 0 39 34" fill="none" aria-hidden="true"><path d="M1.15625 1.15486V32.5507L19.1639 24.5836L37.177 32.4312V1.15486L19.1639 8.99704L1.15625 1.15486Z" stroke="currentColor" stroke-width="2.30972" stroke-linejoin="round"/></svg><svg class="risk-ledger-mark risk-ledger-mark--gradient" viewBox="0 0 39 34" fill="none" aria-hidden="true"><defs><linearGradient id="risk-gradient-domain" x1="0.966169" y1="1.15486" x2="24.6808" y2="42.5422" gradientUnits="userSpaceOnUse"><stop stop-color="#46FFC9"/><stop offset="0.682692" stop-color="#3BAEEC"/><stop offset="1" stop-color="#6133F7"/></linearGradient></defs><path d="M1.15625 1.15486V32.5507L19.1639 24.5836L37.177 32.4312V1.15486L19.1639 8.99704L1.15625 1.15486Z" stroke="url(#risk-gradient-domain)" stroke-width="2.30972" stroke-linejoin="round"/></svg><span>Risk Ledger</span></span></div>
@@ -1035,7 +1143,7 @@
               <h3>Automate domain discovery for suppliers</h3>
               <button class="trigger" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="snapshot-drawer">View snapshot</button>
             </div>
-            <span class="story-company-name">Risk Ledger - 2026</span>
+            <span class="story-company-name">Risk Ledger - 2025</span>
             <p>Designed a continuous asset discovery product that gives security teams visibility of their external attack surface and uncovers unknown risks.</p>
           </div>
         </div>
@@ -1043,15 +1151,16 @@
           <button class="close" type="button" aria-label="Close snapshot">×</button>
           <div class="media"><img src="assets/Portfolio%20Assets%20Disco.jpg" alt="Asset discovery product interface"></div>
           <div class="details">
-            <div><span class="label">Tension</span><p>Security teams lacked a continuously updated view of supplier-facing assets and the risks those assets introduced.</p></div>
-            <div><span class="label">Why we solved it</span><p>Seventy per cent of suppliers added no more than one asset, leaving teams with an incomplete view of their exposure. We automated asset discovery to build a more complete, continuously updated picture.</p></div>
-            <div><span class="label">Outcome</span><p>Created a clearer way to monitor supplier-facing assets and surface security issues continuously.</p></div>
+            <div><span class="label">Tension</span><p>Seventy per cent of suppliers added no more than one asset, raising concerns about the completeness of monitoring coverage.</p></div>
+            <div><span class="label">Why we solved it</span><p>Clients needed visibility into additional domains, applications and portals. Automated discovery could expand that visibility, while suppliers needed a straightforward way to confirm which assets belonged to them.</p></div>
+            <div><span class="label">Outcome</span><p>Automated discovery accounted for approximately 79–80% of all asset additions over six months. Suppliers verified 21,752 discovered assets, confirming 57% as valid for security scanning and rejecting 43%.</p></div>
             <div class="design-decisions">
               <span class="label">Design decisions</span>
               <ul class="decision-list">
-                <li>Make asset discovery continuous rather than dependent on supplier input.</li>
-                <li>Prioritise previously unknown external assets and the risks they introduce.</li>
-                <li>Use a scan-friendly table so security teams can act on findings quickly.</li>
+                <li>Make discovery continuous to reduce reliance on manual supplier submissions.</li>
+                <li>Use company, product and website information to identify potential assets.</li>
+                <li>Balance fast client investigation with straightforward supplier verification.</li>
+                <li>Present assets and security findings in a scannable table.</li>
               </ul>
             </div>
             <div class="related">
@@ -1065,7 +1174,7 @@
                 </span>
               </a>
             </div>
-            <div class="project-year"><span class="label">Year</span><p>2026</p></div>
+            <div class="project-year"><span class="label">Year</span><p>2025</p></div>
           </div>
         </aside>
       </article>
@@ -1086,20 +1195,37 @@
         </div>
         <aside id="snapshot-certifications" class="popover snapshot-template" role="dialog" aria-label="Project snapshot">
           <button class="close" type="button" aria-label="Close snapshot">×</button>
-          <div class="media"><video controls muted playsinline src="assets/Security%20Certs.mov"></video></div>
+          <div class="media-carousel">
+            <div class="media"><video controls muted playsinline src="assets/Security%20Certs.mov"></video></div>
+            <div class="carousel-previews" role="group" aria-label="Security Certifications screens">
+              <button class="carousel-preview" type="button" aria-label="Security Certifications walkthrough" aria-pressed="true" data-media-type="video" data-media-src="assets/Security%20Certs.mov"><span class="carousel-video-preview" aria-hidden="true"><span class="material-symbols-outlined">play_arrow</span></span></button>
+              <button class="carousel-preview" type="button" aria-label="Security Certifications overview" aria-pressed="false" data-media-type="image" data-media-src="assets/certs-panel-2.jpg" data-media-alt="Risk Ledger supplier profile showing discovered security certifications"><img src="assets/certs-panel-2.jpg" alt=""></button>
+              <button class="carousel-preview" type="button" aria-label="Security Certifications detail view" aria-pressed="false" data-media-type="image" data-media-src="assets/certs-detail-2.jpg" data-media-alt="Risk Ledger certifications list with certificate detail panel"><img src="assets/certs-detail-2.jpg" alt=""></button>
+            </div>
+          </div>
           <div class="details">
             <div><span class="label">Tension</span><p>Thirty per cent of suppliers never responded to information requests, with client teams lacking the capacity to keep chasing them. This left gaps in the supplier network and the evidence available for assessments.</p></div>
-            <div><span class="label">Why we solved it</span><p>Research identified certifications as a valuable starting point: clients needed evidence for assessments, while suppliers needed to demonstrate that they met requirements for continuing business. Automatically sourcing certification data could help close these gaps without additional follow-up.</p></div>
+            <div><span class="label">Why we solved it</span><p>Research found that suppliers were reluctant to engage because they already had the business, did not want to share information twice, or did not want to create another account. Security certifications offered a practical starting point: 75% of suppliers already published them publicly, and 95% of clients required them. Automatically sourcing this evidence could close information gaps without asking suppliers to repeat the work.</p></div>
             <div><span class="label">Outcome</span><p>Achieved 70% accuracy in certification discovery, with 60% of the 120-client base using the capability to find certifications.</p></div>
             <div class="design-decisions">
               <span class="label">Design decisions</span>
               <ul class="decision-list">
                 <li>Investigate the causes of non-response before defining a solution.</li>
-                <li>Prioritise certifications based on client needs, business value and engineering effort.</li>
+                <li>Create a systematic solution that can be used for engaged suppliers, prefill answers for suppliers.</li>
                 <li>Automatically source evidence to reduce dependence on manual follow-up.</li>
               </ul>
             </div>
-            <div class="related" data-related-slot="certifications"></div>
+            <div class="related">
+              <span class="label">Releases</span>
+              <a class="related-card" href="https://www.riskledger.com/changelog#april-2026-faster-reviews-with-greater-confidence" target="_blank" rel="noreferrer" title="April 2026: Faster reviews with greater confidence">
+                <img src="https://cdn.prod.website-files.com/6525b54b29494dc8093fea86/6535a9e46047abfdf8fef3b0_cover-page-light.jpg" alt="">
+                <span class="release-copy">
+                  <span class="release-source">Risk Ledger · Changelog</span>
+                  <span class="release-title">April 2026: Faster reviews with greater confidence</span>
+                  <span class="release-description">Certificate Discovery surfaces verified supplier certificate data during review.</span>
+                </span>
+              </a>
+            </div>
             <div class="project-year"><span class="label">Year</span><p>2026</p></div>
           </div>
         </aside>
@@ -1163,6 +1289,7 @@
   </div>
 
   <aside id="snapshot-drawer" class="popover shared-drawer" role="dialog" aria-modal="true" aria-label="Project snapshot">
+    <div class="drawer-resize-handle" role="separator" aria-orientation="vertical" aria-label="Resize snapshot panel" aria-valuemin="320" tabindex="0"></div>
     <div class="drawer-content"></div>
   </aside>
 
@@ -1203,8 +1330,87 @@
 
     const drawer = document.querySelector('.shared-drawer');
     const drawerContent = drawer.querySelector('.drawer-content');
+    const resizeHandle = drawer.querySelector('.drawer-resize-handle');
+    const desktopDrawer = window.matchMedia('(min-width: 768px)');
     let activeRow = null;
     let contentTimer = null;
+
+    function drawerBounds() {
+      return { min: 320, max: Math.min(640, window.innerWidth - 280) };
+    }
+
+    function setDrawerWidth(width) {
+      const { min, max } = drawerBounds();
+      const nextWidth = Math.round(Math.min(Math.max(width, min), max));
+      document.documentElement.style.setProperty('--side-panel-width', `${nextWidth}px`);
+      resizeHandle.setAttribute('aria-valuemin', String(min));
+      resizeHandle.setAttribute('aria-valuemax', String(max));
+      resizeHandle.setAttribute('aria-valuenow', String(nextWidth));
+    }
+
+    resizeHandle.addEventListener('pointerdown', (event) => {
+      if (!desktopDrawer.matches) return;
+      event.preventDefault();
+      const startX = event.clientX;
+      const startWidth = drawer.getBoundingClientRect().width;
+      document.body.classList.add('drawer-resizing');
+      resizeHandle.setPointerCapture(event.pointerId);
+
+      const resize = (moveEvent) => setDrawerWidth(startWidth + startX - moveEvent.clientX);
+      const stopResize = () => {
+        document.body.classList.remove('drawer-resizing');
+        resizeHandle.removeEventListener('pointermove', resize);
+        resizeHandle.removeEventListener('pointerup', stopResize);
+        resizeHandle.removeEventListener('pointercancel', stopResize);
+      };
+
+      resizeHandle.addEventListener('pointermove', resize);
+      resizeHandle.addEventListener('pointerup', stopResize);
+      resizeHandle.addEventListener('pointercancel', stopResize);
+    });
+
+    resizeHandle.addEventListener('keydown', (event) => {
+      if (!desktopDrawer.matches) return;
+      const currentWidth = drawer.getBoundingClientRect().width;
+      const { min, max } = drawerBounds();
+      const step = 24;
+      const keys = {
+        ArrowLeft: currentWidth + step,
+        ArrowRight: currentWidth - step,
+        Home: min,
+        End: max
+      };
+      if (!(event.key in keys)) return;
+      event.preventDefault();
+      setDrawerWidth(keys[event.key]);
+    });
+
+    desktopDrawer.addEventListener('change', (event) => {
+      if (!event.matches) document.documentElement.style.removeProperty('--side-panel-width');
+    });
+
+    drawerContent.addEventListener('click', (event) => {
+      const preview = event.target.closest('.carousel-preview');
+      if (!preview) return;
+      const carousel = preview.closest('.media-carousel');
+      const stage = carousel.querySelector('.media');
+      const media = document.createElement(preview.dataset.mediaType === 'video' ? 'video' : 'img');
+
+      if (preview.dataset.mediaType === 'video') {
+        media.controls = true;
+        media.muted = true;
+        media.playsInline = true;
+        media.setAttribute('src', preview.dataset.mediaSrc);
+      } else {
+        media.setAttribute('src', preview.dataset.mediaSrc);
+        media.setAttribute('alt', preview.dataset.mediaAlt);
+      }
+
+      stage.replaceChildren(media);
+      carousel.querySelectorAll('.carousel-preview').forEach((button) => {
+        button.setAttribute('aria-pressed', String(button === preview));
+      });
+    });
 
     function closeAll() {
       window.clearTimeout(contentTimer);
