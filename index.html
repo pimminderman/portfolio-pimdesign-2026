@@ -150,9 +150,9 @@
       width: 128px;
       height: 128px;
       margin: 0 0 28px;
-      border: 1px solid var(--line);
+      border: 0;
       border-radius: 50%;
-      outline: 1px solid var(--line);
+      outline: 1px solid #fda89a;
       outline-offset: 5px;
       display: block;
       object-fit: cover;
@@ -168,11 +168,24 @@
     .eyebrow,
     .section-heading .heading {
       color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       font-size: 14px;
       font-weight: 600;
       letter-spacing: 0.08em;
       line-height: 1.2;
       text-transform: uppercase;
+    }
+
+    .eyebrow::before,
+    .section-heading .heading::before {
+      width: 10px;
+      height: 10px;
+      flex: 0 0 auto;
+      border: 1.5px solid #fda89a;
+      border-radius: 50%;
+      content: "";
     }
 
     .intro p {
@@ -210,10 +223,6 @@
     .section-heading {
       padding: 0 8px;
       text-align: left;
-    }
-
-    .section-heading .heading {
-      display: block;
     }
 
     .section-heading p {
@@ -300,28 +309,12 @@
     }
 
     .project-item {
-      display: grid;
-      grid-template-columns: 40px minmax(0, 1fr);
-      gap: 24px;
-      align-items: center;
+      display: block;
       padding: 16px 8px;
       border-bottom: 1px solid var(--line);
       color: var(--ink);
       text-decoration: none;
       transition: background 150ms ease;
-    }
-
-    .project-mark {
-      display: inline-grid;
-      width: 40px;
-      height: 40px;
-      place-items: center;
-      border-radius: 50%;
-      background: #05070d;
-      color: #f8fafc;
-      font-family: 'Material Symbols Outlined';
-      font-size: 20px;
-      line-height: 1;
     }
 
     .project-copy { min-width: 0; }
@@ -387,10 +380,10 @@
 
     .company-logo--risk-ledger {
       width: 40px;
-      border-radius: 50%;
-      background: url('assets/figma-story-mark.png') center / cover no-repeat;
+      background: transparent;
     }
-    .company-logo--risk-ledger .risk-ledger-lockup { opacity: 0; }
+    .company-logo--risk-ledger .risk-ledger-lockup { gap: 0; }
+    .company-logo--risk-ledger .risk-ledger-lockup > span { display: none; }
     .company-logo--clarity img {
       width: 40px;
       height: 40px;
@@ -425,8 +418,8 @@
     .risk-ledger-mark--gradient { display: none; }
 
     body[data-theme="dark"] .risk-ledger-lockup { color: #f8fafc; }
-    body[data-theme="dark"] .risk-ledger-mark--light { display: none; }
-    body[data-theme="dark"] .risk-ledger-mark--gradient { display: block; }
+    body[data-theme="dark"] .risk-ledger-mark--light { display: block; }
+    body[data-theme="dark"] .risk-ledger-mark--gradient { display: none; }
     body[data-theme="dark"] .company-logo--clarity img { filter: grayscale(1) brightness(0) invert(1); }
 
     .copy h3 {
@@ -1251,21 +1244,18 @@
     </div>
     <div class="project-list">
       <a class="project-item" href="https://github.com/pimminderman/portfolio-pimdesign-2026/blob/main/DESIGN_SYSTEM.md" target="_blank" rel="noreferrer">
-        <span class="project-mark" aria-hidden="true">dashboard_customize</span>
         <div class="project-copy">
           <h3>Portfolio — design system</h3>
           <p>Reusable patterns and clear rules for evolving this portfolio.</p>
         </div>
       </a>
       <a class="project-item" href="https://pimminderman.github.io/sharped/" target="_blank" rel="noreferrer">
-        <span class="project-mark" aria-hidden="true">gradient</span>
         <div class="project-copy">
           <h3>Sharped</h3>
           <p>Sharp-edged gradients and image patterns for Product by Pim.</p>
         </div>
       </a>
       <a class="project-item" href="painter-carpentry.html">
-        <span class="project-mark" aria-hidden="true">carpenter</span>
         <div class="project-copy">
           <h3>Painter &amp; carpentry</h3>
           <p>Hands-on painting, decorating and joinery work across London.</p>

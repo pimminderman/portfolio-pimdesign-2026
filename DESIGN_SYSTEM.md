@@ -41,6 +41,8 @@ Use **Geist Mono** only for Stories company-year metadata; all body copy remains
 
 Headings use `letter-spacing: -0.025em`; uppercase labels use `0.06–0.08em` letter spacing.
 
+The four primary section labels—Product by Pim, Stories, Other projects and Companies—include a 10px unfilled coral circle (`#FDA89A`) before the text, separated by an 8px gap.
+
 ### Spacing and layout
 
 Use a 4px-based rhythm where possible: `4, 8, 12, 16, 24, 32, 48, 64`.
@@ -60,7 +62,7 @@ The drawer changes the usable page width from the `md` breakpoint (768px) upward
 ### Portrait
 
 - Circular photograph: 128px desktop, 108px mobile.
-- One 1px border plus an outer 1px outline with a 5px gap.
+- One outer 1px coral (`#FDA89A`) outline with a 5px gap.
 - Gentle vertical float: 4 seconds, ease-in-out, 5px maximum travel.
 
 ### Companies
@@ -76,13 +78,13 @@ Companies sits below Other projects as a simple, editable two-column list: compa
 
 Each case study is a compact, full-row snapshot trigger containing a company mark, title and company-year metadata.
 
-- Company marks are 40px circular brand treatments. Risk Ledger uses the approved gradient mark from the story component; Clarity AI uses its standalone C mark without the wordmark. Company and year appear as one muted secondary line below the title.
+- Company marks sit in a 40px frame. Risk Ledger uses its standalone line mark on a transparent background—dark in light mode and white in dark mode; Clarity AI uses its standalone C mark without the wordmark. Company and year appear as one muted secondary line below the title.
 - Divider: 1px `--line` below each row.
 - Keep one primary story idea in the title; detail and outcome copy belong in the snapshot drawer.
 
 ### Other-project row
 
-Other projects use the same 40px-mark, title-and-supporting-line row structure as Stories, but the whole row is its project link rather than a snapshot trigger.
+Other projects are text-only rows with title and supporting copy, using the same 8px content inset and coral hover treatment as Stories. The whole row is its project link rather than a snapshot trigger.
 
 ### Snapshot trigger
 
