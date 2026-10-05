@@ -78,7 +78,7 @@ Companies sits below Other projects as a simple, editable two-column list: compa
 
 Each case study is a compact, full-row snapshot trigger containing a company mark, title and company-year metadata.
 
-- Company marks sit in a 40px frame. Risk Ledger uses its standalone line mark on a transparent background—dark in light mode and white in dark mode; Clarity AI uses its standalone C mark without the wordmark. Company and year appear as one muted secondary line below the title.
+- Company marks sit in a 40px frame. Risk Ledger uses a 24px × 22px standalone line mark on a transparent background—dark in light mode and white in dark mode; Clarity AI uses a 24px standalone C mark without the wordmark. Company and year appear as one muted secondary line below the title.
 - Divider: 1px `--line` below each row.
 - Keep one primary story idea in the title; detail and outcome copy belong in the snapshot drawer.
 
