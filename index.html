@@ -61,6 +61,8 @@
       --line: #dbe2ea;
       --card: #ffffff;
       --side-panel-width: 100vw;
+      /* A calm, Keynote-like curve: ease out of the page, settle into the detail. */
+      --drawer-ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     * { box-sizing: border-box; }
@@ -81,12 +83,16 @@
       width: 100%;
       min-width: 0;
       margin-right: 0;
-      transition: width 240ms ease, margin-right 240ms ease, transform 240ms ease;
+      transition: transform 760ms var(--drawer-ease), opacity 340ms ease-out;
     }
 
     body.snapshot-open .site-content {
       margin-right: 0;
       transform: translateX(-100vw);
+      opacity: 0;
+      pointer-events: none;
+      /* Let the page recede before it begins its journey out of view. */
+      transition: opacity 340ms ease-out, transform 760ms var(--drawer-ease) 260ms;
     }
 
     .theme-toggle {
@@ -436,7 +442,7 @@
       display: block;
       margin-top: 4px;
       color: #707070;
-      font-size: 14px;
+      font-size: 12px;
       line-height: 1.3;
     }
 
@@ -507,49 +513,12 @@
       border-radius: 0;
       background: var(--card);
       box-shadow: -24px 0 70px rgb(15 23 42 / 14%);
-      opacity: 1;
-      visibility: hidden;
-      transform: translateX(100%);
-      pointer-events: none;
-      transition: transform 240ms ease, visibility 240ms ease;
-    }
-
-    .drawer-resize-handle {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: -9px;
-      display: grid;
-      width: 18px;
-      place-items: center;
-      cursor: col-resize;
-      touch-action: none;
-    }
-
-    .drawer-resize-handle::before {
-      width: 2px;
-      height: 56px;
-      border-radius: 999px;
-      background: var(--line);
-      content: "";
       opacity: 0;
-      transition: background 150ms ease, opacity 150ms ease;
+      visibility: hidden;
+      transform: none;
+      pointer-events: none;
+      transition: opacity 440ms var(--drawer-ease), visibility 0s linear 1.1s;
     }
-
-    .shared-drawer:hover .drawer-resize-handle::before,
-    .drawer-resize-handle:focus-visible::before,
-    body.drawer-resizing .drawer-resize-handle::before {
-      background: var(--ink);
-      opacity: 1;
-    }
-
-    .drawer-resize-handle:focus-visible { outline: none; }
-
-    body.drawer-resizing,
-    body.drawer-resizing * { cursor: col-resize !important; user-select: none; }
-
-    body.drawer-resizing .site-content,
-    body.drawer-resizing .shared-drawer { transition: none; }
 
     .snapshot-template {
       display: none;
@@ -558,19 +527,42 @@
     body.snapshot-open .shared-drawer {
       opacity: 1;
       visibility: visible;
-      transform: translateX(0);
+      transform: none;
       pointer-events: auto;
+      /* The drawer arrives after the page has faded and started moving away. */
+      transition: opacity 480ms var(--drawer-ease) 600ms, visibility 0s linear 0s;
+    }
+
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .drawer-title {
+      margin: 0;
+      color: var(--ink);
+      font: 600 16px/1.25 Geist, system-ui, sans-serif;
+    }
+
+    .drawer-header .close {
+      position: static;
+      flex: 0 0 auto;
     }
 
     .drawer-content {
+      padding-top: 20px;
       opacity: 1;
       transform: translateX(0);
-      transition: opacity 140ms ease, transform 140ms ease;
+      transition: opacity 360ms ease-out;
     }
 
     .drawer-content.is-changing {
       opacity: 0;
-      transform: translateX(12px);
+      transform: none;
     }
 
     .media {
@@ -609,30 +601,29 @@
 
     .carousel-previews {
       display: flex;
+      align-items: center;
       gap: 8px;
       margin-top: 16px;
-      overflow-x: auto;
-      padding: 4px;
-      scrollbar-width: thin;
+      padding: 4px 0;
     }
 
     .carousel-preview {
-      display: grid;
-      flex: 1 1 0;
-      min-width: 0;
-      overflow: hidden;
-      padding: 4px;
-      border: 1px solid var(--line);
-      border-radius: 6px;
+      display: block;
+      flex: 0 0 auto;
+      width: 10px;
+      height: 10px;
+      padding: 0;
+      border: 1.5px solid #fda89a;
+      border-radius: 50%;
       background: transparent;
-      color: var(--ink);
       cursor: pointer;
-      font: 500 10px/1.2 Geist, system-ui, sans-serif;
-      text-align: left;
+      transition: transform 180ms ease, background 180ms ease;
     }
 
     .carousel-preview:hover,
-    .carousel-preview[aria-pressed="true"] { background: #fff1ee; }
+    .carousel-preview[aria-pressed="true"] { background: #fda89a; }
+
+    .carousel-preview:hover { transform: scale(1.15); }
 
     .carousel-preview:focus-visible {
       outline: 2px solid var(--ink);
@@ -640,18 +631,7 @@
     }
 
     .carousel-preview img,
-    .carousel-video-preview {
-      display: grid;
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      place-items: center;
-      border-radius: 2px;
-      background: #fbe5e0;
-      color: #334155;
-      object-fit: cover;
-    }
-
-    .carousel-video-preview .material-symbols-outlined { font-size: 18px; }
+    .carousel-video-preview { display: none; }
 
     .details { padding: 22px 0 2px; }
     .details > div {
@@ -779,8 +759,8 @@
       color: #64748b;
       font-size: 12px;
       font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      letter-spacing: 0;
+      text-transform: none;
     }
 
     .details p {
@@ -918,7 +898,7 @@
     body[data-theme="dark"] .label { color: #cbd5e1; }
     body[data-theme="dark"] .media { background: #1e293b; color: #cbd5e1; }
     body[data-theme="dark"] .carousel-preview:hover,
-    body[data-theme="dark"] .carousel-preview[aria-pressed="true"] { background: #1f2937; }
+    body[data-theme="dark"] .carousel-preview[aria-pressed="true"] { background: #fda89a; }
     body[data-theme="dark"] .carousel-video-preview { background: #334155; color: #f8fafc; }
     body[data-theme="dark"] .related-card { border-color: #475569; background: #1e293b; color: #f8fafc; }
     body[data-theme="dark"] .related-card:hover { border-color: #94a3b8; background: #273549; }
@@ -975,7 +955,6 @@
       .risk-ledger-lockup { font-size: 14px; }
       .risk-ledger-mark { width: 20px; height: 18px; }
       .copy h3 { font-size: 14px; }
-
       .close { top: 16px; right: 16px; width: 28px; height: 28px; }
       .details > div { grid-template-columns: 96px minmax(0, 1fr); gap: 12px; }
       .related-card { grid-template-columns: 64px minmax(0, 1fr); }
@@ -984,28 +963,16 @@
 
     /* Tailwind-aligned drawer touchpoints: md 768px, lg 1024px, xl 1280px, 2xl 1536px. */
     @media (min-width: 768px) {
-      :root { --side-panel-width: min(28rem, 48vw); }
-    }
-
-    @media (min-width: 768px) {
+      :root { --side-panel-width: 80vw; }
       body.snapshot-open .site-content {
-        width: calc(100% - var(--side-panel-width));
-        margin-right: var(--side-panel-width);
-        transform: translateX(0);
+        width: 100%;
+        margin-right: 0;
+        transform: translateX(calc(-1 * var(--side-panel-width)));
       }
-      body.snapshot-open .theme-toggle { right: calc(var(--side-panel-width) + 20px); }
-    }
-
-    @media (max-width: 767px) {
-      .drawer-resize-handle { display: none; }
-    }
-
-    @media (min-width: 1280px) {
-      :root { --side-panel-width: 32rem; }
-    }
-
-    @media (min-width: 1536px) {
-      :root { --side-panel-width: 35rem; }
+      body.snapshot-open .theme-toggle {
+        opacity: 0;
+        pointer-events: none;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1058,11 +1025,11 @@
         <aside id="snapshot-transparency" class="popover snapshot-template" role="dialog" aria-label="Project snapshot">
           <button class="close" type="button" aria-label="Close snapshot">×</button>
           <div class="media-carousel">
-            <div class="media"><video controls muted playsinline src="assets/Eu%20Tax%20-%20TP.mp4"></video></div>
+            <div class="media"><img src="assets/eu-taxonomy-panel.jpg" alt="Clarity AI EU Taxonomy table with transparency side panels"></div>
             <div class="carousel-previews" role="group" aria-label="Transparency panel screens">
-              <button class="carousel-preview" type="button" aria-label="Transparency panel walkthrough" aria-pressed="true" data-media-type="video" data-media-src="assets/Eu%20Tax%20-%20TP.mp4"><span class="carousel-video-preview" aria-hidden="true"><span class="material-symbols-outlined">play_arrow</span></span></button>
+              <button class="carousel-preview" type="button" aria-label="EU Taxonomy transparency panel" aria-pressed="true" data-media-type="image" data-media-src="assets/eu-taxonomy-panel.jpg" data-media-alt="Clarity AI EU Taxonomy table with transparency side panels"><img src="assets/eu-taxonomy-panel.jpg" alt=""></button>
               <button class="carousel-preview" type="button" aria-label="Transparency panel anatomy" aria-pressed="false" data-media-type="image" data-media-src="assets/clarity-panel-anatomy.jpg" data-media-alt="Anatomy of the Clarity AI transparency panel"><img src="assets/clarity-panel-anatomy.jpg" alt=""></button>
-              <button class="carousel-preview" type="button" aria-label="EU Taxonomy transparency panel" aria-pressed="false" data-media-type="image" data-media-src="assets/eu-taxonomy-panel.jpg" data-media-alt="Clarity AI EU Taxonomy table with transparency side panels"><img src="assets/eu-taxonomy-panel.jpg" alt=""></button>
+              <button class="carousel-preview" type="button" aria-label="Transparency panel walkthrough" aria-pressed="false" data-media-type="video" data-media-src="assets/Eu%20Tax%20-%20TP.mp4"><span class="carousel-video-preview" aria-hidden="true"><span class="material-symbols-outlined">play_arrow</span></span></button>
             </div>
           </div>
           <div class="details">
@@ -1111,12 +1078,12 @@
         <aside id="snapshot-ai-insights" class="popover snapshot-template" role="dialog" aria-label="Project snapshot">
           <button class="close" type="button" aria-label="Close snapshot">×</button>
           <div class="media-carousel">
-            <div class="media"><video controls muted playsinline src="assets/AI%20Insight%20-%20Product%20Video.%20July%202024-%20v7.mp4"></video></div>
+            <div class="media"><img src="assets/ai-insights-full-view.png" alt="Clarity AI Insights full view across portfolio and company reporting"></div>
             <div class="carousel-previews" role="group" aria-label="AI Insights screens">
-              <button class="carousel-preview" type="button" aria-label="AI Insights walkthrough" aria-pressed="true" data-media-type="video" data-media-src="assets/AI%20Insight%20-%20Product%20Video.%20July%202024-%20v7.mp4"><span class="carousel-video-preview" aria-hidden="true"><span class="material-symbols-outlined">play_arrow</span></span></button>
+              <button class="carousel-preview" type="button" aria-label="AI Insights full view" aria-pressed="true" data-media-type="image" data-media-src="assets/ai-insights-full-view.png" data-media-alt="Clarity AI Insights full view across portfolio and company reporting"><img src="assets/ai-insights-full-view.png" alt=""></button>
               <button class="carousel-preview" type="button" aria-label="AI Insights platform design" aria-pressed="false" data-media-type="image" data-media-src="assets/clarity-insights-platform.png" data-media-alt="Clarity AI Insights platform design showing transparent AI responses"><img src="assets/clarity-insights-platform.png" alt=""></button>
-              <button class="carousel-preview" type="button" aria-label="AI Insights full view" aria-pressed="false" data-media-type="image" data-media-src="assets/ai-insights-full-view.png" data-media-alt="Clarity AI Insights full view across portfolio and company reporting"><img src="assets/ai-insights-full-view.png" alt=""></button>
               <button class="carousel-preview" type="button" aria-label="Controversies heatmap" aria-pressed="false" data-media-type="image" data-media-src="assets/controversies-heatmap-oecd.jpg" data-media-alt="Clarity AI controversies heatmap with OECD guideline detail panel"><img src="assets/controversies-heatmap-oecd.jpg" alt=""></button>
+              <button class="carousel-preview" type="button" aria-label="AI Insights walkthrough" aria-pressed="false" data-media-type="video" data-media-src="assets/AI%20Insight%20-%20Product%20Video.%20July%202024-%20v7.mp4"><span class="carousel-video-preview" aria-hidden="true"><span class="material-symbols-outlined">play_arrow</span></span></button>
             </div>
           </div>
           <div class="details">
@@ -1201,11 +1168,11 @@
         <aside id="snapshot-certifications" class="popover snapshot-template" role="dialog" aria-label="Project snapshot">
           <button class="close" type="button" aria-label="Close snapshot">×</button>
           <div class="media-carousel">
-            <div class="media"><video controls muted playsinline src="assets/Security%20Certs.mov"></video></div>
+            <div class="media"><img src="assets/certs-panel-2.jpg" alt="Risk Ledger supplier profile showing discovered security certifications"></div>
             <div class="carousel-previews" role="group" aria-label="Security Certifications screens">
-              <button class="carousel-preview" type="button" aria-label="Security Certifications walkthrough" aria-pressed="true" data-media-type="video" data-media-src="assets/Security%20Certs.mov"><span class="carousel-video-preview" aria-hidden="true"><span class="material-symbols-outlined">play_arrow</span></span></button>
-              <button class="carousel-preview" type="button" aria-label="Security Certifications overview" aria-pressed="false" data-media-type="image" data-media-src="assets/certs-panel-2.jpg" data-media-alt="Risk Ledger supplier profile showing discovered security certifications"><img src="assets/certs-panel-2.jpg" alt=""></button>
+              <button class="carousel-preview" type="button" aria-label="Security Certifications overview" aria-pressed="true" data-media-type="image" data-media-src="assets/certs-panel-2.jpg" data-media-alt="Risk Ledger supplier profile showing discovered security certifications"><img src="assets/certs-panel-2.jpg" alt=""></button>
               <button class="carousel-preview" type="button" aria-label="Security Certifications detail view" aria-pressed="false" data-media-type="image" data-media-src="assets/certs-detail-2.jpg" data-media-alt="Risk Ledger certifications list with certificate detail panel"><img src="assets/certs-detail-2.jpg" alt=""></button>
+              <button class="carousel-preview" type="button" aria-label="Security Certifications walkthrough" aria-pressed="false" data-media-type="video" data-media-src="assets/Security%20Certs.mov"><span class="carousel-video-preview" aria-hidden="true"><span class="material-symbols-outlined">play_arrow</span></span></button>
             </div>
           </div>
           <div class="details">
@@ -1290,8 +1257,11 @@
   </footer>
   </div>
 
-  <aside id="snapshot-drawer" class="popover shared-drawer" role="dialog" aria-modal="true" aria-label="Project snapshot">
-    <div class="drawer-resize-handle" role="separator" aria-orientation="vertical" aria-label="Resize snapshot panel" aria-valuemin="320" tabindex="0"></div>
+  <aside id="snapshot-drawer" class="popover shared-drawer" role="dialog" aria-modal="true" aria-labelledby="snapshot-drawer-title">
+    <div class="drawer-header">
+      <h2 id="snapshot-drawer-title" class="drawer-title">Project snapshot</h2>
+      <button class="close" type="button" aria-label="Close snapshot">×</button>
+    </div>
     <div class="drawer-content"></div>
   </aside>
 
@@ -1350,64 +1320,9 @@
 
     const drawer = document.querySelector('.shared-drawer');
     const drawerContent = drawer.querySelector('.drawer-content');
-    const resizeHandle = drawer.querySelector('.drawer-resize-handle');
-    const desktopDrawer = window.matchMedia('(min-width: 768px)');
+    const drawerTitle = drawer.querySelector('.drawer-title');
     let activeRow = null;
     let contentTimer = null;
-
-    function drawerBounds() {
-      return { min: 320, max: Math.min(640, window.innerWidth - 280) };
-    }
-
-    function setDrawerWidth(width) {
-      const { min, max } = drawerBounds();
-      const nextWidth = Math.round(Math.min(Math.max(width, min), max));
-      document.documentElement.style.setProperty('--side-panel-width', `${nextWidth}px`);
-      resizeHandle.setAttribute('aria-valuemin', String(min));
-      resizeHandle.setAttribute('aria-valuemax', String(max));
-      resizeHandle.setAttribute('aria-valuenow', String(nextWidth));
-    }
-
-    resizeHandle.addEventListener('pointerdown', (event) => {
-      if (!desktopDrawer.matches) return;
-      event.preventDefault();
-      const startX = event.clientX;
-      const startWidth = drawer.getBoundingClientRect().width;
-      document.body.classList.add('drawer-resizing');
-      resizeHandle.setPointerCapture(event.pointerId);
-
-      const resize = (moveEvent) => setDrawerWidth(startWidth + startX - moveEvent.clientX);
-      const stopResize = () => {
-        document.body.classList.remove('drawer-resizing');
-        resizeHandle.removeEventListener('pointermove', resize);
-        resizeHandle.removeEventListener('pointerup', stopResize);
-        resizeHandle.removeEventListener('pointercancel', stopResize);
-      };
-
-      resizeHandle.addEventListener('pointermove', resize);
-      resizeHandle.addEventListener('pointerup', stopResize);
-      resizeHandle.addEventListener('pointercancel', stopResize);
-    });
-
-    resizeHandle.addEventListener('keydown', (event) => {
-      if (!desktopDrawer.matches) return;
-      const currentWidth = drawer.getBoundingClientRect().width;
-      const { min, max } = drawerBounds();
-      const step = 24;
-      const keys = {
-        ArrowLeft: currentWidth + step,
-        ArrowRight: currentWidth - step,
-        Home: min,
-        End: max
-      };
-      if (!(event.key in keys)) return;
-      event.preventDefault();
-      setDrawerWidth(keys[event.key]);
-    });
-
-    desktopDrawer.addEventListener('change', (event) => {
-      if (!event.matches) document.documentElement.style.removeProperty('--side-panel-width');
-    });
 
     drawerContent.addEventListener('click', (event) => {
       const preview = event.target.closest('.carousel-preview');
@@ -1446,7 +1361,8 @@
       const source = row.querySelector('.snapshot-template');
       const render = () => {
         drawerContent.innerHTML = source.innerHTML;
-        drawer.setAttribute('aria-label', source.getAttribute('aria-label'));
+        drawerContent.querySelector('.close')?.remove();
+        drawerTitle.textContent = row.querySelector('h3').textContent;
         window.requestAnimationFrame(() => drawerContent.classList.remove('is-changing'));
       };
 
@@ -1456,7 +1372,7 @@
       }
 
       drawerContent.classList.add('is-changing');
-      contentTimer = window.setTimeout(render, 140);
+      contentTimer = window.setTimeout(render, 360);
     }
 
     function openSnapshot(row) {
