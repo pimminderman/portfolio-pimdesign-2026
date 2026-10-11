@@ -84,17 +84,32 @@
       width: 100%;
       min-width: 0;
       margin-right: 0;
-      transition: transform 760ms var(--drawer-ease);
+      transition: transform 760ms var(--drawer-ease), opacity 460ms ease-out, filter 460ms ease-out;
     }
 
     body.snapshot-open .site-content {
       margin-right: 0;
       transform: translateX(var(--drawer-shift));
+      opacity: 0.56;
+      filter: grayscale(0.42) sepia(0.3) hue-rotate(305deg) saturate(0.85) brightness(0.86) contrast(0.95);
       pointer-events: none;
     }
 
     body.snapshot-open.snapshot-closing .site-content {
       transform: translateX(0);
+      opacity: 1;
+      filter: none;
+    }
+
+    /* Dark mode keeps the treatment on the content itself, without a colour layer. */
+    body[data-theme="dark"].snapshot-open .site-content {
+      opacity: 0.56;
+      filter: grayscale(0.36) sepia(0.26) hue-rotate(305deg) saturate(0.66) brightness(0.72) contrast(0.96);
+    }
+
+    body[data-theme="dark"].snapshot-open.snapshot-closing .site-content {
+      opacity: 1;
+      filter: none;
     }
 
     .theme-toggle {
@@ -517,7 +532,8 @@
       box-shadow: -20px 0 52px rgb(15 23 42 / 18%);
       opacity: 1;
       visibility: hidden;
-      transform: translateX(12%);
+      /* Rest fully outside the viewport; this prevents a close-time snap back. */
+      transform: translateX(100%);
       pointer-events: none;
       transition: transform 760ms var(--drawer-ease), visibility 0s linear 760ms;
     }
@@ -534,9 +550,9 @@
     }
 
     body.snapshot-open.snapshot-closing .shared-drawer {
-      transform: translateX(12%);
       pointer-events: none;
-      transition: transform 720ms var(--drawer-ease), visibility 0s linear 720ms;
+      transform: translateX(100%);
+      transition: transform 420ms var(--drawer-ease), visibility 0s linear 420ms;
     }
 
     .drawer-header {
@@ -1387,7 +1403,7 @@
       closeTimer = window.setTimeout(() => {
         document.body.classList.remove('snapshot-open', 'snapshot-closing');
         closeTimer = null;
-      }, 760);
+      }, 440);
     }
 
     function replaceDrawerContent(row, animate) {
