@@ -62,8 +62,9 @@
       --card: #ffffff;
       --side-panel-width: 100vw;
       --drawer-shift: -100vw;
-      /* A calm, Keynote-like curve: ease out of the page, settle into the detail. */
+      /* Shared easing for the drawer close. */
       --drawer-ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --drawer-sweep: cubic-bezier(0.45, 0, 0.55, 1);
     }
 
     * { box-sizing: border-box; }
@@ -84,7 +85,7 @@
       width: 100%;
       min-width: 0;
       margin-right: 0;
-      transition: transform 760ms var(--drawer-ease), opacity 460ms ease-out, filter 460ms ease-out;
+      transition: transform 900ms var(--drawer-sweep), opacity 460ms ease-out, filter 460ms ease-out;
     }
 
     body.snapshot-open .site-content {
@@ -546,7 +547,8 @@
       visibility: visible;
       transform: translateX(0);
       pointer-events: auto;
-      transition: transform 860ms var(--drawer-ease), visibility 0s linear 0s;
+      /* Page and drawer move together as one gentle sweep. */
+      transition: transform 900ms var(--drawer-sweep), visibility 0s linear 0s;
     }
 
     body.snapshot-open.snapshot-closing .shared-drawer {
