@@ -18,6 +18,7 @@
   <meta name="twitter:description" content="Product design stories spanning sustainability data, AI insights and supply-chain security.">
   <meta name="twitter:image" content="https://pimminderman.github.io/portfolio-pimdesign-2026/assets/Pim_photo.jpg">
   <meta name="twitter:image:alt" content="Portrait of Pim Minderman">
+  <script>document.documentElement.classList.add('js');</script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -85,7 +86,7 @@
       width: 100%;
       min-width: 0;
       margin-right: 0;
-      transition: transform 900ms var(--drawer-sweep), opacity 460ms ease-out, filter 460ms ease-out;
+      transition: transform 900ms var(--drawer-sweep), opacity 560ms cubic-bezier(0.22, 1, 0.36, 1), filter 460ms ease-out;
     }
 
     body.snapshot-open .site-content {
@@ -100,6 +101,7 @@
       transform: translateX(0);
       opacity: 1;
       filter: none;
+      transition: transform 620ms var(--drawer-sweep), opacity 460ms ease-out, filter 460ms ease-out;
     }
 
     /* Dark mode keeps the treatment on the content itself, without a colour layer. */
@@ -181,7 +183,7 @@
       display: block;
       object-fit: cover;
       object-position: center 34%;
-      animation: portrait-float 4s ease-in-out infinite;
+      animation: portrait-float 4s ease-in-out 650ms infinite;
     }
 
     @keyframes portrait-float {
@@ -210,6 +212,12 @@
       border: 1.5px solid #fda89a;
       border-radius: 50%;
       content: "";
+    }
+
+    .eyebrow::before { display: none; }
+    .section-heading .heading::before {
+      border-color: #fda89a;
+      background: #fda89a;
     }
 
     .intro p {
@@ -256,6 +264,154 @@
       font-size: 14px;
       line-height: 1.3;
       white-space: nowrap;
+    }
+
+    .portfolio-story {
+      padding: 0 8px;
+      margin-bottom: 56px;
+    }
+
+    .portfolio-view-toggle {
+      position: fixed;
+      z-index: 5;
+      top: 18px;
+      right: 52px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      width: 104px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .portfolio-view-toggle::before {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 50%;
+      border-radius: 999px;
+      background: #fda89a;
+      content: "";
+      transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    body[data-portfolio-view="list"] .portfolio-view-toggle::before { transform: translateX(100%); }
+
+    .portfolio-view-toggle button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 24px;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font: 500 12px/1 Geist, system-ui, sans-serif;
+      position: relative;
+      z-index: 1;
+      transition: color 180ms ease;
+    }
+
+    .portfolio-view-toggle button[aria-pressed="true"] {
+      color: #171717;
+    }
+
+    body[data-portfolio-view="story"] .case-index-section,
+    body[data-portfolio-view="story"] .other-projects,
+    body[data-portfolio-view="story"] .experience-section { display: none; }
+
+    body[data-portfolio-view="list"] .portfolio-story { display: none; }
+
+    body[data-portfolio-view="list"] .intro,
+    body[data-portfolio-view="story"] .intro { padding-bottom: 40px; }
+
+    html.js .site-content.is-page-entering {
+      opacity: 0;
+    }
+
+    .portfolio-story.is-leaving {
+      opacity: 0;
+      transition: opacity 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    body.portfolio-view-list-leaving .case-index-section,
+    body.portfolio-view-list-leaving .other-projects,
+    body.portfolio-view-list-leaving .experience-section {
+      opacity: 0;
+      transition: opacity 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes portfolio-view-enter {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    body.portfolio-view-list-entering .case-index-section .section-heading,
+    body.portfolio-view-list-entering .case-index-section .row,
+    body.portfolio-view-list-entering .other-projects,
+    body.portfolio-view-list-entering .experience-section {
+      animation: portfolio-view-enter 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    body.portfolio-view-list-entering .case-index-section .row:nth-child(1) { animation-delay: 50ms; }
+    body.portfolio-view-list-entering .case-index-section .row:nth-child(2) { animation-delay: 110ms; }
+    body.portfolio-view-list-entering .case-index-section .row:nth-child(3) { animation-delay: 170ms; }
+    body.portfolio-view-list-entering .case-index-section .row:nth-child(4) { animation-delay: 230ms; }
+    body.portfolio-view-list-entering .other-projects { animation-delay: 310ms; }
+    body.portfolio-view-list-entering .experience-section { animation-delay: 370ms; }
+
+    body.portfolio-view-story-entering .portfolio-story h2,
+    body.portfolio-view-story-entering .portfolio-story p {
+      animation: portfolio-view-enter 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    body.portfolio-view-story-entering .portfolio-story p:nth-of-type(1) { animation-delay: 70ms; }
+    body.portfolio-view-story-entering .portfolio-story p:nth-of-type(2) { animation-delay: 140ms; }
+    body.portfolio-view-story-entering .portfolio-story p:nth-of-type(3) { animation-delay: 210ms; }
+    .portfolio-story h2 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.035em;
+      line-height: 1.2;
+    }
+
+    .portfolio-story p {
+      margin: 16px 0 0;
+      color: #334155;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .case-index-section .section-heading .heading,
+    .other-projects .section-heading .heading,
+    .experience-section .section-heading .heading {
+      font-size: 16px;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    .case-link {
+      display: inline;
+      padding: 0;
+      border: 0;
+      border-bottom: 1px solid #fda89a;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .case-link:hover { background: #fff1ee; border-bottom-color: transparent; }
+
+    .story-external-link {
+      color: inherit;
+      text-decoration-color: #fda89a;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
     }
 
     .work .story-company-name {
@@ -356,7 +512,7 @@
       margin: 4px 0 0;
       color: #475569;
       font-size: 14px;
-      line-height: 1.3;
+      line-height: 1.5;
     }
 
     .row {
@@ -554,7 +710,7 @@
     body.snapshot-open.snapshot-closing .shared-drawer {
       pointer-events: none;
       transform: translateX(100%);
-      transition: transform 420ms var(--drawer-ease), visibility 0s linear 420ms;
+      transition: transform 620ms var(--drawer-sweep), visibility 0s linear 620ms;
     }
 
     .drawer-header {
@@ -577,6 +733,115 @@
       flex: 0 0 auto;
     }
 
+    .drawer-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .notes-toggle {
+      min-height: 32px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      font: 500 12px/1 Geist, system-ui, sans-serif;
+      transition: background-color 160ms ease, border-color 160ms ease;
+    }
+
+    .notes-toggle:hover,
+    .notes-toggle[aria-expanded="true"] {
+      border-color: #fda89a;
+      background: #fff1ee;
+    }
+
+    .feedback-note {
+      position: absolute;
+      z-index: 4;
+      top: 68px;
+      right: 24px;
+      width: min(280px, calc(100% - 48px));
+      padding: 16px;
+      border: 1px solid #fda89a;
+      border-radius: 8px;
+      background: #fff1ee;
+      box-shadow: 0 10px 22px rgb(71 33 27 / 14%);
+      color: #171717;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-6px);
+      transition: opacity 180ms ease, transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .feedback-note.is-open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .feedback-note label {
+      display: block;
+      margin-bottom: 4px;
+      font: 600 14px/1.2 Geist, system-ui, sans-serif;
+    }
+
+    .feedback-note .note-help {
+      display: block;
+      margin-bottom: 8px;
+      color: #503c37;
+      font: 400 10px/1.35 'Geist Mono', ui-monospace, monospace;
+    }
+
+    .note-attach {
+      margin: 0 0 8px;
+      padding: 0;
+      border: 0;
+      border-bottom: 1px solid currentColor;
+      background: transparent;
+      color: #503c37;
+      cursor: pointer;
+      font: 500 10px/1.35 'Geist Mono', ui-monospace, monospace;
+    }
+
+    .note-attach[aria-pressed="true"] { color: #171717; }
+
+    .note-attachment {
+      display: block;
+      min-height: 14px;
+      margin: -2px 0 8px;
+      color: #66504a;
+      font: 400 10px/1.35 'Geist Mono', ui-monospace, monospace;
+    }
+
+    .feedback-note textarea {
+      display: block;
+      width: 100%;
+      height: 72px;
+      padding: 8px;
+      resize: none;
+      border: 1px solid rgb(23 23 23 / 22%);
+      border-radius: 2px;
+      background: rgb(255 255 255 / 82%);
+      color: #171717;
+      font: 400 12px/1.45 Geist, system-ui, sans-serif;
+    }
+
+    .feedback-note textarea::placeholder { color: #66504a; }
+
+    .feedback-note button[type="submit"] {
+      display: block;
+      margin: 10px 0 0 auto;
+      padding: 6px 9px;
+      border: 1px solid #171717;
+      border-radius: 2px;
+      background: #171717;
+      color: #fff;
+      cursor: pointer;
+      font: 500 12px/1 Geist, system-ui, sans-serif;
+    }
+
     .drawer-content {
       padding-top: 20px;
       opacity: 1;
@@ -587,6 +852,21 @@
     .drawer-content.is-changing {
       opacity: 0;
       transform: none;
+    }
+
+    .drawer-content.is-selecting-note-target .media,
+    .drawer-content.is-selecting-note-target .carousel-preview,
+    .drawer-content.is-selecting-note-target .details p,
+    .drawer-content.is-selecting-note-target .decision-list li {
+      cursor: crosshair;
+    }
+
+    .drawer-content.is-selecting-note-target .media:hover,
+    .drawer-content.is-selecting-note-target .carousel-preview:hover,
+    .drawer-content.is-selecting-note-target .details p:hover,
+    .drawer-content.is-selecting-note-target .decision-list li:hover {
+      outline: 2px solid #fda89a;
+      outline-offset: 3px;
     }
 
     .media {
@@ -686,7 +966,8 @@
       padding-left: 13px;
       color: #334155;
       font-size: 14px;
-      line-height: 1.45;
+      font-weight: 400;
+      line-height: 1.55;
     }
 
     .decision-list li::before {
@@ -781,7 +1062,7 @@
       display: block;
       margin-bottom: 6px;
       color: #64748b;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 600;
       letter-spacing: 0;
       text-transform: none;
@@ -791,7 +1072,8 @@
       margin: 0;
       color: #334155;
       font-size: 14px;
-      line-height: 1.45;
+      font-weight: 400;
+      line-height: 1.55;
     }
 
     .close {
@@ -813,7 +1095,7 @@
     }
 
     .footer {
-      margin: 0 auto;
+      margin: 80px auto 0;
       padding: 18px 0 32px;
       border-top: 1px solid var(--line);
       color: var(--muted);
@@ -851,38 +1133,22 @@
     .footer a {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
       min-height: 0;
-      padding: 0;
+      margin: -3px -5px;
+      padding: 3px 5px;
       border: 0;
+      border-radius: 2px;
       color: var(--muted);
       font-size: 12px;
       line-height: 1.2;
       text-decoration: none;
+      transition: background-color 160ms ease, color 160ms ease;
     }
 
     .footer a:hover {
       color: var(--ink);
-      text-decoration: underline;
-      text-underline-offset: 3px;
+      background: #fff1ee;
     }
-
-    .footer-link-icon {
-      width: 14px;
-      height: 14px;
-      flex: 0 0 auto;
-      filter: grayscale(1);
-      opacity: 0.7;
-    }
-
-    .footer .material-symbols-outlined {
-      width: 14px;
-      height: 14px;
-      font-size: 15px;
-      line-height: 14px;
-    }
-
-    .footer a:hover .footer-link-icon { opacity: 1; }
 
     .external-icon {
       font-family: 'Material Symbols Outlined';
@@ -912,6 +1178,10 @@
     body[data-theme="dark"] .section-heading p,
     body[data-theme="dark"] .project-item p,
     body[data-theme="dark"] .footer-cta { color: #cbd5e1; }
+    body[data-theme="dark"] .portfolio-story p { color: #cbd5e1; }
+    body[data-theme="dark"] .case-link { color: #f8fafc; }
+    body[data-theme="dark"] .case-link:hover { background: #1f2937; }
+    body[data-theme="dark"] .portfolio-view-toggle button[aria-pressed="true"] { color: #171717; }
     body[data-theme="dark"] .story-company-name { color: #cbd5e1; }
     body[data-theme="dark"] .row:hover .story-company-name { color: #cbd5e1; }
     body[data-theme="dark"] .company-list .company-year { color: #cbd5e1; }
@@ -929,7 +1199,10 @@
     body[data-theme="dark"] .related-card:focus-visible { outline-color: #f8fafc; }
     body[data-theme="dark"] .release-title { color: #f8fafc; }
     body[data-theme="dark"] .close { border-color: #64748b; }
-    body[data-theme="dark"] .footer-link-icon { filter: grayscale(1) invert(1); }
+    body[data-theme="dark"] .footer a:hover { background: #fda89a; color: #171717; }
+    body[data-theme="dark"] .notes-toggle { border-color: #64748b; color: #f8fafc; }
+    body[data-theme="dark"] .notes-toggle:hover,
+    body[data-theme="dark"] .notes-toggle[aria-expanded="true"] { color: #171717; }
 
     @media (max-width: 600px) {
       .header,
@@ -945,6 +1218,11 @@
         right: 12px;
         width: 16px;
         height: 16px;
+      }
+
+      .portfolio-view-toggle {
+        top: 8px;
+        right: 40px;
       }
 
       .intro {
@@ -980,6 +1258,7 @@
       .risk-ledger-mark { width: 20px; height: 18px; }
       .copy h3 { font-size: 14px; }
       .close { top: 16px; right: 16px; width: 28px; height: 28px; }
+      .feedback-note { top: 60px; right: 16px; width: min(280px, calc(100% - 32px)); }
       .details > div { grid-template-columns: 96px minmax(0, 1fr); gap: 12px; }
       .related-card { grid-template-columns: 64px minmax(0, 1fr); }
       .related-card > img { width: 64px; }
@@ -1026,21 +1305,32 @@
     <span class="theme-label">Dark mode</span>
   </button>
 
-  <div class="site-content">
+  <div class="site-content is-page-entering">
   <section class="intro">
     <img class="portrait" src="assets/Pim_photo.jpg" alt="Portrait of Pim Minderman">
     <span class="eyebrow">product by pim</span>
-    <p>Heya, my name is Pim and I’m a Senior Product Designer.<br><br>I enjoy getting lost in unfamiliar industries and complex products, from sustainable finance and cybersecurity to brand intelligence. Shaped by a consultancy background, I mix design craft with tech and business sense, validating, prototyping and shipping until complexity starts to feel simple.</p>
   </section>
 
-  <main class="work">
-    <div class="section-heading">
-      <span class="heading">Stories</span>
-      <p>Curated design stories led by tensions, problems, decisions, outcomes and interface.</p>
-    </div>
+  <div class="portfolio-view-toggle" role="group" aria-label="Portfolio view">
+    <button type="button" data-portfolio-view="story" aria-pressed="false">Story</button>
+    <button type="button" data-portfolio-view="list" aria-pressed="true">List</button>
+  </div>
 
-    <div class="list">
-      <article class="row" data-year="2023">
+  <main class="work">
+    <section class="portfolio-story" aria-labelledby="portfolio-story-heading">
+      <h2 id="portfolio-story-heading">Heya, I’m Pim.</h2>
+      <p>I design products. But before that, I prototype, research, validate and build a deep understanding of the problem. I ship code, write and update copy, map out flows, define content architecture and analyse user behaviour. The list is endless.</p>
+      <p>I began exploring how technology, art and business can work together at design agency <a class="story-external-link" href="https://www.akqa.com/" target="_blank" rel="noreferrer">AKQA</a>. Moving into technology products, I redesigned a future-proof information architecture for <a class="story-external-link" href="https://brandtraction.co.uk/" target="_blank" rel="noreferrer">Traction</a>’s brand-strategy features. In sustainable fintech at <a class="story-external-link" href="https://clarity.ai/" target="_blank" rel="noreferrer">Clarity AI</a>, I identified the need for <button class="case-link" type="button" data-case-target="transparency">more transparent ESG data</button> and found ways to make it <button class="case-link" type="button" data-case-target="ai-insights">easier to navigate and reuse</button>. At <a class="story-external-link" href="https://www.riskledger.com/" target="_blank" rel="noreferrer">Risk Ledger</a>, I helped security teams understand supplier-network risk through <button class="case-link" type="button" data-case-target="domain-assets">automated asset discovery</button> and <button class="case-link" type="button" data-case-target="certifications">security-certification discovery</button>.</p>
+      <p>I <strong>validate early, prototype quickly and ship.</strong> Outside product work, I write <a class="story-external-link" href="https://productbypim.substack.com/" target="_blank" rel="noreferrer">Product by Pim</a>, build <a class="story-external-link" href="https://pimminderman.github.io/sharped/" target="_blank" rel="noreferrer">Sharped</a> and this portfolio’s <a class="story-external-link" href="https://github.com/pimminderman/portfolio-pimdesign-2026/blob/main/DESIGN_SYSTEM.md" target="_blank" rel="noreferrer">design system</a>, and occasionally trade pixels for paintbrushes and carpentry tools.</p>
+    </section>
+
+    <section id="case-index" class="case-index-section" aria-labelledby="case-index-heading">
+      <div class="section-heading">
+        <span id="case-index-heading" class="heading">Work</span>
+      </div>
+
+      <div class="list">
+      <article class="row" data-year="2023" data-case="transparency">
         <div class="main">
           <div class="company" data-company="Clarity AI">
             <div class="company-logo company-logo--clarity"><img src="assets/clarity-ai-mark.svg" alt="Clarity AI"></div>
@@ -1050,7 +1340,7 @@
               <h3>Designing transparency for financial sustainability data</h3>
               <button class="trigger" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="snapshot-drawer">View snapshot</button>
             </div>
-            <span class="story-company-name">Clarity AI - 2023</span>
+            <span class="story-company-name">Clarity AI · 2023</span>
             <p>Built a reusable transparency panel that breaks down any ESG score into clear drivers, methodologies and underlying data.</p>
           </div>
         </div>
@@ -1093,7 +1383,7 @@
         </aside>
       </article>
 
-      <article class="row" data-year="2024">
+      <article class="row" data-year="2024" data-case="ai-insights">
         <div class="main">
           <div class="company" data-company="Clarity AI">
             <div class="company-logo company-logo--clarity"><img src="assets/clarity-ai-mark.svg" alt="Clarity AI"></div>
@@ -1103,7 +1393,7 @@
               <h3>Sustainability insights beyond the platform</h3>
               <button class="trigger" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="snapshot-drawer">View snapshot</button>
             </div>
-            <span class="story-company-name">Clarity AI - 2024</span>
+            <span class="story-company-name">Clarity AI · 2024</span>
             <p>Created an AI-powered experience that helps users explore complex sustainability data and uncover what matters—faster.</p>
           </div>
         </div>
@@ -1137,7 +1427,7 @@
         </aside>
       </article>
 
-      <article class="row" data-year="2025">
+      <article class="row" data-year="2025" data-case="domain-assets">
         <div class="main">
           <div class="company" data-company="Risk Ledger">
             <div class="company-logo company-logo--risk-ledger"><span class="risk-ledger-lockup" role="img" aria-label="Risk Ledger"><svg class="risk-ledger-mark risk-ledger-mark--light" viewBox="0 0 39 34" fill="none" aria-hidden="true"><path d="M1.15625 1.15486V32.5507L19.1639 24.5836L37.177 32.4312V1.15486L19.1639 8.99704L1.15625 1.15486Z" stroke="currentColor" stroke-width="2.30972" stroke-linejoin="round"/></svg><svg class="risk-ledger-mark risk-ledger-mark--gradient" viewBox="0 0 39 34" fill="none" aria-hidden="true"><defs><linearGradient id="risk-gradient-domain" x1="0.966169" y1="1.15486" x2="24.6808" y2="42.5422" gradientUnits="userSpaceOnUse"><stop stop-color="#46FFC9"/><stop offset="0.682692" stop-color="#3BAEEC"/><stop offset="1" stop-color="#6133F7"/></linearGradient></defs><path d="M1.15625 1.15486V32.5507L19.1639 24.5836L37.177 32.4312V1.15486L19.1639 8.99704L1.15625 1.15486Z" stroke="url(#risk-gradient-domain)" stroke-width="2.30972" stroke-linejoin="round"/></svg><span>Risk Ledger</span></span></div>
@@ -1147,7 +1437,7 @@
               <h3>Automate domain discovery for suppliers</h3>
               <button class="trigger" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="snapshot-drawer">View snapshot</button>
             </div>
-            <span class="story-company-name">Risk Ledger - 2025</span>
+            <span class="story-company-name">Risk Ledger · 2025</span>
             <p>Designed a continuous asset discovery product that gives security teams visibility of their external attack surface and uncovers unknown risks.</p>
           </div>
         </div>
@@ -1190,7 +1480,7 @@
         </aside>
       </article>
 
-      <article class="row" data-year="2026">
+      <article class="row" data-year="2026" data-case="certifications">
         <div class="main">
           <div class="company" data-company="Risk Ledger">
             <div class="company-logo company-logo--risk-ledger"><span class="risk-ledger-lockup" role="img" aria-label="Risk Ledger"><svg class="risk-ledger-mark risk-ledger-mark--light" viewBox="0 0 39 34" fill="none" aria-hidden="true"><path d="M1.15625 1.15486V32.5507L19.1639 24.5836L37.177 32.4312V1.15486L19.1639 8.99704L1.15625 1.15486Z" stroke="currentColor" stroke-width="2.30972" stroke-linejoin="round"/></svg><svg class="risk-ledger-mark risk-ledger-mark--gradient" viewBox="0 0 39 34" fill="none" aria-hidden="true"><defs><linearGradient id="risk-gradient-certifications" x1="0.966169" y1="1.15486" x2="24.6808" y2="42.5422" gradientUnits="userSpaceOnUse"><stop stop-color="#46FFC9"/><stop offset="0.682692" stop-color="#3BAEEC"/><stop offset="1" stop-color="#6133F7"/></linearGradient></defs><path d="M1.15625 1.15486V32.5507L19.1639 24.5836L37.177 32.4312V1.15486L19.1639 8.99704L1.15625 1.15486Z" stroke="url(#risk-gradient-certifications)" stroke-width="2.30972" stroke-linejoin="round"/></svg><span>Risk Ledger</span></span></div>
@@ -1200,7 +1490,7 @@
               <h3>Security Certifications</h3>
               <button class="trigger" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="snapshot-drawer">View snapshot</button>
             </div>
-            <span class="story-company-name">Risk Ledger - 2026</span>
+            <span class="story-company-name">Risk Ledger · 2026</span>
             <p>Automatically populate the most crucial security data: security certifications.</p>
           </div>
         </div>
@@ -1221,9 +1511,10 @@
             <div class="design-decisions">
               <span class="label">Design decisions</span>
               <ul class="decision-list">
-                <li>Investigate the causes of non-response before defining a solution.</li>
-                <li>Create a systematic solution that can be used for engaged suppliers, prefill answers for suppliers.</li>
-                <li>Automatically source evidence to reduce dependence on manual follow-up.</li>
+                <li>Design for a single supplier contribution, avoiding repeated requests across multiple tools.</li>
+                <li>Introduce continuous sourcing and renewal of certifications from public sources.</li>
+                <li>Create reusable discovery banners and certification cards that can extend to other evidence, such as security policies.</li>
+                <li>Design rich tooltips to show a supplier’s posture at a glance when data is limited.</li>
               </ul>
             </div>
             <div class="related">
@@ -1241,12 +1532,13 @@
           </div>
         </aside>
       </article>
-    </div>
+      </div>
+    </section>
   </main>
 
   <section class="other-projects" aria-labelledby="other-projects-heading">
     <div class="section-heading">
-      <span id="other-projects-heading" class="heading">Other projects</span>
+      <span id="other-projects-heading" class="heading">Projects</span>
     </div>
     <div class="project-list">
       <a class="project-item" href="https://github.com/pimminderman/portfolio-pimdesign-2026/blob/main/DESIGN_SYSTEM.md" target="_blank" rel="noreferrer">
@@ -1285,11 +1577,11 @@
   <footer class="footer">
     <div class="footer-top">
       <div class="footer-links" aria-label="Personal channels">
-        <a href="https://uk.linkedin.com/in/pimminderman" target="_blank" rel="noreferrer"><img class="footer-link-icon" src="assets/icon-linkedin.svg" alt="">LinkedIn</a>
-        <a href="https://productbypim.substack.com" target="_blank" rel="noreferrer"><img class="footer-link-icon" src="assets/icon-substack.svg" alt="">Product by Pim</a>
-        <a href="https://www.instagram.com/pimminderman/" target="_blank" rel="noreferrer"><img class="footer-link-icon" src="assets/icon-instagram.svg" alt="">Instagram</a>
-        <a href="https://github.com/pimminderman" target="_blank" rel="noreferrer"><img class="footer-link-icon" src="assets/icon-github.svg" alt="">GitHub</a>
-        <a href="mailto:pim.minderman89@gmail.com"><span class="material-symbols-outlined" aria-hidden="true">mail</span>Contact me</a>
+        <a href="https://uk.linkedin.com/in/pimminderman" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href="https://productbypim.substack.com" target="_blank" rel="noreferrer">Product by Pim</a>
+        <a href="https://www.instagram.com/pimminderman/" target="_blank" rel="noreferrer">Instagram</a>
+        <a href="https://github.com/pimminderman" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="mailto:pim.minderman89@gmail.com">Contact me</a>
       </div>
     </div>
     <span class="footer-copyright">© 2026 Pim Minderman</span>
@@ -1299,8 +1591,19 @@
   <aside id="snapshot-drawer" class="popover shared-drawer" role="dialog" aria-modal="true" aria-labelledby="snapshot-drawer-title">
     <div class="drawer-header">
       <h2 id="snapshot-drawer-title" class="drawer-title">Project snapshot</h2>
-      <button class="close" type="button" aria-label="Close snapshot">×</button>
+      <div class="drawer-actions">
+        <button class="notes-toggle" type="button" aria-expanded="false" aria-controls="feedback-note">Notes</button>
+        <button class="close" type="button" aria-label="Close snapshot">×</button>
+      </div>
     </div>
+    <form id="feedback-note" class="feedback-note" aria-label="Leave feedback about this case study">
+      <label for="feedback-note-text">Stick a note to me</label>
+      <span class="note-help">Write up to three lines, then send it by email.</span>
+      <button class="note-attach" type="button" aria-pressed="false">Attach to a screen or text</button>
+      <span class="note-attachment" aria-live="polite">Attached to: this case study</span>
+      <textarea id="feedback-note-text" rows="3" maxlength="280" placeholder="A thought, question or bit of feedback…"></textarea>
+      <button type="submit">Send note</button>
+    </form>
     <div class="drawer-content"></div>
   </aside>
 
@@ -1322,6 +1625,76 @@
       const nextTheme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
       localStorage.setItem('portfolio-theme', nextTheme);
       setTheme(nextTheme);
+    });
+
+    const viewButtons = [...document.querySelectorAll('[data-portfolio-view]')];
+    const savedPortfolioView = localStorage.getItem('portfolio-view');
+    const storyView = document.querySelector('.portfolio-story');
+    let portfolioViewTimer = null;
+
+    function applyPortfolioView(view) {
+      document.body.dataset.portfolioView = view;
+      localStorage.setItem('portfolio-view', view);
+      viewButtons.forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.portfolioView === view));
+      });
+    }
+
+    function setPortfolioView(view, animate = false) {
+      const currentView = document.body.dataset.portfolioView;
+      window.clearTimeout(portfolioViewTimer);
+      document.body.classList.remove('portfolio-view-list-entering');
+      document.body.classList.remove('portfolio-view-list-leaving', 'portfolio-view-story-entering');
+
+      if (!animate || !currentView || currentView === view || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        storyView.classList.remove('is-leaving');
+        applyPortfolioView(view);
+        return;
+      }
+
+      if (view === 'list') {
+        viewButtons.forEach((button) => {
+          button.setAttribute('aria-pressed', String(button.dataset.portfolioView === view));
+        });
+        storyView.classList.add('is-leaving');
+        portfolioViewTimer = window.setTimeout(() => {
+          storyView.classList.remove('is-leaving');
+          applyPortfolioView(view);
+          document.body.classList.add('portfolio-view-list-entering');
+          portfolioViewTimer = window.setTimeout(() => {
+            document.body.classList.remove('portfolio-view-list-entering');
+          }, 880);
+        }, 220);
+        return;
+      }
+
+      viewButtons.forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.portfolioView === view));
+      });
+      document.body.classList.add('portfolio-view-list-leaving');
+      portfolioViewTimer = window.setTimeout(() => {
+        document.body.classList.remove('portfolio-view-list-leaving');
+        applyPortfolioView(view);
+        document.body.classList.add('portfolio-view-story-entering');
+        portfolioViewTimer = window.setTimeout(() => {
+          document.body.classList.remove('portfolio-view-story-entering');
+        }, 700);
+      }, 220);
+    }
+
+    setPortfolioView(savedPortfolioView || 'list');
+    const pageContent = document.querySelector('.site-content');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      pageContent.classList.remove('is-page-entering');
+    } else {
+      const revealPage = () => {
+        window.setTimeout(() => pageContent.classList.remove('is-page-entering'), 120);
+      };
+      if (document.readyState === 'complete') revealPage();
+      else window.addEventListener('load', revealPage, { once: true });
+    }
+    viewButtons.forEach((button) => {
+      button.addEventListener('click', () => setPortfolioView(button.dataset.portfolioView, true));
     });
 
     const storyList = document.querySelector('.list');
@@ -1360,11 +1733,92 @@
     const drawer = document.querySelector('.shared-drawer');
     const drawerContent = drawer.querySelector('.drawer-content');
     const drawerTitle = drawer.querySelector('.drawer-title');
+    const notesToggle = drawer.querySelector('.notes-toggle');
+    const feedbackNote = drawer.querySelector('.feedback-note');
+    const feedbackText = drawer.querySelector('#feedback-note-text');
+    const noteAttach = drawer.querySelector('.note-attach');
+    const noteAttachment = drawer.querySelector('.note-attachment');
+    const feedbackSessionKey = 'portfolio-feedback-note-submitted';
     let activeRow = null;
     let contentTimer = null;
     let closeTimer = null;
+    let isSelectingNoteTarget = false;
+    let selectedNoteTarget = 'this case study';
+
+    function setNoteAttachment(target) {
+      selectedNoteTarget = target;
+      noteAttachment.textContent = `Attached to: ${target}`;
+    }
+
+    function setNoteTargetSelection(isSelecting) {
+      isSelectingNoteTarget = isSelecting;
+      noteAttach.setAttribute('aria-pressed', String(isSelecting));
+      noteAttach.textContent = isSelecting ? 'Select a screen or text…' : 'Attach to a screen or text';
+      drawerContent.classList.toggle('is-selecting-note-target', isSelecting);
+    }
+
+    function getNoteTargetDescription(target) {
+      const preview = target.closest('.carousel-preview');
+      if (preview) return `screen: ${preview.getAttribute('aria-label') || 'preview'}`;
+      const media = target.closest('.media');
+      if (media) return `screen: ${media.querySelector('img')?.alt || 'current screen'}`;
+      const decision = target.closest('.decision-list li');
+      if (decision) return `design decision: ${decision.textContent.trim()}`;
+      const detail = target.closest('.details > div');
+      if (detail) return `text: ${detail.querySelector('.label')?.textContent.trim() || target.textContent.trim()}`;
+      return '';
+    }
+
+    function setNotesOpen(isOpen) {
+      notesToggle.setAttribute('aria-expanded', String(isOpen));
+      feedbackNote.classList.toggle('is-open', isOpen);
+      if (!isOpen) setNoteTargetSelection(false);
+      if (isOpen) window.requestAnimationFrame(() => feedbackText.focus());
+    }
+
+    function updateNotesAvailability() {
+      const noteUsed = window.sessionStorage.getItem(feedbackSessionKey) === 'true';
+      notesToggle.hidden = noteUsed;
+      if (noteUsed) setNotesOpen(false);
+    }
+
+    notesToggle.addEventListener('click', () => {
+      setNotesOpen(notesToggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    noteAttach.addEventListener('click', () => {
+      setNoteTargetSelection(!isSelectingNoteTarget);
+    });
+
+    feedbackNote.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const message = feedbackText.value.trim();
+      if (!message) {
+        feedbackText.focus();
+        return;
+      }
+      const subject = `Portfolio feedback — ${drawerTitle.textContent}`;
+      const body = `Attached to: ${selectedNoteTarget}\n\n${message}`;
+      window.location.href = `mailto:pim.minderman89@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.sessionStorage.setItem(feedbackSessionKey, 'true');
+      feedbackText.value = '';
+      updateNotesAvailability();
+    });
+
+    updateNotesAvailability();
 
     drawerContent.addEventListener('click', (event) => {
+      if (isSelectingNoteTarget) {
+        const target = event.target.closest('.media, .carousel-preview, .details p, .decision-list li');
+        const description = target ? getNoteTargetDescription(target) : '';
+        if (description) {
+          event.preventDefault();
+          setNoteAttachment(description);
+          setNoteTargetSelection(false);
+        }
+        return;
+      }
+
       const preview = event.target.closest('.carousel-preview');
       if (!preview) return;
       const carousel = preview.closest('.media-carousel');
@@ -1390,6 +1844,7 @@
     function closeAll(animate = true) {
       window.clearTimeout(contentTimer);
       window.clearTimeout(closeTimer);
+      setNotesOpen(false);
       rows.forEach((row) => {
         row.querySelector('.trigger').setAttribute('aria-expanded', 'false');
         row.classList.remove('is-active');
@@ -1405,7 +1860,7 @@
       closeTimer = window.setTimeout(() => {
         document.body.classList.remove('snapshot-open', 'snapshot-closing');
         closeTimer = null;
-      }, 440);
+      }, 640);
     }
 
     function replaceDrawerContent(row, animate) {
@@ -1414,6 +1869,8 @@
         drawerContent.innerHTML = source.innerHTML;
         drawerContent.querySelector('.close')?.remove();
         drawerTitle.textContent = row.querySelector('h3').textContent;
+        setNoteAttachment('this case study');
+        setNoteTargetSelection(false);
         window.requestAnimationFrame(() => drawerContent.classList.remove('is-changing'));
       };
 
@@ -1446,6 +1903,13 @@
         } else {
           openSnapshot(row);
         }
+      });
+    });
+
+    document.querySelectorAll('.case-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        const row = rows.find((item) => item.dataset.case === link.dataset.caseTarget);
+        if (row) openSnapshot(row);
       });
     });
 
