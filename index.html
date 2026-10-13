@@ -82,6 +82,25 @@
       font-family: Geist, system-ui, sans-serif;
     }
 
+    /* Theme changes use colour interpolation plus a very soft content fade. */
+    body.is-theme-changing,
+    body.is-theme-changing *,
+    body.is-theme-changing *::before,
+    body.is-theme-changing *::after {
+      transition-property: background-color, color, border-color, box-shadow, fill, stroke, filter;
+      transition-duration: 380ms;
+      transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    body.is-theme-changing:not(.snapshot-open) .site-content {
+      animation: theme-content-fade 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes theme-content-fade {
+      0% { opacity: 0.86; }
+      100% { opacity: 1; }
+    }
+
     .site-content {
       width: 100%;
       min-width: 0;
@@ -276,44 +295,34 @@
       z-index: 5;
       top: 18px;
       right: 52px;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      width: 104px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: auto;
       margin: 0;
       padding: 0;
     }
 
-    .portfolio-view-toggle::before {
-      position: absolute;
-      inset: 0 auto 0 0;
-      width: 50%;
-      border-radius: 999px;
-      background: #fda89a;
-      content: "";
-      transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    body[data-portfolio-view="list"] .portfolio-view-toggle::before { transform: translateX(100%); }
-
     .portfolio-view-toggle button {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       min-height: 24px;
-      padding: 0;
-      border: 0;
-      border-radius: 999px;
+      padding: 0 10px;
+      border: 1px solid transparent;
+      border-radius: 4px;
       background: transparent;
       color: var(--muted);
       cursor: pointer;
       font: 500 12px/1 Geist, system-ui, sans-serif;
-      position: relative;
-      z-index: 1;
-      transition: color 180ms ease;
+      transition: color 180ms ease, background 180ms ease, box-shadow 180ms ease;
     }
 
     .portfolio-view-toggle button[aria-pressed="true"] {
+      background: #fff1ee;
+      border-color: #fda89a;
       color: #171717;
+      box-shadow: 0 1px 2px rgb(15 23 42 / 10%);
     }
 
     body[data-portfolio-view="story"] .case-index-section,
@@ -871,24 +880,30 @@
 
     .media {
       position: relative;
+      display: block;
       aspect-ratio: 16 / 9;
-      display: grid;
       overflow: hidden;
-      place-items: center;
       border: 1px solid var(--line);
       border-radius: 7px;
       outline: 1px solid var(--line);
       outline-offset: 4px;
-      background: #e7eef1;
+      background: #eef4f6;
       color: #64748b;
     }
 
     .media video,
     .media img {
+      display: block;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      object-position: left center;
+      opacity: 1;
+      transition: opacity 180ms ease;
     }
+
+    .media.is-changing > img,
+    .media.is-changing > video { opacity: 0; }
 
     .media--screen {
       aspect-ratio: auto;
@@ -897,7 +912,7 @@
 
     .media--screen img {
       display: block;
-      height: auto;
+      height: 100%;
       object-fit: contain;
     }
 
@@ -936,6 +951,85 @@
 
     .carousel-preview img,
     .carousel-video-preview { display: none; }
+
+    /* Transparency uses an intentionally quiet tab frame: the screen remains the hero. */
+    .ui-gallery-frame {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: transparent;
+      box-shadow: 0 3px 12px rgb(15 23 42 / 8%);
+    }
+
+    .ui-gallery-frame .media {
+      border: 0;
+      border-radius: 0;
+      outline: 0;
+      aspect-ratio: auto;
+      background: transparent;
+    }
+
+    .ui-gallery-frame .media img,
+    .ui-gallery-frame .media video { height: auto; }
+
+    .ui-gallery-frame .media.is-scrollable {
+      aspect-ratio: 16 / 9;
+      overflow-x: hidden;
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .ui-gallery-frame .media.is-scrollable::-webkit-scrollbar { display: none; }
+
+    .ui-gallery .carousel-previews {
+      margin: 0;
+      padding: 8px 0;
+      gap: 6px;
+      overflow-x: auto;
+      border-bottom: 0;
+      scrollbar-width: none;
+    }
+
+    .ui-gallery .carousel-previews::-webkit-scrollbar { display: none; }
+
+    .ui-gallery .carousel-preview {
+      width: auto;
+      height: auto;
+      min-height: 24px;
+      margin: 0;
+      padding: 5px 10px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: transparent;
+      color: var(--muted);
+      font: 500 12px/1 Geist, Arial, sans-serif;
+      letter-spacing: 0;
+      white-space: nowrap;
+      justify-content: flex-start;
+      box-shadow: 0 1px 1px rgb(15 23 42 / 4%);
+      transition: color 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .ui-gallery .carousel-preview:hover {
+      transform: none;
+      background: #fff1ee;
+      border-color: #fda89a;
+      color: var(--ink);
+    }
+
+    .ui-gallery .carousel-preview[aria-pressed="true"] {
+      background: #fff1ee;
+      border-color: #fda89a;
+      color: var(--ink);
+      box-shadow: none;
+    }
+
+    .ui-gallery .carousel-preview:focus-visible {
+      position: relative;
+      z-index: 1;
+      outline-offset: -3px;
+    }
 
     .details { padding: 22px 0 2px; }
     .details > div {
@@ -1181,7 +1275,7 @@
     body[data-theme="dark"] .portfolio-story p { color: #cbd5e1; }
     body[data-theme="dark"] .case-link { color: #f8fafc; }
     body[data-theme="dark"] .case-link:hover { background: #1f2937; }
-    body[data-theme="dark"] .portfolio-view-toggle button[aria-pressed="true"] { color: #171717; }
+    body[data-theme="dark"] .portfolio-view-toggle button[aria-pressed="true"] { background: #3b2d35; color: #f8fafc; }
     body[data-theme="dark"] .story-company-name { color: #cbd5e1; }
     body[data-theme="dark"] .row:hover .story-company-name { color: #cbd5e1; }
     body[data-theme="dark"] .company-list .company-year { color: #cbd5e1; }
@@ -1193,6 +1287,11 @@
     body[data-theme="dark"] .media { background: #1e293b; color: #cbd5e1; }
     body[data-theme="dark"] .carousel-preview:hover,
     body[data-theme="dark"] .carousel-preview[aria-pressed="true"] { background: #fda89a; }
+    body[data-theme="dark"] .ui-gallery-frame { background: transparent; border-color: #475569; box-shadow: 0 3px 12px rgb(0 0 0 / 22%); }
+    body[data-theme="dark"] .ui-gallery-frame .media { background: transparent; }
+    body[data-theme="dark"] .ui-gallery .carousel-preview { color: #94a3b8; }
+    body[data-theme="dark"] .ui-gallery .carousel-preview:hover { background: #3b2d35; border-color: #fda89a; color: #f8fafc; }
+    body[data-theme="dark"] .ui-gallery .carousel-preview[aria-pressed="true"] { background: #3b2d35; border-color: #fda89a; color: #f8fafc; }
     body[data-theme="dark"] .carousel-video-preview { background: #334155; color: #f8fafc; }
     body[data-theme="dark"] .related-card { border-color: #475569; background: #1e293b; color: #f8fafc; }
     body[data-theme="dark"] .related-card:hover { border-color: #94a3b8; background: #273549; }
@@ -1280,10 +1379,10 @@
       .drawer-content > .media,
       .drawer-content > .media-carousel {
         width: min(100%, 640px);
-        margin-right: auto;
-        margin-left: auto;
+        margin-right: 0;
+        margin-left: 0;
       }
-      .drawer-content .carousel-previews { justify-content: center; }
+      .drawer-content .carousel-previews { justify-content: flex-start; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1298,7 +1397,7 @@
     }
   </style>
 </head>
-<body>
+<body data-portfolio-view="story">
   <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif?collect-dnt=true" alt="" referrerpolicy="no-referrer-when-downgrade"></noscript>
   <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
     <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
@@ -1312,14 +1411,14 @@
   </section>
 
   <div class="portfolio-view-toggle" role="group" aria-label="Portfolio view">
-    <button type="button" data-portfolio-view="story" aria-pressed="false">Story</button>
-    <button type="button" data-portfolio-view="list" aria-pressed="true">List</button>
+    <button type="button" data-portfolio-view="story" aria-pressed="true">Story</button>
+    <button type="button" data-portfolio-view="list" aria-pressed="false">List</button>
   </div>
 
   <main class="work">
     <section class="portfolio-story" aria-labelledby="portfolio-story-heading">
       <h2 id="portfolio-story-heading">Heya, I’m Pim.</h2>
-      <p>I design products. But before that, I prototype, research, validate and build a deep understanding of the problem. I ship code, write and update copy, map out flows, define content architecture and analyse user behaviour. The list is endless.</p>
+      <p>I design products. But before that, I prototype, research and validate; build a deep understanding of the problem and product; ship small UI updates and update larger UI patterns; write and update copy; map out flows; define content architecture; and analyse user behaviour and data.</p>
       <p>I began exploring how technology, art and business can work together at design agency <a class="story-external-link" href="https://www.akqa.com/" target="_blank" rel="noreferrer">AKQA</a>. Moving into technology products, I redesigned a future-proof information architecture for <a class="story-external-link" href="https://brandtraction.co.uk/" target="_blank" rel="noreferrer">Traction</a>’s brand-strategy features. In sustainable fintech at <a class="story-external-link" href="https://clarity.ai/" target="_blank" rel="noreferrer">Clarity AI</a>, I identified the need for <button class="case-link" type="button" data-case-target="transparency">more transparent ESG data</button> and found ways to make it <button class="case-link" type="button" data-case-target="ai-insights">easier to navigate and reuse</button>. At <a class="story-external-link" href="https://www.riskledger.com/" target="_blank" rel="noreferrer">Risk Ledger</a>, I helped security teams understand supplier-network risk through <button class="case-link" type="button" data-case-target="domain-assets">automated asset discovery</button> and <button class="case-link" type="button" data-case-target="certifications">security-certification discovery</button>.</p>
       <p>I <strong>validate early, prototype quickly and ship.</strong> Outside product work, I write <a class="story-external-link" href="https://productbypim.substack.com/" target="_blank" rel="noreferrer">Product by Pim</a>, build <a class="story-external-link" href="https://pimminderman.github.io/sharped/" target="_blank" rel="noreferrer">Sharped</a> and this portfolio’s <a class="story-external-link" href="https://github.com/pimminderman/portfolio-pimdesign-2026/blob/main/DESIGN_SYSTEM.md" target="_blank" rel="noreferrer">design system</a>, and occasionally trade pixels for paintbrushes and carpentry tools.</p>
     </section>
@@ -1346,12 +1445,15 @@
         </div>
         <aside id="snapshot-transparency" class="popover snapshot-template" role="dialog" aria-label="Project snapshot">
           <button class="close" type="button" aria-label="Close snapshot">×</button>
-          <div class="media-carousel">
-            <div class="media"><img src="assets/eu-taxonomy-panel.jpg" alt="Clarity AI EU Taxonomy table with transparency side panels"></div>
-            <div class="carousel-previews" role="group" aria-label="Transparency panel screens">
-              <button class="carousel-preview" type="button" aria-label="EU Taxonomy transparency panel" aria-pressed="true" data-media-type="image" data-media-src="assets/eu-taxonomy-panel.jpg" data-media-alt="Clarity AI EU Taxonomy table with transparency side panels"><img src="assets/eu-taxonomy-panel.jpg" alt=""></button>
-              <button class="carousel-preview" type="button" aria-label="Transparency panel anatomy" aria-pressed="false" data-media-type="image" data-media-src="assets/clarity-panel-anatomy.jpg" data-media-alt="Anatomy of the Clarity AI transparency panel"><img src="assets/clarity-panel-anatomy.jpg" alt=""></button>
-              <button class="carousel-preview" type="button" aria-label="Transparency panel walkthrough" aria-pressed="false" data-media-type="video" data-media-src="assets/Eu%20Tax%20-%20TP.mp4"><span class="carousel-video-preview" aria-hidden="true"><span class="material-symbols-outlined">play_arrow</span></span></button>
+          <div class="media-carousel ui-gallery">
+            <div class="carousel-previews" role="tablist" aria-label="Transparency case study screens">
+              <button class="carousel-preview" type="button" role="tab" aria-label="Walkthrough" aria-selected="true" aria-pressed="true" data-media-type="video" data-media-src="assets/Eu%20Tax%20-%20TP.mp4">Walkthrough</button>
+              <button class="carousel-preview" type="button" role="tab" aria-label="ESG risk" aria-selected="false" aria-pressed="false" data-media-type="image" data-media-src="assets/transparency-esg-risk-water-use.svg" data-media-alt="Clarity AI ESG risk table with a Water Use transparency panel">ESG risk</button>
+              <button class="carousel-preview" type="button" role="tab" aria-label="Historical data" aria-selected="false" aria-pressed="false" data-media-type="image" data-media-src="assets/transparency-eu-taxonomy-history.svg" data-media-alt="Clarity AI EU Taxonomy historical data with a transparency panel">Historical data</button>
+              <button class="carousel-preview" type="button" role="tab" aria-label="Controversies" aria-selected="false" aria-pressed="false" data-media-type="image" data-media-src="assets/transparency-controversies.svg" data-media-alt="Clarity AI controversies heatmap with OECD guideline detail panel">Controversies</button>
+            </div>
+            <div class="ui-gallery-frame">
+              <div class="media" role="tabpanel"><video controls muted playsinline src="assets/Eu%20Tax%20-%20TP.mp4"></video></div>
             </div>
           </div>
           <div class="details">
@@ -1399,26 +1501,30 @@
         </div>
         <aside id="snapshot-ai-insights" class="popover snapshot-template" role="dialog" aria-label="Project snapshot">
           <button class="close" type="button" aria-label="Close snapshot">×</button>
-          <div class="media-carousel">
-            <div class="media"><img src="assets/ai-insights-full-view.png" alt="Clarity AI Insights full view across portfolio and company reporting"></div>
-            <div class="carousel-previews" role="group" aria-label="AI Insights screens">
-              <button class="carousel-preview" type="button" aria-label="AI Insights full view" aria-pressed="true" data-media-type="image" data-media-src="assets/ai-insights-full-view.png" data-media-alt="Clarity AI Insights full view across portfolio and company reporting"><img src="assets/ai-insights-full-view.png" alt=""></button>
-              <button class="carousel-preview" type="button" aria-label="AI Insights platform design" aria-pressed="false" data-media-type="image" data-media-src="assets/clarity-insights-platform.png" data-media-alt="Clarity AI Insights platform design showing transparent AI responses"><img src="assets/clarity-insights-platform.png" alt=""></button>
-              <button class="carousel-preview" type="button" aria-label="Controversies heatmap" aria-pressed="false" data-media-type="image" data-media-src="assets/controversies-heatmap-oecd.jpg" data-media-alt="Clarity AI controversies heatmap with OECD guideline detail panel"><img src="assets/controversies-heatmap-oecd.jpg" alt=""></button>
-              <button class="carousel-preview" type="button" aria-label="AI Insights walkthrough" aria-pressed="false" data-media-type="video" data-media-src="assets/AI%20Insight%20-%20Product%20Video.%20July%202024-%20v7.mp4"><span class="carousel-video-preview" aria-hidden="true"><span class="material-symbols-outlined">play_arrow</span></span></button>
+          <div class="media-carousel ui-gallery">
+            <div class="carousel-previews" role="tablist" aria-label="AI Insights case study screens">
+              <button class="carousel-preview" type="button" role="tab" aria-label="Walkthrough" aria-selected="true" aria-pressed="true" data-media-type="video" data-media-src="assets/AI%20Insight%20-%20Product%20Video.%20July%202024-%20v7.mp4">Walkthrough</button>
+              <button class="carousel-preview" type="button" role="tab" aria-label="Full view" aria-selected="false" aria-pressed="false" data-media-type="image" data-media-src="assets/ai-insights-full-view.png" data-media-alt="Clarity AI Insights full view across portfolio and company reporting">Full view</button>
+              <button class="carousel-preview" type="button" role="tab" aria-label="Platform design" aria-selected="false" aria-pressed="false" data-media-type="image" data-media-src="assets/clarity-insights-platform.png" data-media-alt="Clarity AI Insights platform design showing transparent AI responses">Platform design</button>
+              <button class="carousel-preview" type="button" role="tab" aria-label="Insights panel" aria-selected="false" aria-pressed="false" data-media-type="image" data-media-src="assets/ai-insights-screen.svg" data-media-alt="Clarity AI AI Insights interface">Insights panel</button>
+              <button class="carousel-preview" type="button" role="tab" aria-label="Reports" aria-selected="false" aria-pressed="false" data-media-type="image" data-media-scrollable="true" data-media-src="assets/transparency-reports.svg" data-media-alt="Clarity AI reporting interface with supporting transparency detail">Reports</button>
+            </div>
+            <div class="ui-gallery-frame">
+              <div class="media" role="tabpanel"><video controls muted playsinline src="assets/AI%20Insight%20-%20Product%20Video.%20July%202024-%20v7.mp4"></video></div>
             </div>
           </div>
           <div class="details">
-            <div><span class="label">Tension</span><p>Portfolio and asset managers needed to identify what mattered within large volumes of data, without losing access to the detail behind an insight.</p></div>
-            <div><span class="label">Why we solved it</span><p>Similar needs appeared across company, portfolio and fund views. We needed an approach that addressed specific ESG questions while also supporting other domains, including climate and regulatory analysis.</p></div>
+            <div><span class="label">Tension</span><p>Portfolio and asset managers make investment decisions across multiple tools. They needed Clarity AI’s ESG data to assess portfolio risk, without losing the underlying evidence and detail that gives those decisions context.</p></div>
+            <div><span class="label">Why we solved it</span><p>ESG Risk was Clarity AI’s most-used product, critical to 60% of the client base and the source of the largest share of product feedback. It was the right place to test a way to surface decision-ready insight without disconnecting users from the data.</p></div>
             <div><span class="label">Outcome</span><p>Adoption of portfolio-level ESG risk analysis rose from 10% to 12% following the rollout of AI Insights—a 2 percentage-point increase.</p></div>
             <div class="design-decisions">
               <span class="label">Design decisions</span>
               <ul class="decision-list">
-                <li>Surface useful insights while preserving access to supporting detail.</li>
-                <li>Adapt the experience to company, portfolio and fund contexts.</li>
-                <li>Define shared patterns while allowing for domain-specific requirements.</li>
-                <li>Align product teams, domain specialists and engineering around a consistent approach across in-app experiences and reporting.</li>
+                <li>Prioritise an overall view of portfolio risk rather than using AI to answer isolated, ad hoc questions.</li>
+                <li>Start with preset, broadly useful insights, then let people move deliberately into granular supporting data.</li>
+                <li>Make every insight traceable to its underlying source data, so people can check its accuracy and context.</li>
+                <li>Constrain output to the score and its drivers after testing showed that unconstrained generation could introduce unsupported information.</li>
+                <li>Extend insights into configurable, shareable reports so investors can carry their analysis into the other tools they use.</li>
               </ul>
             </div>
             <div class="related" data-related-slot="ai-insights"></div>
@@ -1443,12 +1549,13 @@
         </div>
         <aside id="snapshot-domain-assets" class="popover snapshot-template" role="dialog" aria-label="Project snapshot">
           <button class="close" type="button" aria-label="Close snapshot">×</button>
-          <div class="media-carousel">
-            <div class="media"><img src="assets/Portfolio%20Assets%20Disco.jpg" alt="Asset discovery product interface"></div>
-            <div class="carousel-previews" role="group" aria-label="Asset discovery screens">
-              <button class="carousel-preview" type="button" aria-label="Asset discovery overview" aria-pressed="true" data-media-type="image" data-media-src="assets/Portfolio%20Assets%20Disco.jpg" data-media-alt="Risk Ledger asset discovery overview"></button>
-              <button class="carousel-preview" type="button" aria-label="Discovered assets list" aria-pressed="false" data-media-type="image" data-media-src="assets/asset-discovery-list.png" data-media-alt="Risk Ledger discovered assets list with supplier verification controls"></button>
-              <button class="carousel-preview" type="button" aria-label="Asset discovery walkthrough" aria-pressed="false" data-media-type="video" data-media-src="assets/asset-discovery-walkthrough.mov"></button>
+          <div class="media-carousel ui-gallery">
+            <div class="carousel-previews" role="tablist" aria-label="Asset Discovery case study screens">
+              <button class="carousel-preview" type="button" role="tab" aria-label="Walkthrough" aria-selected="true" aria-pressed="true" data-media-type="video" data-media-src="assets/asset-discovery-walkthrough.mov">Walkthrough</button>
+              <button class="carousel-preview" type="button" role="tab" aria-label="Discovered assets" aria-selected="false" aria-pressed="false" data-media-type="image" data-media-src="assets/asset-discovery-list.png" data-media-alt="Risk Ledger discovered assets list with supplier verification controls">Discovered assets</button>
+            </div>
+            <div class="ui-gallery-frame">
+              <div class="media" role="tabpanel"><video controls muted playsinline src="assets/asset-discovery-walkthrough.mov"></video></div>
             </div>
           </div>
           <div class="details">
@@ -1496,22 +1603,26 @@
         </div>
         <aside id="snapshot-certifications" class="popover snapshot-template" role="dialog" aria-label="Project snapshot">
           <button class="close" type="button" aria-label="Close snapshot">×</button>
-          <div class="media-carousel">
-            <div class="media"><img src="assets/certs-panel-2.jpg" alt="Risk Ledger supplier profile showing discovered security certifications"></div>
-            <div class="carousel-previews" role="group" aria-label="Security Certifications screens">
-              <button class="carousel-preview" type="button" aria-label="Security Certifications overview" aria-pressed="true" data-media-type="image" data-media-src="assets/certs-panel-2.jpg" data-media-alt="Risk Ledger supplier profile showing discovered security certifications"><img src="assets/certs-panel-2.jpg" alt=""></button>
-              <button class="carousel-preview" type="button" aria-label="Security Certifications detail view" aria-pressed="false" data-media-type="image" data-media-src="assets/certs-detail-2.jpg" data-media-alt="Risk Ledger certifications list with certificate detail panel"><img src="assets/certs-detail-2.jpg" alt=""></button>
-              <button class="carousel-preview" type="button" aria-label="Security Certifications walkthrough" aria-pressed="false" data-media-type="video" data-media-src="assets/Security%20Certs.mov"><span class="carousel-video-preview" aria-hidden="true"><span class="material-symbols-outlined">play_arrow</span></span></button>
+          <div class="media-carousel ui-gallery">
+            <div class="carousel-previews" role="tablist" aria-label="Security Certifications case study screens">
+              <button class="carousel-preview" type="button" role="tab" aria-label="Walkthrough" aria-selected="true" aria-pressed="true" data-media-type="video" data-media-src="assets/Security%20Certs.mov">Walkthrough</button>
+              <button class="carousel-preview" type="button" role="tab" aria-label="Overview" aria-selected="false" aria-pressed="false" data-media-type="image" data-media-src="assets/certifications-overview.svg" data-media-alt="Risk Ledger supplier profile showing discovered security certifications">Overview</button>
+              <button class="carousel-preview" type="button" role="tab" aria-label="Certification detail" aria-selected="false" aria-pressed="false" data-media-type="image" data-media-src="assets/certifications-detail.svg" data-media-alt="Risk Ledger supplier documents page with certification detail">Certification detail</button>
+              <button class="carousel-preview" type="button" role="tab" aria-label="Full connection" aria-selected="false" aria-pressed="false" data-media-type="image" data-media-src="assets/certifications-full-connection.svg" data-media-alt="Risk Ledger full connection view for discovered certifications">Full connection</button>
+            </div>
+            <div class="ui-gallery-frame">
+              <div class="media" role="tabpanel"><video controls muted playsinline src="assets/Security%20Certs.mov"></video></div>
             </div>
           </div>
           <div class="details">
-            <div><span class="label">Tension</span><p>Thirty per cent of suppliers never responded to information requests, with client teams lacking the capacity to keep chasing them. This left gaps in the supplier network and the evidence available for assessments.</p></div>
+            <div><span class="label">Tension</span><p>30% of suppliers never responded to information requests, with client teams lacking the capacity to keep chasing them. This left gaps in the supplier network and the evidence available for assessments.</p></div>
             <div><span class="label">Why we solved it</span><p>Research found that suppliers were reluctant to engage because they already had the business, did not want to share information twice, or did not want to create another account. Security certifications offered a practical starting point: 75% of suppliers already published them publicly, and 95% of clients required them. Automatically sourcing this evidence could close information gaps without asking suppliers to repeat the work.</p></div>
             <div><span class="label">Outcome</span><p>Achieved 70% accuracy in certification discovery, with 60% of the 120-client base using the capability to find certifications.</p></div>
             <div class="design-decisions">
               <span class="label">Design decisions</span>
               <ul class="decision-list">
                 <li>Design for a single supplier contribution, avoiding repeated requests across multiple tools.</li>
+                <li>Extend the system to provide security data for both engaged and unengaged suppliers after validation showed the need applied to both.</li>
                 <li>Introduce continuous sourcing and renewal of certifications from public sources.</li>
                 <li>Create reusable discovery banners and certification cards that can extend to other evidence, such as security policies.</li>
                 <li>Design rich tooltips to show a supplier’s posture at a glance when data is limited.</li>
@@ -1609,26 +1720,60 @@
 
   <script>
     const themeToggle = document.querySelector('.theme-toggle');
-    const savedTheme = localStorage.getItem('portfolio-theme');
 
-    function setTheme(theme) {
+    let themeTransitionTimer = null;
+
+    function setTheme(theme, { animate = false } = {}) {
+      const shouldAnimate = animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (shouldAnimate) {
+        document.body.classList.add('is-theme-changing');
+        // Commit the transition class before changing the colour tokens.
+        void document.body.offsetWidth;
+      }
       document.body.dataset.theme = theme;
       const isDark = theme === 'dark';
       themeToggle.setAttribute('aria-pressed', String(isDark));
       themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
       themeToggle.querySelector('.theme-label').textContent = isDark ? 'Light mode' : 'Dark mode';
       themeToggle.querySelector('.material-symbols-outlined').textContent = isDark ? 'light_mode' : 'dark_mode';
+
+      if (shouldAnimate) {
+        window.clearTimeout(themeTransitionTimer);
+        themeTransitionTimer = window.setTimeout(() => {
+          document.body.classList.remove('is-theme-changing');
+        }, 400);
+      }
     }
 
-    setTheme(savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+    function getTimeBasedTheme() {
+      const hour = new Date().getHours();
+      return hour >= 18 || hour < 6 ? 'dark' : 'light';
+    }
+
+    function scheduleThemeChange() {
+      const now = new Date();
+      const nextChange = new Date(now);
+      if (now.getHours() < 6) nextChange.setHours(6, 0, 0, 0);
+      else if (now.getHours() < 18) nextChange.setHours(18, 0, 0, 0);
+      else {
+        nextChange.setDate(nextChange.getDate() + 1);
+        nextChange.setHours(6, 0, 0, 0);
+      }
+      window.setTimeout(() => {
+        setTheme(getTimeBasedTheme(), { animate: true });
+        scheduleThemeChange();
+      }, nextChange.getTime() - now.getTime());
+    }
+
+    localStorage.removeItem('portfolio-theme');
+    setTheme(getTimeBasedTheme());
+    scheduleThemeChange();
     themeToggle.addEventListener('click', () => {
       const nextTheme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
-      localStorage.setItem('portfolio-theme', nextTheme);
-      setTheme(nextTheme);
+      setTheme(nextTheme, { animate: true });
     });
 
-    const viewButtons = [...document.querySelectorAll('[data-portfolio-view]')];
-    const savedPortfolioView = localStorage.getItem('portfolio-view');
+    const viewButtons = [...document.querySelectorAll('.portfolio-view-toggle button[data-portfolio-view]')];
     const storyView = document.querySelector('.portfolio-story');
     let portfolioViewTimer = null;
 
@@ -1682,7 +1827,7 @@
       }, 220);
     }
 
-    setPortfolioView(savedPortfolioView || 'list');
+    setPortfolioView('story');
     const pageContent = document.querySelector('.site-content');
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       pageContent.classList.remove('is-page-entering');
@@ -1742,6 +1887,7 @@
     let activeRow = null;
     let contentTimer = null;
     let closeTimer = null;
+    let mediaChangeTimer = null;
     let isSelectingNoteTarget = false;
     let selectedNoteTarget = 'this case study';
 
@@ -1790,6 +1936,13 @@
       setNoteTargetSelection(!isSelectingNoteTarget);
     });
 
+    document.addEventListener('pointerdown', (event) => {
+      if (!feedbackNote.classList.contains('is-open')) return;
+      if (feedbackNote.contains(event.target) || notesToggle.contains(event.target)) return;
+      if (isSelectingNoteTarget && event.target.closest('.media, .carousel-preview, .details p, .decision-list li')) return;
+      setNotesOpen(false);
+    });
+
     feedbackNote.addEventListener('submit', (event) => {
       event.preventDefault();
       const message = feedbackText.value.trim();
@@ -1807,6 +1960,43 @@
 
     updateNotesAvailability();
 
+    function showCarouselPreview(preview) {
+      const carousel = preview.closest('.media-carousel');
+      const stage = carousel.querySelector('.media');
+      const media = document.createElement(preview.dataset.mediaType === 'video' ? 'video' : 'img');
+      stage.classList.toggle('is-scrollable', preview.dataset.mediaScrollable === 'true');
+
+      if (preview.dataset.mediaType === 'video') {
+        media.controls = true;
+        media.muted = true;
+        media.playsInline = true;
+        media.setAttribute('src', preview.dataset.mediaSrc);
+      } else {
+        media.setAttribute('src', preview.dataset.mediaSrc);
+        media.setAttribute('alt', preview.dataset.mediaAlt);
+      }
+
+      carousel.querySelectorAll('.carousel-preview').forEach((button) => {
+        button.setAttribute('aria-pressed', String(button === preview));
+        if (button.hasAttribute('aria-selected')) {
+          button.setAttribute('aria-selected', String(button === preview));
+        }
+      });
+
+      const replaceMedia = () => {
+        stage.replaceChildren(media);
+        window.requestAnimationFrame(() => stage.classList.remove('is-changing'));
+      };
+
+      window.clearTimeout(mediaChangeTimer);
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        replaceMedia();
+        return;
+      }
+      stage.classList.add('is-changing');
+      mediaChangeTimer = window.setTimeout(replaceMedia, 180);
+    }
+
     drawerContent.addEventListener('click', (event) => {
       if (isSelectingNoteTarget) {
         const target = event.target.closest('.media, .carousel-preview, .details p, .decision-list li');
@@ -1820,30 +2010,32 @@
       }
 
       const preview = event.target.closest('.carousel-preview');
-      if (!preview) return;
-      const carousel = preview.closest('.media-carousel');
-      const stage = carousel.querySelector('.media');
-      const media = document.createElement(preview.dataset.mediaType === 'video' ? 'video' : 'img');
+      if (preview) showCarouselPreview(preview);
+    });
 
-      if (preview.dataset.mediaType === 'video') {
-        media.controls = true;
-        media.muted = true;
-        media.playsInline = true;
-        media.setAttribute('src', preview.dataset.mediaSrc);
-      } else {
-        media.setAttribute('src', preview.dataset.mediaSrc);
-        media.setAttribute('alt', preview.dataset.mediaAlt);
-      }
-
-      stage.replaceChildren(media);
-      carousel.querySelectorAll('.carousel-preview').forEach((button) => {
-        button.setAttribute('aria-pressed', String(button === preview));
-      });
+    drawerContent.addEventListener('keydown', (event) => {
+      const preview = event.target.closest('.carousel-preview');
+      if (!preview || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      if (isSelectingNoteTarget) return;
+      event.preventDefault();
+      const previews = [...preview.closest('.media-carousel').querySelectorAll('.carousel-preview')];
+      const index = previews.indexOf(preview);
+      const nextIndex = event.key === 'ArrowLeft'
+        ? (index - 1 + previews.length) % previews.length
+        : event.key === 'ArrowRight'
+          ? (index + 1) % previews.length
+          : event.key === 'Home'
+            ? 0
+            : previews.length - 1;
+      const nextPreview = previews[nextIndex];
+      showCarouselPreview(nextPreview);
+      nextPreview.focus();
     });
 
     function closeAll(animate = true) {
       window.clearTimeout(contentTimer);
       window.clearTimeout(closeTimer);
+      window.clearTimeout(mediaChangeTimer);
       setNotesOpen(false);
       rows.forEach((row) => {
         row.querySelector('.trigger').setAttribute('aria-expanded', 'false');
@@ -1922,6 +2114,11 @@
 
     document.addEventListener('keydown', (event) => {
       if (event.key !== 'Escape') return;
+      if (feedbackNote.classList.contains('is-open')) {
+        setNotesOpen(false);
+        notesToggle.focus();
+        return;
+      }
       const openRow = activeRow;
       closeAll();
       openRow?.querySelector('.trigger').focus();
