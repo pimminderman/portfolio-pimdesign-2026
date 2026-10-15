@@ -1031,38 +1031,9 @@
       transition: opacity 180ms ease, transform 180ms ease;
     }
 
-    @media (hover: none), (pointer: coarse) {
-      .company-list li.is-company-active .akqa-work-preview,
-      .company-list li.is-company-active .proquo-work-preview {
-        position: relative;
-        top: auto;
-        left: auto;
-        width: calc(100% - 16px);
-        margin: 0 8px 12px;
-        pointer-events: auto;
-        transform: none;
-      }
-
-      .akqa-story-wrapper.is-story-preview-active,
-      .proquo-story-wrapper.is-story-preview-active {
-        display: inline-block;
-        width: 100%;
-        vertical-align: top;
-      }
-
-      .akqa-story-wrapper.is-story-preview-active .akqa-work-preview,
-      .proquo-story-wrapper.is-story-preview-active .proquo-work-preview {
-        position: relative;
-        top: auto;
-        left: auto;
-        display: block;
-        width: 100%;
-        margin: 12px 0;
-        pointer-events: auto;
-        transform: none;
-        opacity: 1;
-        visibility: visible;
-      }
+    @media (hover: none), (pointer: coarse), (max-width: 600px) {
+      .akqa-work-preview,
+      .proquo-work-preview { display: none; }
     }
 
     .project-list {
@@ -2823,20 +2794,22 @@
         });
 
         const previewHost = preview.closest(hostSelector);
-        previewHost.addEventListener('pointerenter', () => previewVideo.play().catch(() => {}));
-        previewHost.addEventListener('pointerleave', () => {
-          previewVideo.pause();
-          previewVideo.currentTime = 0;
-        });
-        previewHost.addEventListener('focusin', () => previewVideo.play().catch(() => {}));
-        previewHost.addEventListener('focusout', () => {
-          window.requestAnimationFrame(() => {
-            if (!previewHost.contains(document.activeElement)) {
-              previewVideo.pause();
-              previewVideo.currentTime = 0;
-            }
+        if (!touchPointerQuery.matches) {
+          previewHost.addEventListener('pointerenter', () => previewVideo.play().catch(() => {}));
+          previewHost.addEventListener('pointerleave', () => {
+            previewVideo.pause();
+            previewVideo.currentTime = 0;
           });
-        });
+          previewHost.addEventListener('focusin', () => previewVideo.play().catch(() => {}));
+          previewHost.addEventListener('focusout', () => {
+            window.requestAnimationFrame(() => {
+              if (!previewHost.contains(document.activeElement)) {
+                previewVideo.pause();
+                previewVideo.currentTime = 0;
+              }
+            });
+          });
+        }
       });
     }
 
@@ -2871,20 +2844,6 @@
 
     const touchDeviceQuery = window.matchMedia('(hover: none), (pointer: coarse)');
 
-    function setTouchPreview(currentItem, shouldOpen) {
-      companyItems.forEach((item) => {
-        const isCurrent = item === currentItem;
-        setCompanyHover(item, shouldOpen && isCurrent);
-        const itemVideo = item.querySelector('video');
-        if (!itemVideo) return;
-        if (shouldOpen && isCurrent) itemVideo.play().catch(() => {});
-        else {
-          itemVideo.pause();
-          itemVideo.currentTime = 0;
-        }
-      });
-    }
-
     companyItems.forEach((item) => {
       item.addEventListener('pointerenter', () => {
         if (!touchDeviceQuery.matches) setCompanyHover(item, true);
@@ -2901,43 +2860,6 @@
         });
       });
 
-      const companyLink = item.querySelector('a');
-      if (item.querySelector('video')) {
-        companyLink.addEventListener('click', (event) => {
-          if (!touchDeviceQuery.matches) return;
-          if (!item.classList.contains('is-company-active')) {
-            event.preventDefault();
-            setTouchPreview(item, true);
-          }
-        });
-      }
-    });
-
-    const storyPreviewWrappers = [...document.querySelectorAll('.akqa-story-wrapper, .proquo-story-wrapper')];
-
-    function setStoryPreview(currentWrapper, shouldOpen) {
-      storyPreviewWrappers.forEach((wrapper) => {
-        const isCurrent = wrapper === currentWrapper;
-        wrapper.classList.toggle('is-story-preview-active', shouldOpen && isCurrent);
-        const previewVideo = wrapper.querySelector('video');
-        if (!previewVideo) return;
-        if (shouldOpen && isCurrent) previewVideo.play().catch(() => {});
-        else {
-          previewVideo.pause();
-          previewVideo.currentTime = 0;
-        }
-      });
-    }
-
-    storyPreviewWrappers.forEach((wrapper) => {
-      const companyLink = wrapper.querySelector('a');
-      companyLink.addEventListener('click', (event) => {
-        if (!touchDeviceQuery.matches) return;
-        if (!wrapper.classList.contains('is-story-preview-active')) {
-          event.preventDefault();
-          setStoryPreview(wrapper, true);
-        }
-      });
     });
 
     function arrangeStoryMeta() {
