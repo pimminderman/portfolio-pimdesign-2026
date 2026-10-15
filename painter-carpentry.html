@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>document.documentElement.classList.add('js');</script>
   <meta name="description" content="Painting, decorating and joinery work by Pim Minderman in London.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://pimminderman.github.io/portfolio-pimdesign-2026/painter-carpentry.html">
@@ -27,12 +28,13 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" rel="stylesheet">
   <title>Painter &amp; carpentry — Pim Minderman</title>
   <style>
     :root {
       color-scheme: light dark;
-      --bg: #f8fafc;
+      --bg: #f0f9ff;
       --ink: #171717;
       --muted: #64748b;
       --line: #dbe2ea;
@@ -50,75 +52,226 @@
       margin: 0;
       background: var(--bg);
       color: var(--ink);
-      font-family: Inter, system-ui, sans-serif;
+      font-family: Geist, system-ui, sans-serif;
     }
 
-    .theme-toggle {
+    .coral-cursor,
+    .touch-press-dot {
       position: fixed;
-      z-index: 2;
-      top: 20px;
-      right: 20px;
-      width: 20px;
-      height: 20px;
-      padding: 0;
-      border: 0;
+      z-index: 1000;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #111827 0 49%, #f8fafc 51% 100%);
-      box-shadow: 0 4px 14px rgb(15 23 42 / 8%);
+      background: #fda89a;
+      pointer-events: none;
+    }
+
+    .coral-cursor {
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+      transition: width 160ms ease, height 160ms ease, opacity 160ms ease, transform 160ms ease;
+    }
+
+    .coral-cursor.is-visible {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .coral-cursor.is-interactive {
+      width: 14px;
+      height: 14px;
+    }
+
+    .touch-press-dot {
+      transform: translate(-50%, -50%) scale(0.4);
+      animation: touch-press-dot 520ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes touch-press-dot {
+      0% { opacity: 0.9; transform: translate(-50%, -50%) scale(0.4); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(2.4); }
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      body.has-coral-cursor,
+      body.has-coral-cursor a,
+      body.has-coral-cursor button { cursor: none; }
+    }
+
+    body.is-theme-changing,
+    body.is-theme-changing *,
+    body.is-theme-changing *::before,
+    body.is-theme-changing *::after {
+      transition-property: background-color, color, border-color, box-shadow, fill, stroke, filter;
+      transition-duration: 380ms;
+      transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    body.is-theme-changing .site-content {
+      animation: theme-content-fade 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes theme-content-fade {
+      0% { opacity: 0.86; }
+      100% { opacity: 1; }
+    }
+
+    .views-panel {
+      position: fixed;
+      z-index: 12;
+      top: 16px;
+      right: 16px;
+      width: 144px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: #fff;
+      box-shadow: 0 3px 12px rgb(15 23 42 / 10%);
+      transition: width 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .views-panel-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+      min-height: 28px;
+      padding: 4px 6px;
+      border: 0;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--ink);
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      font: 600 12px/1 Geist, system-ui, sans-serif;
+      text-align: left;
     }
 
-    .theme-toggle:hover {
-      box-shadow: 0 6px 18px rgb(15 23 42 / 14%);
-      transform: scale(1.06);
+    .views-panel-toggle:hover { background: #fff1ee; }
+    .views-panel-toggle:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+    .views-panel-icon {
+      width: 16px;
+      height: 16px;
+      flex: 0 0 auto;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.8;
     }
 
-    .theme-label {
-      position: absolute;
-      width: 1px;
-      height: 1px;
+    .views-panel-label { flex: 1; }
+    .views-panel-chevron { color: var(--muted); font-size: 14px; transition: transform 180ms ease; }
+    .views-panel.is-expanded .views-panel-chevron { transform: rotate(180deg); }
+
+    .views-panel-options {
+      display: grid;
+      gap: 4px;
+      max-height: 42px;
+      margin-top: 4px;
+      opacity: 1;
       overflow: hidden;
-      clip: rect(0 0 0 0);
-      white-space: nowrap;
+      transition: max-height 180ms ease, margin 180ms ease, opacity 140ms ease;
     }
+
+    .views-panel:not(.is-expanded) {
+      width: 36px;
+      padding: 4px;
+    }
+
+    .views-panel:not(.is-expanded) .views-panel-toggle { justify-content: center; padding: 4px; }
+    .views-panel:not(.is-expanded) .views-panel-label,
+    .views-panel:not(.is-expanded) .views-panel-chevron { display: none; }
+    .views-panel:not(.is-expanded) .views-panel-options { max-height: 0; margin-top: 0; opacity: 0; pointer-events: none; }
+
+    .views-panel .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 5px;
+      width: 100%;
+      min-height: 26px;
+      padding: 4px 7px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font: 500 12px/1 Geist, system-ui, sans-serif;
+      transition: color 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .views-panel .theme-toggle:hover,
+    .views-panel .theme-toggle[aria-pressed="true"] {
+      border-color: #fda89a;
+      background: #fff1ee;
+      color: #171717;
+      box-shadow: 0 1px 2px rgb(15 23 42 / 10%);
+    }
+
+    .views-panel .theme-toggle .material-symbols-outlined { font-size: 14px; }
 
     .page {
       width: min(1060px, calc(100% - 64px));
       margin: auto;
-      padding: 30px 0 80px;
+      padding: 30px 0 32px;
     }
 
     .back {
+      display: inline-flex;
+      align-items: center;
+      margin: -4px 0 0 3px;
+      padding: 4px 5px;
+      border-radius: 2px;
       color: var(--muted);
       font-size: 14px;
+      font-weight: 500;
       text-decoration: none;
+      transition: color 160ms ease, background-color 160ms ease;
     }
 
     .back:hover {
       color: var(--ink);
-      text-decoration: underline;
-      text-underline-offset: 3px;
+      background: #fff1ee;
     }
 
     .intro {
       max-width: 720px;
-      margin: 88px auto 0;
+      margin: 96px auto 0;
+      padding: 0 8px;
     }
 
-    .eyebrow,
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .eyebrow::before {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #fda89a;
+      content: "";
+    }
+
     .caption {
       color: var(--muted);
       font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      font-weight: 400;
+      line-height: 1.45;
     }
 
     h1 {
       margin: 12px 0 0;
       font-size: clamp(32px, 5vw, 52px);
-      font-weight: 500;
+      font-weight: 600;
       line-height: 1.05;
       letter-spacing: -0.045em;
     }
@@ -126,9 +279,9 @@
     .intro p {
       max-width: 590px;
       margin: 20px 0 0;
-      color: #475569;
-      font-size: 20px;
-      line-height: 1.5;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.65;
       letter-spacing: -0.025em;
     }
 
@@ -139,20 +292,21 @@
       width: 100%;
       max-height: min(78vh, 880px);
       border: 1px solid var(--line);
-      border-radius: 12px;
+      border-radius: 4px;
       background: var(--card);
       object-fit: contain;
+      box-shadow: 0 3px 12px rgb(15 23 42 / 8%);
     }
 
     figcaption { margin-top: 12px; }
 
     .project-notes {
       display: grid;
-      grid-template-columns: 170px minmax(0, 1fr);
-      gap: 50px;
+      grid-template-columns: 144px minmax(0, 1fr);
+      gap: 40px;
       max-width: 720px;
       margin: 56px auto 0;
-      padding-top: 24px;
+      padding: 24px 8px 0;
       border-top: 1px solid var(--line);
     }
 
@@ -161,41 +315,42 @@
       color: var(--muted);
       font-size: 14px;
       font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      line-height: 1.45;
     }
 
     .project-notes p {
       margin: 0;
-      color: #475569;
+      color: var(--muted);
       font-size: 14px;
-      line-height: 1.6;
+      font-weight: 400;
+      line-height: 1.65;
     }
 
     .painting-project {
-      margin: 88px 0 0;
-      padding-top: 24px;
+      margin: 96px 0 0;
+      padding-top: 32px;
       border-top: 1px solid var(--line);
     }
 
     .painting-intro {
       max-width: 720px;
       margin: 0 auto;
+      padding: 0 8px;
     }
 
     .painting-intro h2 {
       margin: 12px 0 0;
       font-size: 28px;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: -0.035em;
     }
 
     .painting-intro p {
       max-width: 590px;
       margin: 12px 0 0;
-      color: #475569;
+      color: var(--muted);
       font-size: 14px;
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
     .gallery-phase { margin-top: 48px; }
@@ -203,10 +358,9 @@
     .gallery-phase h3 {
       margin: 0 0 14px;
       color: var(--muted);
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      line-height: 1.45;
     }
 
     .gallery-grid {
@@ -223,9 +377,42 @@
       display: block;
       width: 100%;
       border: 1px solid var(--line);
-      border-radius: 12px;
+      border-radius: 4px;
       background: var(--card);
+      box-shadow: 0 3px 12px rgb(15 23 42 / 8%);
     }
+
+    .footer {
+      max-width: 720px;
+      margin: 80px auto 0;
+      padding: 18px 8px 32px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px 16px;
+    }
+
+    .footer a {
+      display: inline-flex;
+      align-items: center;
+      margin: -3px -5px;
+      padding: 3px 5px;
+      border-radius: 2px;
+      color: var(--muted);
+      line-height: 1.2;
+      text-decoration: none;
+      transition: background-color 160ms ease, color 160ms ease;
+    }
+
+    .footer a:hover { color: var(--ink); background: #fff1ee; }
+
+    .footer-copyright { display: block; margin-top: 12px; }
 
     .gallery-grid figcaption { margin-top: 10px; }
 
@@ -238,17 +425,52 @@
       --card: #111827;
     }
 
-    body[data-theme="dark"] .theme-toggle { transform: rotate(180deg); }
-    body[data-theme="dark"] .theme-toggle:hover { transform: rotate(180deg) scale(1.06); }
+    body[data-theme="dark"] .views-panel {
+      background: #111827;
+      border-color: #475569;
+      box-shadow: 0 3px 12px rgb(0 0 0 / 24%);
+    }
+
+    body[data-theme="dark"] .views-panel-toggle:hover,
+    body[data-theme="dark"] .views-panel .theme-toggle:hover,
+    body[data-theme="dark"] .views-panel .theme-toggle[aria-pressed="true"] {
+      background: #3b2d35;
+      color: #f8fafc;
+    }
+
     body[data-theme="dark"] :where(a, button):focus-visible { outline-color: #5eead4; }
-    body[data-theme="dark"] .intro p,
-    body[data-theme="dark"] .project-notes p,
-    body[data-theme="dark"] .painting-intro p { color: #cbd5e1; }
+    body[data-theme="dark"] .project-image,
+    body[data-theme="dark"] .gallery-image { box-shadow: 0 3px 12px rgb(0 0 0 / 24%); }
+    body[data-theme="dark"] .back:hover,
+    body[data-theme="dark"] .footer a:hover { background: #3b2d35; }
+
+    @keyframes page-entry-cascade {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    html.js .site-content.is-page-entering .views-panel,
+    html.js .site-content.is-page-entering .back,
+    html.js .site-content.is-page-entering .intro,
+    html.js .site-content.is-page-entering > .page > figure,
+    html.js .site-content.is-page-entering .project-notes,
+    html.js .site-content.is-page-entering .painting-project,
+    html.js .site-content.is-page-entering .footer {
+      animation: page-entry-cascade 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    html.js .site-content.is-page-entering .views-panel { animation-delay: 40ms; }
+    html.js .site-content.is-page-entering .back { animation-delay: 70ms; }
+    html.js .site-content.is-page-entering .intro { animation-delay: 120ms; }
+    html.js .site-content.is-page-entering > .page > figure { animation-delay: 190ms; }
+    html.js .site-content.is-page-entering .project-notes { animation-delay: 260ms; }
+    html.js .site-content.is-page-entering .painting-project { animation-delay: 330ms; }
+    html.js .site-content.is-page-entering .footer { animation-delay: 400ms; }
 
     @media (max-width: 600px) {
       .page { width: calc(100% - 32px); padding: 24px 0 64px; }
-      .theme-toggle { top: 12px; right: 12px; width: 16px; height: 16px; }
-      .intro { margin-top: 68px; }
+      .views-panel { top: 12px; right: 12px; }
+      .intro { margin-top: 72px; }
       .intro p { font-size: 18px; }
       figure { margin-top: 40px; }
       .project-notes { display: block; margin-top: 40px; }
@@ -257,15 +479,34 @@
       .painting-intro h2 { font-size: 24px; }
       .gallery-phase { margin-top: 36px; }
       .gallery-grid { grid-template-columns: 1fr; gap: 24px; }
+      .footer-links { justify-content: flex-start; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { transition-duration: 0.01ms !important; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
 <body>
-  <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode"><span class="theme-label">Dark mode</span></button>
+  <div class="site-content is-page-entering">
+  <aside class="views-panel is-expanded" aria-label="Views and appearance">
+    <button class="views-panel-toggle" type="button" aria-expanded="true" aria-controls="views-panel-options" aria-label="Collapse views">
+      <svg class="views-panel-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="m4 8 8-4 8 4-8 4-8-4Z"/><path d="m4 12 8 4 8-4"/><path d="m4 16 8 4 8-4"/></svg>
+      <span class="views-panel-label">Views</span>
+      <span class="views-panel-chevron" aria-hidden="true">⌄</span>
+    </button>
+    <div id="views-panel-options" class="views-panel-options">
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
+        <span class="material-symbols-outlined" aria-hidden="true">dark_mode</span>
+        <span class="theme-label">Dark mode</span>
+      </button>
+    </div>
+  </aside>
 
   <main class="page">
     <a class="back" href="index.html">← Back to portfolio</a>
@@ -331,25 +572,122 @@
         </div>
       </div>
     </section>
+
+    <footer class="footer">
+      <nav class="footer-links" aria-label="Personal channels">
+        <a href="https://uk.linkedin.com/in/pimminderman" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href="https://productbypim.substack.com" target="_blank" rel="noreferrer">Product by Pim</a>
+        <a href="https://www.instagram.com/pimminderman/" target="_blank" rel="noreferrer">Instagram</a>
+        <a href="https://github.com/pimminderman" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="mailto:pim.minderman89@gmail.com">Contact me</a>
+      </nav>
+      <span class="footer-copyright">© 2026 Pim Minderman</span>
+    </footer>
   </main>
+  </div>
 
   <script>
     const themeToggle = document.querySelector('.theme-toggle');
-    const savedTheme = localStorage.getItem('portfolio-theme');
+    const viewsPanel = document.querySelector('.views-panel');
+    const viewsPanelToggle = viewsPanel.querySelector('.views-panel-toggle');
 
-    function setTheme(theme) {
+    function setViewsPanel(expanded, { focusToggle = false } = {}) {
+      viewsPanel.classList.toggle('is-expanded', expanded);
+      viewsPanelToggle.setAttribute('aria-expanded', String(expanded));
+      viewsPanelToggle.setAttribute('aria-label', expanded ? 'Collapse views' : 'Open views');
+      if (focusToggle) viewsPanelToggle.focus();
+    }
+
+    viewsPanelToggle.addEventListener('click', () => {
+      setViewsPanel(!viewsPanel.classList.contains('is-expanded'));
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || !viewsPanel.classList.contains('is-expanded') || !viewsPanel.contains(document.activeElement)) return;
+      event.preventDefault();
+      setViewsPanel(false, { focusToggle: true });
+    });
+
+    const finePointerQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const touchPointerQuery = window.matchMedia('(hover: none), (pointer: coarse)');
+
+    if (finePointerQuery.matches) {
+      const coralCursor = document.createElement('div');
+      coralCursor.className = 'coral-cursor';
+      coralCursor.setAttribute('aria-hidden', 'true');
+      document.body.append(coralCursor);
+      document.body.classList.add('has-coral-cursor');
+
+      document.addEventListener('pointermove', (event) => {
+        if (event.pointerType !== 'mouse') return;
+        coralCursor.style.left = `${event.clientX}px`;
+        coralCursor.style.top = `${event.clientY}px`;
+        coralCursor.classList.add('is-visible');
+        coralCursor.classList.toggle('is-interactive', Boolean(event.target.closest('a, button')));
+      });
+
+      document.addEventListener('pointerleave', () => coralCursor.classList.remove('is-visible'));
+    }
+
+    document.addEventListener('pointerdown', (event) => {
+      if (!touchPointerQuery.matches || event.pointerType === 'mouse') return;
+      const pressDot = document.createElement('span');
+      pressDot.className = 'touch-press-dot';
+      pressDot.setAttribute('aria-hidden', 'true');
+      pressDot.style.left = `${event.clientX}px`;
+      pressDot.style.top = `${event.clientY}px`;
+      document.body.append(pressDot);
+      window.setTimeout(() => pressDot.remove(), 540);
+    });
+
+    let themeTransitionTimer = null;
+
+    function setTheme(theme, { animate = false } = {}) {
+      const shouldAnimate = animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (shouldAnimate) {
+        document.body.classList.add('is-theme-changing');
+        void document.body.offsetWidth;
+      }
       document.body.dataset.theme = theme;
       const isDark = theme === 'dark';
       themeToggle.setAttribute('aria-pressed', String(isDark));
       themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
       themeToggle.querySelector('.theme-label').textContent = isDark ? 'Light mode' : 'Dark mode';
+      themeToggle.querySelector('.material-symbols-outlined').textContent = isDark ? 'light_mode' : 'dark_mode';
+
+      if (shouldAnimate) {
+        window.clearTimeout(themeTransitionTimer);
+        themeTransitionTimer = window.setTimeout(() => {
+          document.body.classList.remove('is-theme-changing');
+        }, 400);
+      }
     }
 
-    setTheme(savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+    function getTimeBasedTheme() {
+      const hour = new Date().getHours();
+      return hour >= 18 || hour < 6 ? 'dark' : 'light';
+    }
+
+    function scheduleThemeChange() {
+      const now = new Date();
+      const nextChange = new Date(now);
+      if (now.getHours() < 6) nextChange.setHours(6, 0, 0, 0);
+      else if (now.getHours() < 18) nextChange.setHours(18, 0, 0, 0);
+      else {
+        nextChange.setDate(nextChange.getDate() + 1);
+        nextChange.setHours(6, 0, 0, 0);
+      }
+      window.setTimeout(() => {
+        setTheme(getTimeBasedTheme(), { animate: true });
+        scheduleThemeChange();
+      }, nextChange.getTime() - now.getTime());
+    }
+
+    setTheme(getTimeBasedTheme());
+    scheduleThemeChange();
     themeToggle.addEventListener('click', () => {
       const nextTheme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
-      localStorage.setItem('portfolio-theme', nextTheme);
-      setTheme(nextTheme);
+      setTheme(nextTheme, { animate: true });
     });
   </script>
 </body>
