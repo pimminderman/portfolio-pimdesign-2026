@@ -2051,8 +2051,14 @@
     }
 
     @media (max-width: 767px) {
-      /* Mobile uses a true full-screen overlay: the page stays in place beneath the drawer. */
-      :root { --side-panel-width: 100vw; --drawer-shift: 0px; }
+      /* Keep the mobile drawer full-width, but use the same coordinated sweep as desktop. */
+      :root { --side-panel-width: 100vw; --drawer-shift: -100vw; }
+
+      body.snapshot-open .views-panel,
+      body.snapshot-open .views-panel-backdrop {
+        opacity: 0;
+        pointer-events: none;
+      }
     }
 
     /* Tailwind-aligned drawer touchpoints: md 768px, lg 1024px, xl 1280px, 2xl 1536px. */
