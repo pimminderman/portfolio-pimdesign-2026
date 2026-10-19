@@ -1033,6 +1033,24 @@
       transition: opacity 180ms ease, transform 180ms ease;
     }
 
+    /* Tailwind xl boundary: keep rich company previews inside narrower viewports. */
+    @media (max-width: 1279px) {
+      .company-list .akqa-work-preview,
+      .company-list .proquo-work-preview {
+        top: auto;
+        right: auto;
+        bottom: calc(100% + 8px);
+        left: 0;
+        width: min(400px, 100%);
+        transform: translateY(6px);
+      }
+
+      .company-list li.is-company-active .akqa-work-preview,
+      .company-list li.is-company-active .proquo-work-preview {
+        transform: translateY(0);
+      }
+    }
+
     @media (hover: none), (pointer: coarse), (max-width: 600px) {
       .akqa-work-preview,
       .proquo-work-preview { display: none; }
