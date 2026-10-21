@@ -1954,7 +1954,14 @@
       }
 
       .views-panel .connect-toggle {
-        min-width: 44px;
+        min-width: 48px;
+        min-height: 48px;
+        padding-inline: 12px;
+      }
+
+      .views-panel .connect-toggle > svg:not(.connect-chevron) {
+        width: 18px;
+        height: 18px;
       }
 
       .views-panel .theme-toggle {
@@ -1988,6 +1995,15 @@
         left: 50%;
         width: calc(100% - 32px);
       }
+      .views-panel .connect-toggle {
+        min-width: 48px;
+        min-height: 48px;
+        padding-inline: 12px;
+      }
+      .views-panel .connect-toggle > svg:not(.connect-chevron) {
+        width: 18px;
+        height: 18px;
+      }
       .portfolio-navigation::before {
         top: 4px;
         bottom: 4px;
@@ -2003,7 +2019,7 @@
         .views-panel-divider { margin-inline: 1px; }
         .views-panel .connect-toggle {
           justify-content: center;
-          width: 44px;
+          width: 48px;
           padding: 0;
         }
         .connect-label,
@@ -2011,6 +2027,9 @@
       }
 
       @media (max-width: 360px) {
+        .views-panel,
+        .portfolio-navigation { gap: 4px; }
+        .views-panel-divider { display: none; }
         .portfolio-navigation button { padding-inline: 1px; font-size: var(--minimum-readable-text); }
       }
 
